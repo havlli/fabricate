@@ -1,8 +1,12 @@
-package com.github.havlli;
+package com.github.havlli.store;
 
 import java.util.Locale;
 
-public class ChineseLocaleStore implements LocaleStore {
+public class ChineseLocaleStore extends LocaleStore {
+    public ChineseLocaleStore() {
+        super(new ChineseLocaleConstraint());
+    }
+
     @Override
     public Locale getLocale() {
         return Locale.CHINESE;
@@ -57,40 +61,40 @@ public class ChineseLocaleStore implements LocaleStore {
     };
 
     private final String[] lastNames = {
-            "李",
-            "王",
-            "张",
-            "刘",
-            "陈",
-            "杨",
-            "黄",
-            "赵",
-            "吴",
-            "周",
-            "徐",
-            "孙",
-            "马",
-            "朱",
-            "胡",
-            "郭",
-            "何",
-            "高",
-            "林",
-            "罗",
-            "郑",
-            "梁",
-            "谢",
-            "宋",
-            "唐",
-            "许",
-            "韩",
-            "冯",
-            "邓",
-            "曹",
-            "彭",
-            "曾",
-            "肖",
-            "田",
-            "董"
+            "建国",
+            "志强",
+            "美丽",
+            "小明",
+            "晓东",
+            "天翔",
+            "思思",
+            "小芳",
+            "晓琳",
+            "明明",
+            "丽华",
+            "飞飞",
+            "小强",
+            "志",
+            "晓静",
+            "佳佳",
+            "小杰",
+            "欣欣",
+            "小燕",
+            "光辉",
+            "世界",
+            "佳慧",
+            "天",
+            "小宝",
+            "晓峰",
+            "志明",
+            "宇航",
+            "欢欢",
+            "海洋",
+            "小",
+            "文静",
+            "天天",
+            "晓华",
+            "婷婷",
+            "小龙"
     };
 }

@@ -1,8 +1,12 @@
-package com.github.havlli;
+package com.github.havlli.store;
 
 import java.util.Locale;
 
-public class EnglishLocaleStore implements LocaleStore {
+public class EnglishLocaleStore extends LocaleStore {
+    public EnglishLocaleStore() {
+        super(new EnglishLocaleConstraint());
+    }
+
     @Override
     public Locale getLocale() {
         return Locale.ENGLISH;
