@@ -1,6 +1,6 @@
 package com.github.havlli;
 
-import com.github.havlli.store.EnglishLocaleStore;
+import com.github.havlli.store.ChineseLocaleStore;
 import com.github.havlli.store.LocaleStore;
 
 import java.util.Map;
@@ -13,19 +13,20 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Hello world!");
 
-        LocaleStore localeStore = new EnglishLocaleStore();
+        LocaleStore localeStore = new ChineseLocaleStore();
         RandomGenerator randomGenerator = new RandomGenerator(localeStore);
+        OptimizedRandomGenerator optimizedRandomGenerator = new OptimizedRandomGenerator(localeStore, 500);
 
 
 
-        for (int i = 0; i < 500; i++) {
-            String generated = randomGenerator.generate();
-            System.out.println(generated);
-        }
+//        for (int i = 0; i < 500; i++) {
+//            String generated = randomGenerator.generate();
+//            System.out.println(generated);
+//        }
 
         Map<String, Long> collect = IntStream.range(0, 500)
                 .mapToObj(i -> {
-                    String generated = randomGenerator.generate();
+                    String generated = optimizedRandomGenerator.generate();
                     System.out.println(generated);
 
                     return generated;

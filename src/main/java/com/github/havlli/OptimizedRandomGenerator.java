@@ -7,19 +7,27 @@ import java.util.Random;
 import java.util.Set;
 
 public class OptimizedRandomGenerator {
-    private static final int MEMORY_BUFFER = 500;
+    private final int bufferSize;
     private final Set<String> recentNames = new HashSet<>();
     private final LocaleStore localeStore;
     private final String[] firstNames;
     private final String[] lastNames;
     private final Random random;
 
-
     public OptimizedRandomGenerator(LocaleStore localeStore) {
         this.localeStore = localeStore;
         this.firstNames = localeStore.getFirstNames();
         this.lastNames = localeStore.getLastNames();
         this.random = new Random(System.nanoTime());
+        this.bufferSize = 100;
+    }
+
+    public OptimizedRandomGenerator(LocaleStore localeStore, int bufferSize) {
+        this.localeStore = localeStore;
+        this.firstNames = localeStore.getFirstNames();
+        this.lastNames = localeStore.getLastNames();
+        this.random = new Random(System.nanoTime());
+        this.bufferSize = bufferSize;
     }
 
     public String generate() {
@@ -32,7 +40,7 @@ public class OptimizedRandomGenerator {
         } while (recentNames.contains(fullName));
 
         recentNames.add(fullName);
-        if (recentNames.size() > MEMORY_BUFFER) {
+        if (recentNames.size() > bufferSize) {
             recentNames.remove(recentNames.iterator().next());
         }
 

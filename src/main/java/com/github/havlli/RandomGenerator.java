@@ -21,7 +21,6 @@ public class RandomGenerator {
     public String generate() {
         String firstName = firstNames[random.nextInt(firstNames.length)];
         String lastName = lastNames[random.nextInt(firstNames.length)];
-
         return firstName + localeStore.getNameDelimiter() + lastName;
     }
 }
