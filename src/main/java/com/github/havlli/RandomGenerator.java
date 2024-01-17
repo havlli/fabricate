@@ -4,6 +4,7 @@ import com.github.havlli.model.Person;
 import com.github.havlli.store.LocaleStore;
 
 import java.util.Random;
+import java.util.UUID;
 
 public class RandomGenerator implements Generator {
     private final LocaleStore localeStore;
@@ -21,12 +22,6 @@ public class RandomGenerator implements Generator {
         this.random = new Random();
     }
 
-    public String generateEmail() {
-        String firstName = getRandomValueFrom(firstNames);
-        String lastName = getRandomValueFrom(lastNames);
-        return firstName + localeStore.getNameDelimiter() + lastName;
-    }
-
     private String getRandomValueFrom(String[] values) {
         return values[random.nextInt(values.length)];
     }
@@ -35,16 +30,25 @@ public class RandomGenerator implements Generator {
     public Person generatePerson() {
         String firstName = getRandomValueFrom(firstNames);
         String lastName = getRandomValueFrom(lastNames);
-        String email = constructEmail(firstName + "." + lastName);
+        String email = generateEmail(firstName + "." + lastName);
+        UUID uuid = UUID.randomUUID();
+        String username = generateUsername(firstName, lastName, uuid);
 
         return Person.builder()
                 .firstName(firstName)
                 .lastName(lastName)
                 .email(email)
+                .uuid(uuid)
+                .username(username)
                 .build();
     }
 
-    private String constructEmail(String value) {
-        return localeStore.getEmailLocalPart(value) + "@" + emailDomains[random.nextInt(emailDomains.length)];
+    private String generateEmail(String value) {
+        return localeStore.getEmailLocalPart(value.toLowerCase()) + "@" + emailDomains[random.nextInt(emailDomains.length)];
+    }
+
+    public String generateUsername(String firstName, String lastName, UUID uuid) {
+        String uuidPart = uuid.toString().split("-")[0]; // Take first part of UUID
+        return firstName.toLowerCase() + lastName.toLowerCase().charAt(0) + uuidPart;
     }
 }
