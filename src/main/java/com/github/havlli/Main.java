@@ -24,6 +24,9 @@ public class Main {
 //            System.out.println(generated);
 //        }
 
+
+        System.out.println(randomGenerator.generatePerson());
+
         Map<String, Long> collect = IntStream.range(0, 500)
                 .mapToObj(i -> {
                     String generated = optimizedRandomGenerator.generate();

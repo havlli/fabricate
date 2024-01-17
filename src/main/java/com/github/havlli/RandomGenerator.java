@@ -1,10 +1,11 @@
 package com.github.havlli;
 
+import com.github.havlli.model.Person;
 import com.github.havlli.store.LocaleStore;
 
 import java.util.Random;
 
-public class RandomGenerator {
+public class RandomGenerator implements Generator {
     private final LocaleStore localeStore;
     private final String[] firstNames;
     private final String[] lastNames;
@@ -18,9 +19,30 @@ public class RandomGenerator {
         this.random = new Random();
     }
 
-    public String generate() {
-        String firstName = firstNames[random.nextInt(firstNames.length)];
-        String lastName = lastNames[random.nextInt(firstNames.length)];
+    public String generateEmail() {
+        String firstName = getRandomValueFrom(firstNames);
+        String lastName = getRandomValueFrom(lastNames);
         return firstName + localeStore.getNameDelimiter() + lastName;
+    }
+
+    private String getRandomValueFrom(String[] values) {
+        return values[random.nextInt(values.length)];
+    }
+
+    @Override
+    public Person generatePerson() {
+        String firstName = getRandomValueFrom(firstNames);
+        String lastName = getRandomValueFrom(lastNames);
+        String email = constructEmail(firstName + "." + lastName);
+
+        return Person.builder()
+                .firstName(firstName)
+                .lastName(lastName)
+                .email()
+                .build();
+    }
+
+    private String constructEmail(String value) {
+        return localeStore.getEmailLocalPart(value) + localeStore.g;
     }
 }

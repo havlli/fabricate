@@ -4,7 +4,7 @@ import java.util.Locale;
 
 public class ChineseLocaleStore extends LocaleStore {
     public ChineseLocaleStore() {
-        super(new ChineseLocaleConstraint());
+        super(new ChineseLocaleConstraint(), );
     }
 
     @Override
@@ -96,5 +96,18 @@ public class ChineseLocaleStore extends LocaleStore {
             "晓华",
             "婷婷",
             "小龙"
+    };
+
+    String[] emailDomains = {
+            "163.com",
+            "126.com",
+            "qq.com",
+            "sina.com",
+            "sina.cn",
+            "sohu.com",
+            "tom.com",
+            "yeah.net",
+            "21cn.com",
+            "aliyun.com"
     };
 }
