@@ -1,26 +1,6 @@
-package com.github.havlli.store;
+package com.github.havlli.store.repository;
 
-import java.util.Locale;
-
-public class ChineseLocaleStore extends LocaleStore {
-    public ChineseLocaleStore() {
-        super(new ChineseLocaleConstraint(), );
-    }
-
-    @Override
-    public Locale getLocale() {
-        return Locale.CHINESE;
-    }
-
-    @Override
-    public String[] getFirstNames() {
-        return firstNames;
-    }
-
-    @Override
-    public String[] getLastNames() {
-        return lastNames;
-    }
+public class ChineseResourceRepository implements ResourceRepository {
 
     private final String[] firstNames = {
             "伟",
@@ -110,4 +90,19 @@ public class ChineseLocaleStore extends LocaleStore {
             "21cn.com",
             "aliyun.com"
     };
+
+    @Override
+    public String[] getFirstNames() {
+        return firstNames;
+    }
+
+    @Override
+    public String[] getLastNames() {
+        return lastNames;
+    }
+
+    @Override
+    public String[] getEmailDomains() {
+        return emailDomains;
+    }
 }

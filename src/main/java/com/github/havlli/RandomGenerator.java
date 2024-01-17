@@ -9,6 +9,7 @@ public class RandomGenerator implements Generator {
     private final LocaleStore localeStore;
     private final String[] firstNames;
     private final String[] lastNames;
+    private final String[] emailDomains;
     private final Random random;
 
 
@@ -16,6 +17,7 @@ public class RandomGenerator implements Generator {
         this.localeStore = localeStore;
         this.firstNames = localeStore.getFirstNames();
         this.lastNames = localeStore.getLastNames();
+        this.emailDomains = localeStore.getEmailDomains();
         this.random = new Random();
     }
 
@@ -38,11 +40,11 @@ public class RandomGenerator implements Generator {
         return Person.builder()
                 .firstName(firstName)
                 .lastName(lastName)
-                .email()
+                .email(email)
                 .build();
     }
 
     private String constructEmail(String value) {
-        return localeStore.getEmailLocalPart(value) + localeStore.g;
+        return localeStore.getEmailLocalPart(value) + "@" + emailDomains[random.nextInt(emailDomains.length)];
     }
 }

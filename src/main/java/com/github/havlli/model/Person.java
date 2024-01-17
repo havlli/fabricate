@@ -14,18 +14,18 @@ public record Person(
         String lastName,
         @NonNull
         String email,
-        @NonNull
+
         String username,
-        @NonNull
+
         String password,
-        @NonNull
+
         String phoneNumber,
-        @NonNull
+
         Address address,
-        @NonNull
+
         Instant dateOfBirth,
-        @NonNull
+
         String jobTitle,
-        @NonNull
+
         LocaleConstraint localeConstraint
 ) { }
