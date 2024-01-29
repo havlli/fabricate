@@ -4,4 +4,5 @@ public interface ResourceRepository {
     String[] getFirstNames();
     String[] getLastNames();
     String[] getEmailDomains();
+    String[] getRegionPhoneNumbers();
 }

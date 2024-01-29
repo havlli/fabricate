@@ -4,10 +4,6 @@ import com.github.havlli.store.LocaleStore;
 import com.github.havlli.store.LocaleStoreFactory;
 
 import java.util.Locale;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Main {
@@ -26,25 +22,27 @@ public class Main {
 //        }
 
 
-        System.out.println(randomGenerator.generatePerson());
+        IntStream.range(0, 500)
+                .mapToObj(i -> randomGenerator.generatePerson())
+                .forEach(System.out::println);
 
-        Map<String, Long> collect = IntStream.range(0, 500)
-                .mapToObj(i -> {
-                    String generated = optimizedRandomGenerator.generate();
-                    System.out.println(generated);
-
-                    return generated;
-                })
-                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
-
-        AtomicInteger count = new AtomicInteger();
-        collect.forEach((k, v) -> {
-            if(v > 1) {
-                System.out.println(k + " " + v);
-                count.getAndIncrement();
-            }
-        });
-
-        System.out.println(count);
+//        Map<String, Long> collect = IntStream.range(0, 500)
+//                .mapToObj(i -> {
+//                    String generated = optimizedRandomGenerator.generate();
+//                    System.out.println(generated);
+//
+//                    return generated;
+//                })
+//                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+//
+//        AtomicInteger count = new AtomicInteger();
+//        collect.forEach((k, v) -> {
+//            if(v > 1) {
+//                System.out.println(k + " " + v);
+//                count.getAndIncrement();
+//            }
+//        });
+//
+//        System.out.println(count);
     }
 }

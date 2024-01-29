@@ -35,4 +35,8 @@ public class LocaleStore {
     public String[] getEmailDomains() {
         return repository.getEmailDomains();
     }
+
+    public String[] getRegionPhoneNumbers() {
+        return repository.getRegionPhoneNumbers();
+    }
 }

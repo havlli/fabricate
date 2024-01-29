@@ -90,6 +90,10 @@ public class EnglishResourceRepository implements ResourceRepository {
             "cybermail.com"
     };
 
+    String[] regionPhoneNumbers = {
+            "+44", "+49", "+33", "+7", "+39", "+34", "+46", "+47", "+31", "+48", "+32", "+43", "+45", "+358", "+351", "+420", "+41", "+380", "+375"
+    };
+
     @Override
     public String[] getFirstNames() {
         return firstNames;
@@ -103,5 +107,10 @@ public class EnglishResourceRepository implements ResourceRepository {
     @Override
     public String[] getEmailDomains() {
         return emailDomains;
+    }
+
+    @Override
+    public String[] getRegionPhoneNumbers() {
+        return regionPhoneNumbers;
     }
 }
