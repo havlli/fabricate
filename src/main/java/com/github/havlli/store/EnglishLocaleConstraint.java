@@ -10,6 +10,6 @@ public class EnglishLocaleConstraint implements LocaleConstraint {
 
     @Override
     public Function<String, String> getEmailLocalPart() {
-        return s -> s;
+        return String::toLowerCase;
     }
 }

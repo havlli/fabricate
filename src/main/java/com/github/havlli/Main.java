@@ -12,7 +12,7 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Hello world!");
 
-        LocaleStore localeStore = LocaleStoreFactory.getLocaleStore(Locale.CHINESE);
+        LocaleStore localeStore = LocaleStoreFactory.getLocaleStore(Locale.ENGLISH);
         RandomGenerator randomGenerator = new RandomGenerator(localeStore);
         OptimizedRandomGenerator optimizedRandomGenerator = new OptimizedRandomGenerator(localeStore, 500);
 
