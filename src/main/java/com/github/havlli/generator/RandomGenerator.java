@@ -1,5 +1,6 @@
-package com.github.havlli;
+package com.github.havlli.generator;
 
+import com.github.havlli.model.Address;
 import com.github.havlli.model.Person;
 import com.github.havlli.store.LocaleStore;
 
@@ -46,6 +47,7 @@ public class RandomGenerator implements Generator {
                 .username(username)
                 .password(password)
                 .phoneNumber(phoneNumber)
+                .address(generateAddress())
                 .build();
     }
 
@@ -83,5 +85,15 @@ public class RandomGenerator implements Generator {
         }
 
         return stringBuilder.toString();
+    }
+
+    public Address generateAddress() {
+        return Address.builder()
+                .street(getRandomValueFrom(localeStore.getStreets()))
+                .city(getRandomValueFrom(localeStore.getCities()))
+                .state(getRandomValueFrom(localeStore.getStates()))
+                .postalCode(getRandomValueFrom(localeStore.getPostalCodes()))
+                .country(getRandomValueFrom(localeStore.getCountries()))
+                .build();
     }
 }

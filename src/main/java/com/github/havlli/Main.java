@@ -1,5 +1,7 @@
 package com.github.havlli;
 
+import com.github.havlli.generator.OptimizedRandomGenerator;
+import com.github.havlli.generator.RandomGenerator;
 import com.github.havlli.store.LocaleStore;
 import com.github.havlli.store.LocaleStoreFactory;
 
@@ -10,7 +12,7 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Hello world!");
 
-        LocaleStore localeStore = LocaleStoreFactory.getLocaleStore(Locale.ENGLISH);
+        LocaleStore localeStore = LocaleStoreFactory.getLocaleStore(Locale.CHINESE);
         RandomGenerator randomGenerator = new RandomGenerator(localeStore);
         OptimizedRandomGenerator optimizedRandomGenerator = new OptimizedRandomGenerator(localeStore, 500);
 

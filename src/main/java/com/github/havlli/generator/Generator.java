@@ -1,4 +1,4 @@
-package com.github.havlli;
+package com.github.havlli.generator;
 
 import com.github.havlli.model.Person;
 

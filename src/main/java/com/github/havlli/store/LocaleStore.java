@@ -39,4 +39,24 @@ public class LocaleStore {
     public String[] getRegionPhoneNumbers() {
         return repository.getRegionPhoneNumbers();
     }
+
+    public String[] getStreets() {
+        return repository.getStreets();
+    }
+
+    public String[] getCities() {
+        return repository.getCities();
+    }
+
+    public String[] getCountries() {
+        return repository.getCountries();
+    }
+
+    public String[] getStates() {
+        return repository.getStates();
+    }
+
+    public String[] getPostalCodes() {
+        return repository.getPostalCodes();
+    }
 }
