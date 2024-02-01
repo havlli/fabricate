@@ -1,7 +1,8 @@
-package com.github.havlli.generator;
+package com.github.havlli.generators.person;
 
+import com.github.havlli.generators.GeneratorService;
+import com.github.havlli.generators.GeneratorServiceImpl;
 import com.github.havlli.model.Address;
-import com.github.havlli.model.Person;
 import com.github.havlli.store.LocaleStore;
 
 import java.time.Instant;
@@ -9,42 +10,42 @@ import java.time.temporal.ChronoUnit;
 import java.util.Random;
 import java.util.UUID;
 
-public class RandomGenerator implements Generator {
+public class RandomPersonGenerator implements PersonGenerator {
+
     private final LocaleStore localeStore;
+    private final GeneratorService generatorService;
     private final Random random;
 
-
-    public RandomGenerator(LocaleStore localeStore) {
+    public RandomPersonGenerator(LocaleStore localeStore) {
         this.localeStore = localeStore;
-        this.random = new Random();
-    }
-
-    private String getRandomValueFrom(String[] values) {
-        return values[random.nextInt(values.length)];
+        this.generatorService = new GeneratorServiceImpl();
+        this.random = generatorService.createRandom();
     }
 
     @Override
-    public Person generatePerson() {
-        String firstName = getRandomValueFrom(localeStore.getFirstNames());
-        String lastName = getRandomValueFrom(localeStore.getLastNames());
-        UUID uuid = UUID.randomUUID();
-
-        return Person.builder()
-                .firstName(firstName)
-                .lastName(lastName)
-                .email(generateEmail(firstName, lastName))
-                .uuid(uuid)
-                .username(generateUsername(firstName, lastName, uuid))
-                .password(generatePassword())
-                .phoneNumber(generatePhoneNumber())
-                .address(generateAddress())
-                .dateOfBirth(generateDateOfBirth())
-                .build();
+    public String generateFirstName() {
+        return getRandomValueFrom(localeStore.getFirstNames());
     }
 
-    private String generatePassword() {
+    @Override
+    public String generateLastName() {
+        return getRandomValueFrom(localeStore.getLastNames());
+    }
+
+    @Override
+    public String generateUID() {
+        return UUID.randomUUID().toString();
+    }
+
+    @Override
+    public String generateEmail(String firstName, String lastName) {
+        String[] emailDomains = localeStore.getEmailDomains();
+        return localeStore.getEmailLocalPart(firstName + "." + lastName) + "@" + emailDomains[random.nextInt(emailDomains.length)];
+    }
+
+    @Override
+    public String generatePassword() {
         String charSet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%&*";
-        Random random = new Random();
         int length = 8;
 
         StringBuilder sb = new StringBuilder(length);
@@ -57,16 +58,13 @@ public class RandomGenerator implements Generator {
         return sb.toString();
     }
 
-    private String generateEmail(String firstName, String lastName) {
-        String[] emailDomains = localeStore.getEmailDomains();
-        return localeStore.getEmailLocalPart(firstName + "." + lastName) + "@" + emailDomains[random.nextInt(emailDomains.length)];
+    @Override
+    public String generateUsername(String firstName, String lastName, String uid) {
+        String uidPart = uid.split("-")[0]; // Take first part of UID
+        return firstName.toLowerCase() + lastName.toLowerCase().charAt(0) + uidPart;
     }
 
-    public String generateUsername(String firstName, String lastName, UUID uuid) {
-        String uuidPart = uuid.toString().split("-")[0]; // Take first part of UUID
-        return firstName.toLowerCase() + lastName.toLowerCase().charAt(0) + uuidPart;
-    }
-
+    @Override
     public String generatePhoneNumber() {
         String regionPrefix = getRandomValueFrom(localeStore.getRegionPhoneNumbers());
 
@@ -79,6 +77,7 @@ public class RandomGenerator implements Generator {
         return stringBuilder.toString();
     }
 
+    @Override
     public Address generateAddress() {
         return Address.builder()
                 .street(getRandomValueFrom(localeStore.getStreets()))
@@ -89,6 +88,7 @@ public class RandomGenerator implements Generator {
                 .build();
     }
 
+    @Override
     public Instant generateDateOfBirth() {
         long minAgeInDays = 18 * 365;
         long maxAgeInDays = 90 * 365;
@@ -98,5 +98,14 @@ public class RandomGenerator implements Generator {
         return Instant.now()
                 .minus(random.nextLong(365), ChronoUnit.DAYS)
                 .minus(randomDays, ChronoUnit.DAYS);
+    }
+
+    @Override
+    public String generateJobTittle() {
+        return getRandomValueFrom(localeStore.getJobTitles());
+    }
+
+    private String getRandomValueFrom(String[] values) {
+        return generatorService.getRandomValueFrom(values);
     }
 }

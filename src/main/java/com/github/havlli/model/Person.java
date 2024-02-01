@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.NonNull;
 
 import java.time.Instant;
-import java.util.UUID;
 
 @Builder
 public record Person(
@@ -15,7 +14,7 @@ public record Person(
         String lastName,
         @NonNull
         String email,
-        UUID uuid,
+        String uid,
 
         String username,
 

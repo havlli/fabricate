@@ -59,4 +59,8 @@ public class LocaleStore {
     public String[] getPostalCodes() {
         return repository.getPostalCodes();
     }
+
+    public String[] getJobTitles() {
+        return repository.getJobTitles();
+    }
 }

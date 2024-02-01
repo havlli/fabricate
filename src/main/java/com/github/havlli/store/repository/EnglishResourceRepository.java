@@ -143,6 +143,22 @@ public class EnglishResourceRepository implements ResourceRepository {
             "SK", "SI", "EE", "LV", "LT"
     };
 
+    String[] jobTitles = {
+            "Software Developer", "Marketing Manager", "Financial Analyst", "Human Resources Coordinator",
+            "Data Scientist", "Operations Manager", "Customer Service Representative", "Sales Executive",
+            "Project Manager", "Graphic Designer", "Web Developer", "IT Support Specialist",
+            "Content Writer", "UX/UI Designer", "Business Analyst", "Environmental Consultant",
+            "Public Relations Specialist", "Supply Chain Analyst", "Healthcare Administrator", "Social Media Manager",
+            "Civil Engineer", "Product Manager", "Quality Assurance Engineer", "Investment Banker",
+            "Network Engineer", "Digital Marketing Specialist", "SEO Strategist", "Pharmaceutical Sales Representative",
+            "Industrial Designer", "Logistics Coordinator", "Architectural Engineer", "Event Planner",
+            "Software QA Tester", "Legal Assistant", "Pediatric Nurse Practitioner", "Construction Project Manager",
+            "Art Director", "Compliance Officer", "Real Estate Agent", "Cloud Solutions Architect",
+            "Cybersecurity Analyst", "Biotech Research Scientist", "AI Developer", "Veterinary Technician",
+            "Mechanical Engineer", "Electrical Engineer", "Nutritionist", "Occupational Therapist",
+            "Speech Language Pathologist", "Aerospace Engineer"
+    };
+
     @Override
     public String[] getFirstNames() {
         return firstNames;
@@ -186,5 +202,10 @@ public class EnglishResourceRepository implements ResourceRepository {
     @Override
     public String[] getPostalCodes() {
         return postalCodes;
+    }
+
+    @Override
+    public String[] getJobTitles() {
+        return jobTitles;
     }
 }

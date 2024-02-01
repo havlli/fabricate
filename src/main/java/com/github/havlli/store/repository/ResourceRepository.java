@@ -10,5 +10,5 @@ public interface ResourceRepository {
     String[] getCountries();
     String[] getStates();
     String[] getPostalCodes();
-
+    String[] getJobTitles();
 }

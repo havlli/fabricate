@@ -1,7 +1,7 @@
 package com.github.havlli;
 
-import com.github.havlli.generator.OptimizedRandomGenerator;
-import com.github.havlli.generator.RandomGenerator;
+import com.github.havlli.generators.OptimizedRandomGenerator;
+import com.github.havlli.generators.RandomGenerator;
 import com.github.havlli.store.LocaleStore;
 import com.github.havlli.store.LocaleStoreFactory;
 

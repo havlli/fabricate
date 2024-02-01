@@ -155,6 +155,22 @@ public class ChineseResourceRepository implements ResourceRepository {
             "Ho Chi Minh City", "Hanoi", "Da Nang", "Haiphong", "Can Tho"
     };
 
+    String[] jobTitles = {
+            "软件开发工程师", "市场经理", "财务分析师", "人力资源协调员",
+            "数据科学家", "运营经理", "客户服务代表", "销售执行",
+            "项目经理", "平面设计师", "网页开发员", "IT支持专家",
+            "内容编写员", "用户体验设计师", "商务分析师", "环境顾问",
+            "公关专员", "供应链分析师", "医疗管理者", "社交媒体经理",
+            "土木工程师", "产品经理", "质量保证工程师", "投资银行家",
+            "网络工程师", "数字营销专家", "SEO策略师", "制药销售代表",
+            "工业设计师", "物流协调员", "建筑工程师", "活动策划",
+            "软件测试工程师", "法律助理", "儿科护士", "建筑项目经理",
+            "艺术指导", "合规官员", "房地产代理", "云解决方案架构师",
+            "网络安全分析师", "生物技术研究科学家", "人工智能开发者", "兽医技术员",
+            "机械工程师", "电气工程师", "营养师", "职业治疗师",
+            "语言治疗师", "航空工程师"
+    };
+
     @Override
     public String[] getFirstNames() {
         return firstNames;
@@ -198,5 +214,10 @@ public class ChineseResourceRepository implements ResourceRepository {
     @Override
     public String[] getPostalCodes() {
         return postalCodes;
+    }
+
+    @Override
+    public String[] getJobTitles() {
+        return jobTitles;
     }
 }

@@ -1,4 +1,4 @@
-package com.github.havlli.generator;
+package com.github.havlli.generators;
 
 import com.github.havlli.store.LocaleStore;
 
