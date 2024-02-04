@@ -19,7 +19,7 @@ public class OptimizedRandomGenerator {
         this.firstNames = localeStore.getFirstNames();
         this.lastNames = localeStore.getLastNames();
         this.random = new Random(System.nanoTime());
-        this.bufferSize = 100;
+        this.bufferSize = maxUniqueCombinations() - 1;
     }
 
     public OptimizedRandomGenerator(LocaleStore localeStore, int bufferSize) {
@@ -27,7 +27,7 @@ public class OptimizedRandomGenerator {
         this.firstNames = localeStore.getFirstNames();
         this.lastNames = localeStore.getLastNames();
         this.random = new Random(System.nanoTime());
-        this.bufferSize = bufferSize;
+        this.bufferSize = validate(bufferSize);
     }
 
     public String generate() {
@@ -45,5 +45,17 @@ public class OptimizedRandomGenerator {
         }
 
         return fullName;
+    }
+
+    private int maxUniqueCombinations() {
+        return firstNames.length * lastNames.length;
+    }
+
+    private int validate(int bufferSize) {
+        if (maxUniqueCombinations() < bufferSize) {
+            throw new IllegalStateException("BufferSize exceeds number of possible unique combinations!");
+        }
+
+        return bufferSize;
     }
 }
