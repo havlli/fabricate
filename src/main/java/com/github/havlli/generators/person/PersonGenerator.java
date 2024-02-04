@@ -1,6 +1,7 @@
 package com.github.havlli.generators.person;
 
 import com.github.havlli.model.Address;
+import com.github.havlli.model.Person;
 
 import java.time.Instant;
 
@@ -15,5 +16,5 @@ public interface PersonGenerator {
     Address generateAddress();
     Instant generateDateOfBirth();
     String generateJobTittle();
-
+    Person generate();
 }

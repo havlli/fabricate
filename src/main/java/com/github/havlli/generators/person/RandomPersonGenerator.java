@@ -1,8 +1,11 @@
 package com.github.havlli.generators.person;
 
-import com.github.havlli.generators.GeneratorService;
-import com.github.havlli.generators.GeneratorServiceImpl;
+import com.github.havlli.generators.address.AddressGenerator;
+import com.github.havlli.generators.address.RandomAddressGenerator;
+import com.github.havlli.generators.strategies.GeneratorStrategy;
+import com.github.havlli.generators.strategies.SimpleRandomGeneratorStrategy;
 import com.github.havlli.model.Address;
+import com.github.havlli.model.Person;
 import com.github.havlli.store.LocaleStore;
 
 import java.time.Instant;
@@ -13,13 +16,22 @@ import java.util.UUID;
 public class RandomPersonGenerator implements PersonGenerator {
 
     private final LocaleStore localeStore;
-    private final GeneratorService generatorService;
+    private final GeneratorStrategy generatorStrategy;
+    private final AddressGenerator addressGenerator;
     private final Random random;
 
     public RandomPersonGenerator(LocaleStore localeStore) {
         this.localeStore = localeStore;
-        this.generatorService = new GeneratorServiceImpl();
-        this.random = generatorService.createRandom();
+        this.generatorStrategy = new SimpleRandomGeneratorStrategy();
+        this.addressGenerator = new RandomAddressGenerator(localeStore, generatorStrategy);
+        this.random = new Random(System.nanoTime());
+    }
+
+    public RandomPersonGenerator(LocaleStore localeStore, GeneratorStrategy generatorStrategy) {
+        this.localeStore = localeStore;
+        this.generatorStrategy = generatorStrategy;
+        this.addressGenerator = new RandomAddressGenerator(localeStore, generatorStrategy);
+        this.random = new Random(System.nanoTime());
     }
 
     @Override
@@ -79,13 +91,7 @@ public class RandomPersonGenerator implements PersonGenerator {
 
     @Override
     public Address generateAddress() {
-        return Address.builder()
-                .street(getRandomValueFrom(localeStore.getStreets()))
-                .city(getRandomValueFrom(localeStore.getCities()))
-                .state(getRandomValueFrom(localeStore.getStates()))
-                .postalCode(getRandomValueFrom(localeStore.getPostalCodes()))
-                .country(getRandomValueFrom(localeStore.getCountries()))
-                .build();
+        return addressGenerator.generate();
     }
 
     @Override
@@ -105,7 +111,28 @@ public class RandomPersonGenerator implements PersonGenerator {
         return getRandomValueFrom(localeStore.getJobTitles());
     }
 
+    @Override
+    public Person generate() {
+        String firstName = generateFirstName();
+        String lastName = generateLastName();
+        String uid = generateUID();
+
+        return Person.builder()
+                .firstName(firstName)
+                .lastName(lastName)
+                .email(generateEmail(firstName, lastName))
+                .uid(uid)
+                .username(generateUsername(firstName, lastName, uid))
+                .password(generatePassword())
+                .phoneNumber(generatePhoneNumber())
+                .address(generateAddress())
+                .dateOfBirth(generateDateOfBirth())
+                .jobTitle(generateJobTittle())
+                .build();
+    }
+
     private String getRandomValueFrom(String[] values) {
-        return generatorService.getRandomValueFrom(values);
+        return generatorStrategy.generationStrategy()
+                .apply(values);
     }
 }
