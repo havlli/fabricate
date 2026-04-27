@@ -48,9 +48,9 @@ class FabricateTest {
 
     @Test
     void unsupportedLocale_throws() {
-        assertThatThrownBy(() -> Fabricate.builder().locale(Locale.JAPANESE).build())
+        assertThatThrownBy(() -> Fabricate.builder().locale(Locale.of("xx")).build())
                 .isInstanceOf(NoSuchElementException.class)
-                .hasMessageContaining("ja");
+                .hasMessageContaining("xx");
     }
 
     @Test

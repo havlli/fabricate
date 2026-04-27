@@ -16,5 +16,10 @@ module org.fabricate {
 
     provides org.fabricate.spi.LocaleProvider with
             org.fabricate.locale.EnglishLocaleProvider,
-            org.fabricate.locale.ChineseLocaleProvider;
+            org.fabricate.locale.ChineseLocaleProvider,
+            org.fabricate.locale.RussianLocaleProvider,
+            org.fabricate.locale.JapaneseLocaleProvider,
+            org.fabricate.locale.KoreanLocaleProvider,
+            org.fabricate.locale.ArabicLocaleProvider,
+            org.fabricate.locale.GermanLocaleProvider;
 }

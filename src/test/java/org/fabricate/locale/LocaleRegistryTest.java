@@ -26,9 +26,9 @@ class LocaleRegistryTest {
     void get_unknownLocale_throws() {
         LocaleRegistry registry = LocaleRegistry.getDefault();
 
-        assertThatThrownBy(() -> registry.get(Locale.JAPANESE))
+        assertThatThrownBy(() -> registry.get(Locale.of("xx")))
                 .isInstanceOf(NoSuchElementException.class)
-                .hasMessageContaining("ja");
+                .hasMessageContaining("xx");
     }
 
     @Test
