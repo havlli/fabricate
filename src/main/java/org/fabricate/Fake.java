@@ -120,12 +120,27 @@ public final class Fake {
 
     // --- Internet ---
     public static String url()                 { return instance.internet().url(); }
+    public static String urlWithQuery()        { return instance.internet().urlWithQuery(); }
     public static String domain()              { return instance.internet().domain(); }
     public static String ipv4()                { return instance.internet().ipv4(); }
     public static String ipv6()                { return instance.internet().ipv6(); }
+    public static String ipv6Compressed()      { return instance.internet().ipv6Compressed(); }
     public static String macAddress()          { return instance.internet().macAddress(); }
     public static String userAgent()           { return instance.internet().userAgent(); }
     public static int port()                   { return instance.internet().port(); }
+    public static String apiKey()              { return instance.internet().apiKey(); }
+    public static String bearerToken()         { return instance.internet().bearerToken(); }
+    public static String imageUrl()            { return instance.internet().imageUrl(); }
+    public static String username()            { return instance.internet().username(); }
+
+    // --- Geo ---
+    public static double latitude()            { return instance.geo().latitude(); }
+    public static double longitude()           { return instance.geo().longitude(); }
+    public static String coordinate()          { return instance.geo().coordinate(); }
+    public static String timezone()            { return instance.geo().timezone(); }
+    public static String countryCodeIso2()     { return instance.geo().countryCodeIso2(); }
+    public static String countryCodeIso3()     { return instance.geo().countryCodeIso3(); }
+    public static String geohash(int length)   { return instance.geo().geohash(length); }
 
     // --- Files ---
     public static String fileName()            { return instance.files().fileName(); }

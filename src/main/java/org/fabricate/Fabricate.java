@@ -16,6 +16,7 @@ import org.fabricate.provider.DevOps;
 import org.fabricate.provider.Emails;
 import org.fabricate.provider.Files;
 import org.fabricate.provider.Finance;
+import org.fabricate.provider.Geo;
 import org.fabricate.provider.Identities;
 import org.fabricate.provider.Internet;
 import org.fabricate.provider.JobTitles;
@@ -70,6 +71,7 @@ public final class Fabricate {
     private final Commerce commerce;
     private final DevOps devops;
     private final Dates dates;
+    private final Geo geo;
     private final BeanFiller beanFiller;
 
     private Fabricate(LocaleData locale, Rng rng) {
@@ -93,6 +95,7 @@ public final class Fabricate {
         this.commerce = new Commerce(rng);
         this.devops = new DevOps(rng);
         this.dates = new Dates(rng);
+        this.geo = new Geo(rng);
         this.beanFiller = new BeanFiller(this);
     }
 
@@ -120,6 +123,7 @@ public final class Fabricate {
     public Addresses addresses()     { return addresses; }
     public DatesOfBirth datesOfBirth()  { return datesOfBirth; }
     public Dates dates()             { return dates; }
+    public Geo geo()                 { return geo; }
     public JobTitles jobTitles()     { return jobTitles; }
     public Identities identities()   { return identities; }
     public Passwords passwords()     { return passwords; }
