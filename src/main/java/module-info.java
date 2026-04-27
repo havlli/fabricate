@@ -9,6 +9,7 @@ module org.fabricate {
     exports org.fabricate.model;
     exports org.fabricate.provider;
     exports org.fabricate.random;
+    exports org.fabricate.sink;
     exports org.fabricate.spi;
 
     uses org.fabricate.spi.LocaleProvider;
