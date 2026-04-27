@@ -1,0 +1,15 @@
+package org.fabricate.store;
+
+import java.util.function.Function;
+
+public class EnglishLocaleConstraint implements LocaleConstraint {
+    @Override
+    public String getNameDelimiter() {
+        return " ";
+    }
+
+    @Override
+    public Function<String, String> getEmailLocalPart() {
+        return String::toLowerCase;
+    }
+}
