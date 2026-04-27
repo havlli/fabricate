@@ -18,6 +18,7 @@ import org.fabricate.provider.Numbers;
 import org.fabricate.provider.Passwords;
 import org.fabricate.provider.Persons;
 import org.fabricate.provider.Phones;
+import org.fabricate.provider.Texts;
 import org.fabricate.random.Rng;
 import org.fabricate.spi.LocaleData;
 import org.jspecify.annotations.Nullable;
@@ -56,6 +57,7 @@ public final class Fabricate {
     private final Persons persons;
     private final Numbers numbers;
     private final Booleans booleans;
+    private final Texts texts;
     private final BeanFiller beanFiller;
 
     private Fabricate(LocaleData locale, Rng rng) {
@@ -72,6 +74,7 @@ public final class Fabricate {
         this.persons = new Persons(names, emails, phones, addresses, datesOfBirth, jobTitles, identities);
         this.numbers = new Numbers(rng);
         this.booleans = new Booleans(rng);
+        this.texts = new Texts(rng);
         this.beanFiller = new BeanFiller(this);
     }
 
@@ -104,6 +107,7 @@ public final class Fabricate {
     public Persons persons()         { return persons; }
     public Numbers numbers()         { return numbers; }
     public Booleans booleans()       { return booleans; }
+    public Texts texts()             { return texts; }
 
     /** Reflectively populates an arbitrary record type with random values. */
     public <T> T fill(Class<T> type) {
