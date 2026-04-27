@@ -29,6 +29,17 @@ Built for tests, demos, and load-data fixtures. Java 21+. JPMS-ready.
 - **No runtime dependencies** — JSpecify and JUnit Jupiter are both
   declared `optional`/`requires static`; consumers pay for what they use.
 
+## Building from source
+
+The repo pins JDK and Maven versions via [mise](https://mise.jdx.dev):
+
+```bash
+mise install   # one-time: installs Temurin 21 + Maven 3.9.9
+mise exec -- mvn verify
+```
+
+Or use any JDK 21+ and Maven 3.9+ already on your `PATH`.
+
 ## Quick start
 
 ```xml

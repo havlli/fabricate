@@ -25,6 +25,8 @@ public final class FabricateExtension implements BeforeEachCallback, ParameterRe
     private static final Namespace NAMESPACE = Namespace.create(FabricateExtension.class);
     private static final String FABRICATE_KEY = "fabricate";
 
+    public FabricateExtension() {}
+
     @Override
     public void beforeEach(ExtensionContext context) {
         Fabricate fab = buildFabricate(context);
