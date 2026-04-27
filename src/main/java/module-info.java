@@ -1,8 +1,10 @@
 @org.jspecify.annotations.NullMarked
 module org.fabricate {
     requires static org.jspecify;
+    requires static transitive org.junit.jupiter.api;
 
     exports org.fabricate;
+    exports org.fabricate.junit;
     exports org.fabricate.locale;
     exports org.fabricate.model;
     exports org.fabricate.provider;

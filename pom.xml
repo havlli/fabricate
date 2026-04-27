@@ -67,6 +67,17 @@
             <version>${jspecify.version}</version>
             <optional>true</optional>
         </dependency>
+        <!--
+            JUnit Jupiter is optional: only consumers that use the
+            org.fabricate.junit extension need to bring it on classpath.
+            Library code outside that package does not depend on it.
+        -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>${junit.version}</version>
+            <optional>true</optional>
+        </dependency>
 
         <dependency>
             <groupId>org.junit.jupiter</groupId>
