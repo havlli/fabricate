@@ -195,6 +195,17 @@
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
                         <version>${maven-javadoc-plugin.version}</version>
+                        <configuration>
+                            <!--
+                                Class-level javadoc carries the public-API contract
+                                via {@snippet ... } examples; per-method @param/@return
+                                duplication adds noise without information. Keep doclint
+                                strict on syntax/HTML/reference errors and skip the
+                                "missing" category.
+                            -->
+                            <doclint>all,-missing</doclint>
+                            <quiet>true</quiet>
+                        </configuration>
                         <executions>
                             <execution>
                                 <id>attach-javadocs</id>
