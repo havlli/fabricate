@@ -11,6 +11,7 @@ import org.fabricate.provider.Addresses;
 import org.fabricate.provider.Booleans;
 import org.fabricate.provider.Commerce;
 import org.fabricate.provider.DatesOfBirth;
+import org.fabricate.provider.DevOps;
 import org.fabricate.provider.Emails;
 import org.fabricate.provider.Files;
 import org.fabricate.provider.Finance;
@@ -66,6 +67,7 @@ public final class Fabricate {
     private final Files files;
     private final Finance finance;
     private final Commerce commerce;
+    private final DevOps devops;
     private final BeanFiller beanFiller;
 
     private Fabricate(LocaleData locale, Rng rng) {
@@ -87,6 +89,7 @@ public final class Fabricate {
         this.files = new Files(rng);
         this.finance = new Finance(rng);
         this.commerce = new Commerce(rng);
+        this.devops = new DevOps(rng);
         this.beanFiller = new BeanFiller(this);
     }
 
@@ -124,6 +127,7 @@ public final class Fabricate {
     public Files files()             { return files; }
     public Finance finance()         { return finance; }
     public Commerce commerce()       { return commerce; }
+    public DevOps devops()           { return devops; }
 
     /** Reflectively populates an arbitrary record type with random values. */
     public <T> T fill(Class<T> type) {
