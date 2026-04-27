@@ -178,4 +178,11 @@ public final class Fake {
     public static LocalDate dateRecent(int days)  { return instance.dates().recent(days); }
     public static LocalDate dateFuture(int days)  { return instance.dates().future(days); }
     public static LocalDate datePast(int years)   { return instance.dates().past(years); }
+    public static LocalDate workingDayInNext(int days) { return instance.dates().workingDayInNext(days); }
+    public static LocalDate workingDayBetween(LocalDate from, LocalDate to) {
+        return instance.dates().workingDayBetween(from, to);
+    }
+    public static LocalDate weekendDayBetween(LocalDate from, LocalDate to) {
+        return instance.dates().weekendDayBetween(from, to);
+    }
 }

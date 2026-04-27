@@ -134,4 +134,78 @@ class DatesTest {
             assertThat(d.getSeconds()).isBetween(0L, 3600L);
         }
     }
+
+    @Test
+    void workingDayBetween_neverReturnsWeekend() {
+        Dates dates = new Dates(Rng.seeded(20L), FIXED);
+        LocalDate start = LocalDate.of(2024, 1, 1); // Mon
+        LocalDate end = LocalDate.of(2024, 3, 31);
+
+        for (int i = 0; i < 200; i++) {
+            LocalDate d = dates.workingDayBetween(start, end);
+            assertThat(d.getDayOfWeek()).isNotIn(DayOfWeek.SATURDAY, DayOfWeek.SUNDAY);
+            assertThat(d).isBetween(start, end);
+        }
+    }
+
+    @Test
+    void weekendDayBetween_alwaysReturnsWeekend() {
+        Dates dates = new Dates(Rng.seeded(21L), FIXED);
+        LocalDate start = LocalDate.of(2024, 1, 1);
+        LocalDate end = LocalDate.of(2024, 3, 31);
+
+        for (int i = 0; i < 200; i++) {
+            LocalDate d = dates.weekendDayBetween(start, end);
+            assertThat(d.getDayOfWeek()).isIn(DayOfWeek.SATURDAY, DayOfWeek.SUNDAY);
+            assertThat(d).isBetween(start, end);
+        }
+    }
+
+    @Test
+    void workingDayBetween_singleDayWeekday_returnsThatDay() {
+        Dates dates = new Dates(Rng.seeded(22L), FIXED);
+        LocalDate friday = LocalDate.of(2024, 1, 5);
+
+        assertThat(dates.workingDayBetween(friday, friday)).isEqualTo(friday);
+    }
+
+    @Test
+    void workingDayBetween_throwsWhenRangeIsOnlyWeekend() {
+        Dates dates = new Dates(Rng.seeded(23L), FIXED);
+        LocalDate sat = LocalDate.of(2024, 1, 6);
+        LocalDate sun = LocalDate.of(2024, 1, 7);
+
+        assertThatThrownBy(() -> dates.workingDayBetween(sat, sun))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void weekendDayBetween_throwsWhenRangeIsOnlyWeekdays() {
+        Dates dates = new Dates(Rng.seeded(24L), FIXED);
+        LocalDate mon = LocalDate.of(2024, 1, 8);
+        LocalDate fri = LocalDate.of(2024, 1, 12);
+
+        assertThatThrownBy(() -> dates.weekendDayBetween(mon, fri))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void workingDayInNext_isInRangeAndNeverWeekend() {
+        Dates dates = new Dates(Rng.seeded(25L), FIXED);
+        LocalDate today = LocalDate.now(FIXED);
+
+        for (int i = 0; i < 50; i++) {
+            LocalDate d = dates.workingDayInNext(60);
+            assertThat(d).isBetween(today, today.plusDays(60));
+            assertThat(d.getDayOfWeek()).isNotIn(DayOfWeek.SATURDAY, DayOfWeek.SUNDAY);
+        }
+    }
+
+    @Test
+    void isWeekend_isAccurate() {
+        Dates dates = new Dates(Rng.seeded(26L), FIXED);
+        assertThat(dates.isWeekend(LocalDate.of(2024, 1, 6))).isTrue();  // Sat
+        assertThat(dates.isWeekend(LocalDate.of(2024, 1, 7))).isTrue();  // Sun
+        assertThat(dates.isWeekend(LocalDate.of(2024, 1, 8))).isFalse(); // Mon
+    }
 }
