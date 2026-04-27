@@ -3,7 +3,11 @@ package org.fabricate;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import java.math.BigDecimal;
+import java.net.URI;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 import org.fabricate.model.Address;
 import org.junit.jupiter.api.Test;
@@ -94,5 +98,83 @@ class BeanFillerTest {
         assertThatThrownBy(() -> fab.fill(UnsupportedType.class))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("File");
+    }
+
+    record RichTypes(
+            BigDecimal amount,
+            URI website,
+            Instant lastSeen,
+            LocalDateTime createdAt,
+            int port,
+            int httpStatus,
+            double latitude,
+            double longitude,
+            String email,
+            String iban,
+            String creditCard,
+            String semver,
+            String slug
+    ) {}
+
+    @Test
+    void fill_supportsRichJdkTypesAndNameHeuristics() {
+        Fabricate fab = Fabricate.builder().seed(11L).build();
+
+        RichTypes r = fab.fill(RichTypes.class);
+
+        assertThat(r.amount()).isNotNull();
+        assertThat(r.website()).isNotNull();
+        assertThat(r.website().toString()).matches("https?://.+");
+        assertThat(r.lastSeen()).isNotNull();
+        assertThat(r.createdAt()).isNotNull();
+        assertThat(r.port()).isBetween(1024, 65535);
+        assertThat(r.httpStatus()).isBetween(100, 599);
+        assertThat(r.latitude()).isBetween(-90.0, 90.0);
+        assertThat(r.longitude()).isBetween(-180.0, 180.0);
+        assertThat(r.email()).contains("@");
+        assertThat(r.iban()).matches("[A-Z]{2}\\d{2}.+");
+        assertThat(r.creditCard().replaceAll("\\D", "")).matches("\\d{13,19}");
+        assertThat(r.semver()).matches("\\d+\\.\\d+\\.\\d+");
+        assertThat(r.slug()).matches("[a-z]+(-[a-z]+)*");
+    }
+
+    public static class UserPojo {
+        private String firstName;
+        private String email;
+        private int age;
+        public String getFirstName() { return firstName; }
+        public void setFirstName(String firstName) { this.firstName = firstName; }
+        public String getEmail() { return email; }
+        public void setEmail(String email) { this.email = email; }
+        public int getAge() { return age; }
+        public void setAge(int age) { this.age = age; }
+    }
+
+    @Test
+    void fill_populatesPojoViaSetters() {
+        Fabricate fab = Fabricate.builder().seed(12L).build();
+
+        UserPojo p = fab.fill(UserPojo.class);
+
+        assertThat(p.getFirstName()).isNotBlank();
+        assertThat(p.getEmail()).contains("@");
+        assertThat(p.getAge()).isBetween(0, 99);
+    }
+
+    public static class FieldOnlyPojo {
+        public String city;
+        public String country;
+        public int port;
+    }
+
+    @Test
+    void fill_populatesPojoFieldsWhenNoSetters() {
+        Fabricate fab = Fabricate.builder().seed(13L).build();
+
+        FieldOnlyPojo p = fab.fill(FieldOnlyPojo.class);
+
+        assertThat(p.city).isNotBlank();
+        assertThat(p.country).isNotBlank();
+        assertThat(p.port).isBetween(1024, 65535);
     }
 }
