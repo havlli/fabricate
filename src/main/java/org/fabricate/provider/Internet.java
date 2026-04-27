@@ -134,8 +134,8 @@ public final class Internet {
     }
 
     /**
-     * A Stripe-style API secret/key of the form {@code <prefix>_<env>_<hex>}.
-     * Example: {@code sk_live_4eC39HqLyjWDarjtT1zdp7dc}.
+     * A Stripe-style API secret/key of the form {@code <prefix>_<env>_<random>}.
+     * Example shape: {@code sk_test_XXXXXXXXXXXXXXXXXXXXXXXX}.
      */
     public String apiKey() {
         String[] prefixes = {"sk", "pk", "rk", "whsec", "ak"};
