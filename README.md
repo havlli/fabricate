@@ -141,11 +141,15 @@ Built-in locales cover the major writing systems you'll need to test:
 |-------------------|-------------------------------------------------|
 | `Locale.ENGLISH`  | Latin (ASCII)                                   |
 | `Locale.GERMAN`   | Latin with umlauts and ß                        |
+| `Locale.FRENCH`   | Latin with accents and ç                        |
+| `Locale.of("es")` | Latin (Spanish — Spain + LatAm pools)           |
+| `Locale.of("pt")` | Latin (Portuguese — Portugal + Brazil pools)    |
 | `Locale.CHINESE`  | CJK ideographs                                  |
 | `Locale.JAPANESE` | CJK + Hiragana + Katakana                       |
 | `Locale.KOREAN`   | Hangul                                          |
 | `Locale.of("ru")` | Cyrillic                                        |
 | `Locale.of("ar")` | Arabic (RTL)                                    |
+| `Locale.of("hi")` | Devanagari (Hindi)                              |
 
 ```java
 Fabricate fab = Fabricate.builder()

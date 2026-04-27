@@ -21,5 +21,9 @@ module org.fabricate {
             org.fabricate.locale.JapaneseLocaleProvider,
             org.fabricate.locale.KoreanLocaleProvider,
             org.fabricate.locale.ArabicLocaleProvider,
-            org.fabricate.locale.GermanLocaleProvider;
+            org.fabricate.locale.GermanLocaleProvider,
+            org.fabricate.locale.SpanishLocaleProvider,
+            org.fabricate.locale.FrenchLocaleProvider,
+            org.fabricate.locale.PortugueseLocaleProvider,
+            org.fabricate.locale.HindiLocaleProvider;
 }

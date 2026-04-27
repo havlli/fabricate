@@ -88,7 +88,62 @@ class CharsetLocaleTest {
         Set<Locale> available = Fabricate.availableLocales();
         assertThat(available).contains(
                 Locale.ENGLISH, Locale.CHINESE, Locale.JAPANESE, Locale.KOREAN, Locale.GERMAN,
-                Locale.of("ru"), Locale.of("ar"));
+                Locale.FRENCH, Locale.of("ru"), Locale.of("ar"),
+                Locale.of("es"), Locale.of("pt"), Locale.of("hi"));
+    }
+
+    @Test
+    void hindiLocale_namesAreDevanagari() {
+        Fabricate fab = Fabricate.builder().locale(Locale.of("hi")).seed(0L).build();
+
+        for (int i = 0; i < 30; i++) {
+            assertThat(allCharsIn(fab.names().firstName(), Set.of(UnicodeBlock.DEVANAGARI))).isTrue();
+            assertThat(allCharsIn(fab.names().lastName(), Set.of(UnicodeBlock.DEVANAGARI))).isTrue();
+        }
+    }
+
+    @Test
+    void hindiLocale_emailLocalPartIsAscii() {
+        Fabricate fab = Fabricate.builder().locale(Locale.of("hi")).seed(0L).build();
+
+        for (int i = 0; i < 30; i++) {
+            String email = fab.emails().email();
+            String local = email.substring(0, email.indexOf('@'));
+            assertThat(local).matches("[\\x00-\\x7F]+");
+        }
+    }
+
+    @Test
+    void spanishFrenchPortugueseLocales_useLatinScript() {
+        Set<UnicodeBlock> blocks = Set.of(
+                UnicodeBlock.BASIC_LATIN, UnicodeBlock.LATIN_1_SUPPLEMENT,
+                UnicodeBlock.LATIN_EXTENDED_A);
+
+        for (Locale locale : new Locale[]{Locale.of("es"), Locale.FRENCH, Locale.of("pt")}) {
+            Fabricate fab = Fabricate.builder().locale(locale).seed(0L).build();
+            for (int i = 0; i < 30; i++) {
+                assertThat(allCharsIn(fab.names().firstName(), blocks))
+                        .as("firstName for " + locale)
+                        .isTrue();
+                assertThat(allCharsIn(fab.names().lastName(), blocks))
+                        .as("lastName for " + locale)
+                        .isTrue();
+            }
+        }
+    }
+
+    @Test
+    void latinLocaleEmails_haveAsciiLocalPart() {
+        for (Locale locale : new Locale[]{Locale.of("es"), Locale.FRENCH, Locale.of("pt")}) {
+            Fabricate fab = Fabricate.builder().locale(locale).seed(1L).build();
+            for (int i = 0; i < 30; i++) {
+                String email = fab.emails().email();
+                String local = email.substring(0, email.indexOf('@'));
+                assertThat(local)
+                        .as("email local part for " + locale)
+                        .matches("[\\x00-\\x7F]+");
+            }
+        }
     }
 
     private static boolean allCharsIn(String s, Set<UnicodeBlock> blocks) {
