@@ -49,6 +49,7 @@ public final class Fabricate {
     private final Identities identities;
     private final Passwords passwords;
     private final Persons persons;
+    private final BeanFiller beanFiller;
 
     private Fabricate(LocaleData locale, Rng rng) {
         this.locale = locale;
@@ -62,6 +63,7 @@ public final class Fabricate {
         this.identities = new Identities(rng);
         this.passwords = new Passwords();
         this.persons = new Persons(names, emails, phones, addresses, datesOfBirth, jobTitles, identities);
+        this.beanFiller = new BeanFiller(this);
     }
 
     public static Fabricate create() {
@@ -91,6 +93,11 @@ public final class Fabricate {
     public Identities identities()   { return identities; }
     public Passwords passwords()     { return passwords; }
     public Persons persons()         { return persons; }
+
+    /** Reflectively populates an arbitrary record type with random values. */
+    public <T> T fill(Class<T> type) {
+        return beanFiller.fill(type);
+    }
 
     public static final class Builder {
 
