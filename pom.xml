@@ -125,6 +125,11 @@
                         otherwise collides with module visibility on JDK 21+.
                     -->
                     <useModulePath>false</useModulePath>
+                    <!--
+                        Skip throughput smoke benchmarks by default; opt in with
+                        `mvn test -Pbench` (see profile below).
+                    -->
+                    <excludedGroups>bench</excludedGroups>
                 </configuration>
             </plugin>
 
@@ -152,6 +157,23 @@
     </build>
 
     <profiles>
+        <profile>
+            <id>bench</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>${maven-surefire-plugin.version}</version>
+                        <configuration combine.self="override">
+                            <useModulePath>false</useModulePath>
+                            <groups>bench</groups>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
         <profile>
             <id>release</id>
             <build>
