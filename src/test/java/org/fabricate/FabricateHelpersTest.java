@@ -57,6 +57,54 @@ class FabricateHelpersTest {
     }
 
     @Test
+    void sample_returnsRequestedCountWithoutDuplicates() {
+        Fabricate fab = Fabricate.builder().seed(1L).build();
+        List<Integer> pool = List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+
+        List<Integer> sampled = fab.sample(pool, 5);
+
+        assertThat(sampled).hasSize(5);
+        assertThat(sampled).doesNotHaveDuplicates();
+        assertThat(pool).containsAll(sampled);
+    }
+
+    @Test
+    void sample_zeroIsEmpty() {
+        Fabricate fab = Fabricate.builder().seed(1L).build();
+        assertThat(fab.sample(List.of(1, 2, 3), 0)).isEmpty();
+    }
+
+    @Test
+    void sample_overSizeThrows() {
+        Fabricate fab = Fabricate.builder().seed(1L).build();
+        assertThatThrownBy(() -> fab.sample(List.of(1, 2), 5))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void shuffle_preservesElementsButChangesOrder() {
+        Fabricate fab = Fabricate.builder().seed(1L).build();
+        List<Integer> input = List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+
+        List<Integer> shuffled = fab.shuffle(input);
+
+        assertThat(shuffled).hasSameElementsAs(input);
+        assertThat(shuffled).isNotEqualTo(input);
+    }
+
+    @Test
+    void repeat_callsSupplierExactlyCountTimes() {
+        Fabricate fab = Fabricate.builder().seed(1L).build();
+        java.util.concurrent.atomic.AtomicInteger calls = new java.util.concurrent.atomic.AtomicInteger();
+
+        List<Integer> out = fab.repeat(7, calls::incrementAndGet);
+
+        assertThat(out).hasSize(7);
+        assertThat(calls.get()).isEqualTo(7);
+        assertThat(out).containsExactly(1, 2, 3, 4, 5, 6, 7);
+    }
+
+    @Test
     void weighted_buildsWorkingPicker() {
         Fabricate fab = Fabricate.builder().seed(1L).build();
         WeightedPicker<String> picker = fab.<String>weighted()

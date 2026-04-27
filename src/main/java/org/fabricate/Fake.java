@@ -89,7 +89,7 @@ public final class Fake {
     public static String jobTitle()            { return instance.jobTitles().jobTitle(); }
 
     // --- Time ---
-    public static LocalDate dateOfBirth()      { return instance.dates().birthdate(); }
+    public static LocalDate dateOfBirth()      { return instance.datesOfBirth().birthdate(); }
 
     // --- Records ---
     public static Person person()              { return instance.persons().person(); }

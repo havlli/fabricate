@@ -76,7 +76,7 @@ public final class BeanFiller {
         if (type == boolean.class)     return fab.rng().delegate().nextBoolean();
         if (type == double.class)      return fab.rng().delegate().nextDouble();
         if (type == UUID.class)        return fab.identities().uuid();
-        if (type == LocalDate.class)   return fab.dates().birthdate();
+        if (type == LocalDate.class)   return fab.datesOfBirth().birthdate();
         if (type == Address.class)     return fab.addresses().address();
         if (type == Person.class)      return fab.persons().person();
         if (type.isRecord())           return fill(type);

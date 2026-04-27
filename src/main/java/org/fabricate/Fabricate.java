@@ -10,6 +10,7 @@ import org.fabricate.locale.LocaleRegistry;
 import org.fabricate.provider.Addresses;
 import org.fabricate.provider.Booleans;
 import org.fabricate.provider.Commerce;
+import org.fabricate.provider.Dates;
 import org.fabricate.provider.DatesOfBirth;
 import org.fabricate.provider.DevOps;
 import org.fabricate.provider.Emails;
@@ -68,6 +69,7 @@ public final class Fabricate {
     private final Finance finance;
     private final Commerce commerce;
     private final DevOps devops;
+    private final Dates dates;
     private final BeanFiller beanFiller;
 
     private Fabricate(LocaleData locale, Rng rng) {
@@ -90,6 +92,7 @@ public final class Fabricate {
         this.finance = new Finance(rng);
         this.commerce = new Commerce(rng);
         this.devops = new DevOps(rng);
+        this.dates = new Dates(rng);
         this.beanFiller = new BeanFiller(this);
     }
 
@@ -115,7 +118,8 @@ public final class Fabricate {
     public Emails emails()           { return emails; }
     public Phones phones()           { return phones; }
     public Addresses addresses()     { return addresses; }
-    public DatesOfBirth dates()      { return datesOfBirth; }
+    public DatesOfBirth datesOfBirth()  { return datesOfBirth; }
+    public Dates dates()             { return dates; }
     public JobTitles jobTitles()     { return jobTitles; }
     public Identities identities()   { return identities; }
     public Passwords passwords()     { return passwords; }
@@ -146,6 +150,43 @@ public final class Fabricate {
     /** Picks one of the values uniformly. */
     public <T> T choice(List<T> values) {
         return rng.pick(values);
+    }
+
+    /** A new list containing {@code count} elements drawn without replacement from {@code values}. */
+    public <T> List<T> sample(List<T> values, int count) {
+        if (count < 0) throw new IllegalArgumentException("count must be >= 0");
+        if (count > values.size()) {
+            throw new IllegalArgumentException("count " + count + " exceeds pool size " + values.size());
+        }
+        java.util.ArrayList<T> pool = new java.util.ArrayList<>(values);
+        fisherYates(pool);
+        return List.copyOf(pool.subList(0, count));
+    }
+
+    /** A new list with the given values in randomised order. */
+    public <T> List<T> shuffle(List<T> values) {
+        java.util.ArrayList<T> copy = new java.util.ArrayList<>(values);
+        fisherYates(copy);
+        return List.copyOf(copy);
+    }
+
+    private <T> void fisherYates(java.util.List<T> list) {
+        for (int i = list.size() - 1; i > 0; i--) {
+            int j = rng.nextInt(i + 1);
+            T tmp = list.get(i);
+            list.set(i, list.get(j));
+            list.set(j, tmp);
+        }
+    }
+
+    /** Calls {@code supplier} {@code count} times and returns the results in order. */
+    public <T> List<T> repeat(int count, Supplier<T> supplier) {
+        if (count < 0) throw new IllegalArgumentException("count must be >= 0");
+        java.util.ArrayList<T> out = new java.util.ArrayList<>(count);
+        for (int i = 0; i < count; i++) {
+            out.add(supplier.get());
+        }
+        return List.copyOf(out);
     }
 
     /**
