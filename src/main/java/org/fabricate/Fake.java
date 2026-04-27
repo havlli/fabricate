@@ -117,4 +117,50 @@ public final class Fake {
     // --- Password ---
     public static String password()            { return instance.passwords().password(); }
     public static String password(int length)  { return instance.passwords().password(length); }
+
+    // --- Internet ---
+    public static String url()                 { return instance.internet().url(); }
+    public static String domain()              { return instance.internet().domain(); }
+    public static String ipv4()                { return instance.internet().ipv4(); }
+    public static String ipv6()                { return instance.internet().ipv6(); }
+    public static String macAddress()          { return instance.internet().macAddress(); }
+    public static String userAgent()           { return instance.internet().userAgent(); }
+    public static int port()                   { return instance.internet().port(); }
+
+    // --- Files ---
+    public static String fileName()            { return instance.files().fileName(); }
+    public static String filePath()            { return instance.files().path(); }
+    public static String mimeType()            { return instance.files().mimeType(); }
+    public static long fileSizeBytes()         { return instance.files().fileSizeBytes(); }
+
+    // --- Finance ---
+    public static String creditCard()          { return instance.finance().creditCard(); }
+    public static String creditCard(String brand) { return instance.finance().creditCard(brand); }
+    public static String iban()                { return instance.finance().iban(); }
+    public static String iban(String country)  { return instance.finance().iban(country); }
+    public static String currencyCode()        { return instance.finance().currencyCode(); }
+    public static String money()               { return instance.finance().money(); }
+
+    // --- Commerce ---
+    public static String productName()         { return instance.commerce().productName(); }
+    public static String sku()                 { return instance.commerce().sku(); }
+    public static String isbn13()              { return instance.commerce().isbn13(); }
+    public static String colorName()           { return instance.commerce().colorName(); }
+    public static String colorHex()            { return instance.commerce().colorHex(); }
+
+    // --- DevOps ---
+    public static String semver()              { return instance.devops().semver(); }
+    public static String gitSha()              { return instance.devops().gitSha(); }
+    public static String environment()         { return instance.devops().environment(); }
+    public static String logLevel()            { return instance.devops().logLevel(); }
+    public static int httpStatus()             { return instance.devops().httpStatus(); }
+    public static String dockerImage()         { return instance.devops().dockerImage(); }
+
+    // --- Dates ---
+    public static LocalDate dateBetween(LocalDate from, LocalDate to) {
+        return instance.dates().between(from, to);
+    }
+    public static LocalDate dateRecent(int days)  { return instance.dates().recent(days); }
+    public static LocalDate dateFuture(int days)  { return instance.dates().future(days); }
+    public static LocalDate datePast(int years)   { return instance.dates().past(years); }
 }

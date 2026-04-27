@@ -4,20 +4,36 @@
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
 Lightweight, zero-runtime-dependency Java library for generating realistic
-random data — names, emails, addresses, dates, identities, full `Person`
-records, and arbitrary user-defined records.
+random data — names, emails, addresses, dates, full `Person` records,
+credit cards, IBANs, URLs, file paths, semvers, git SHAs, and any record
+type you point it at.
 
-Built for tests, demos, and load-data fixtures. Java 21+. JPMS-ready.
+Built for tests, demos, fixtures, and corpus generation. Java 21+. JPMS-ready.
 
 ## Features
 
+- **Zero-setup static facade** — `Fake.firstName()`, `Fake.iban()`,
+  `Fake.creditCard()`, `Fake.gitSha()`. Default seed is `0L` so quick
+  scripts are reproducible without any setup.
+- **Realistic data** — Luhn-valid credit cards across 6 brands,
+  IBANs with mod-97 check digits for 32 countries, EAN-13/ISBN-13 with
+  valid GS1 checksums, ~20 curated User-Agent strings, ~50 file extensions
+  with matching MIME types.
 - **Reproducible** — seed once, get the same data every run. Built on JEP 356
   `RandomGenerator` (`L64X128MixRandom`); the algorithm is JDK-stable, so
   seeded sequences survive minor JDK upgrades.
-- **Locale-aware** — English and Chinese pools out of the box, plus an SPI
-  (`LocaleProvider`) for adding your own without forking.
+- **Locale-aware** — built-in pools for English, Chinese, Russian (Cyrillic),
+  Japanese (CJK + Kana), Korean (Hangul), Arabic (RTL), and German (Latin
+  with umlauts). Plus an SPI (`LocaleProvider`) for adding your own.
+- **One-line corpus dumpers** — `Sinks.toCsv(rows, path)`,
+  `Sinks.toJsonLines(rows, path)`, `Sinks.toSqlInserts(rows, table, path)`
+  for any list of records.
 - **Stream APIs** — `fab.persons().stream()` for lazy unbounded sequences,
-  `fab.persons().list(n)` for bounded eager generation.
+  `fab.persons().list(n)` for bounded eager generation, `fab.repeat(n, …)`
+  for arbitrary suppliers.
+- **Sequences** — `Sequence.counter("USR-", 1)` and
+  `Sequence.cycle("admin", "user", "guest")` for deterministic IDs and
+  round-robin values.
 - **Unique decorator** — `Unique.of(fab.emails()::email)` produces distinct
   values with a bounded retry budget; finite pools fail fast and explicitly.
 - **Builder overrides** — fix one field, randomize the rest:
@@ -51,6 +67,13 @@ Or use any JDK 21+ and Maven 3.9+ already on your `PATH`.
 ```
 
 ```java
+// Zero-setup facade with default seed (0L) for quick scripts
+String name = Fake.fullName();
+String iban = Fake.iban("DE");
+String card = Fake.creditCard("VISA");
+String env  = Fake.environment();
+
+// Or build a Fabricate when you need control
 Fabricate fab = Fabricate.builder().seed(42L).build();
 
 Person person     = fab.persons().person();
@@ -67,7 +90,28 @@ List<String> noDuplicates = distinctEmails.list(50);
 // fill any record by reflection
 record Customer(String firstName, String email, LocalDate dateOfBirth) {}
 Customer c = fab.fill(Customer.class);
+
+// dump 1k rows to a CSV/JSONL/SQL fixture
+Sinks.toCsv(bulk, Path.of("people.csv"));
+Sinks.toJsonLines(bulk, Path.of("people.jsonl"));
+Sinks.toSqlInserts(bulk, "person", Path.of("people.sql"));
 ```
+
+## What you can generate
+
+| Provider              | Examples                                                      |
+|-----------------------|---------------------------------------------------------------|
+| `numbers` / `booleans`| `intBetween`, `gaussian`, `withProbability`                   |
+| `texts`               | lorem `word`/`sentence`/`paragraph`, `slug`, `hex`, `alphanumeric` |
+| `names` / `emails` / `phones` / `addresses` | localised, full `Person` builder           |
+| `internet`            | `url`, `ipv4`/`ipv6`, `macAddress`, `userAgent`, `port`       |
+| `files`               | `fileName`, `path`, `mimeType`, `fileSizeBytes` (log-uniform) |
+| `finance`             | Luhn-valid `creditCard`, `cvv`, mod-97 `iban`, `currencyCode`, `money` |
+| `commerce`            | `productName`, `sku`, `isbn13`, `colorName`/`colorHex`        |
+| `devops`              | `semver`, `gitSha`, `httpStatus`, `branchName`, `dockerImage`, `cloudRegion` |
+| `dates`               | `between`, `recent`/`future`/`past`, `instantBetween`, `weekday`, `month` |
+| `Sequence`            | monotonic `Counter`, cyclic `Cycle`                           |
+| `Sinks`               | `toCsv`, `toJsonLines`, `toSqlInserts` over any record stream |
 
 ## JUnit 5 extension
 
@@ -91,13 +135,25 @@ class UserServiceTest {
 
 ## Locales
 
+Built-in locales cover the major writing systems you'll need to test:
+
+| Locale            | Script                                          |
+|-------------------|-------------------------------------------------|
+| `Locale.ENGLISH`  | Latin (ASCII)                                   |
+| `Locale.GERMAN`   | Latin with umlauts and ß                        |
+| `Locale.CHINESE`  | CJK ideographs                                  |
+| `Locale.JAPANESE` | CJK + Hiragana + Katakana                       |
+| `Locale.KOREAN`   | Hangul                                          |
+| `Locale.of("ru")` | Cyrillic                                        |
+| `Locale.of("ar")` | Arabic (RTL)                                    |
+
 ```java
 Fabricate fab = Fabricate.builder()
-        .locale(Locale.CHINESE)
+        .locale(Locale.of("ar"))
         .seed(1L)
         .build();
 
-System.out.println(fab.names().fullName()); // e.g. 王伟
+System.out.println(fab.names().fullName()); // e.g. محمد العلي
 ```
 
 Add your own locale by implementing `LocaleData` and registering a
