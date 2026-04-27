@@ -73,6 +73,7 @@ public final class Fabricate {
     private final Dates dates;
     private final Geo geo;
     private final BeanFiller beanFiller;
+    private final Templates templates;
 
     private Fabricate(LocaleData locale, Rng rng) {
         this.locale = locale;
@@ -97,6 +98,7 @@ public final class Fabricate {
         this.dates = new Dates(rng);
         this.geo = new Geo(rng);
         this.beanFiller = new BeanFiller(this);
+        this.templates = new Templates(this);
     }
 
     public static Fabricate create() {
@@ -140,6 +142,16 @@ public final class Fabricate {
     /** Reflectively populates an arbitrary record type with random values. */
     public <T> T fill(Class<T> type) {
         return beanFiller.fill(type);
+    }
+
+    /** Returns the {@link Templates} expander bound to this Fabricate's providers. */
+    public Templates templates() {
+        return templates;
+    }
+
+    /** Convenience: {@code templates().expand(template)}. */
+    public String expand(String template) {
+        return templates.expand(template);
     }
 
     /** Picks one of the literal values uniformly. */
