@@ -9,6 +9,7 @@ import java.util.function.Supplier;
 import org.fabricate.locale.LocaleRegistry;
 import org.fabricate.provider.Addresses;
 import org.fabricate.provider.Booleans;
+import org.fabricate.provider.Commerce;
 import org.fabricate.provider.DatesOfBirth;
 import org.fabricate.provider.Emails;
 import org.fabricate.provider.Files;
@@ -64,6 +65,7 @@ public final class Fabricate {
     private final Internet internet;
     private final Files files;
     private final Finance finance;
+    private final Commerce commerce;
     private final BeanFiller beanFiller;
 
     private Fabricate(LocaleData locale, Rng rng) {
@@ -84,6 +86,7 @@ public final class Fabricate {
         this.internet = new Internet(rng);
         this.files = new Files(rng);
         this.finance = new Finance(rng);
+        this.commerce = new Commerce(rng);
         this.beanFiller = new BeanFiller(this);
     }
 
@@ -120,6 +123,7 @@ public final class Fabricate {
     public Internet internet()       { return internet; }
     public Files files()             { return files; }
     public Finance finance()         { return finance; }
+    public Commerce commerce()       { return commerce; }
 
     /** Reflectively populates an arbitrary record type with random values. */
     public <T> T fill(Class<T> type) {
