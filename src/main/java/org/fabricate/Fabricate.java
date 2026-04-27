@@ -1,15 +1,20 @@
 package org.fabricate;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
+import java.util.function.Supplier;
 import org.fabricate.locale.LocaleRegistry;
 import org.fabricate.provider.Addresses;
+import org.fabricate.provider.Booleans;
 import org.fabricate.provider.DatesOfBirth;
 import org.fabricate.provider.Emails;
 import org.fabricate.provider.Identities;
 import org.fabricate.provider.JobTitles;
 import org.fabricate.provider.Names;
+import org.fabricate.provider.Numbers;
 import org.fabricate.provider.Passwords;
 import org.fabricate.provider.Persons;
 import org.fabricate.provider.Phones;
@@ -49,6 +54,8 @@ public final class Fabricate {
     private final Identities identities;
     private final Passwords passwords;
     private final Persons persons;
+    private final Numbers numbers;
+    private final Booleans booleans;
     private final BeanFiller beanFiller;
 
     private Fabricate(LocaleData locale, Rng rng) {
@@ -63,6 +70,8 @@ public final class Fabricate {
         this.identities = new Identities(rng);
         this.passwords = new Passwords();
         this.persons = new Persons(names, emails, phones, addresses, datesOfBirth, jobTitles, identities);
+        this.numbers = new Numbers(rng);
+        this.booleans = new Booleans(rng);
         this.beanFiller = new BeanFiller(this);
     }
 
@@ -93,10 +102,41 @@ public final class Fabricate {
     public Identities identities()   { return identities; }
     public Passwords passwords()     { return passwords; }
     public Persons persons()         { return persons; }
+    public Numbers numbers()         { return numbers; }
+    public Booleans booleans()       { return booleans; }
 
     /** Reflectively populates an arbitrary record type with random values. */
     public <T> T fill(Class<T> type) {
         return beanFiller.fill(type);
+    }
+
+    /** Picks one of the literal values uniformly. */
+    @SafeVarargs
+    public final <T> T choice(T... values) {
+        if (values.length == 0) {
+            throw new IllegalArgumentException("choice requires at least one value");
+        }
+        return values[numbers.intBetween(0, values.length - 1)];
+    }
+
+    /** Picks one of the values uniformly. */
+    public <T> T choice(List<T> values) {
+        return rng.pick(values);
+    }
+
+    /**
+     * Returns the supplier's value with probability {@code presentProbability},
+     * otherwise {@link Optional#empty()}. Useful for testing nullable fields.
+     */
+    public <T> Optional<T> optional(double presentProbability, Supplier<T> supplier) {
+        return booleans.withProbability(presentProbability)
+                ? Optional.of(supplier.get())
+                : Optional.empty();
+    }
+
+    /** Convenience entry point for {@link WeightedPicker#builder(Rng)} bound to this RNG. */
+    public <T> WeightedPicker.Builder<T> weighted() {
+        return WeightedPicker.builder(rng);
     }
 
     public static final class Builder {
