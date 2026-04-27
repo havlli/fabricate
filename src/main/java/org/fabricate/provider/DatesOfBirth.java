@@ -3,6 +3,8 @@ package org.fabricate.provider;
 import java.time.Clock;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.List;
+import java.util.stream.Stream;
 import org.fabricate.random.Rng;
 
 public final class DatesOfBirth {
@@ -44,5 +46,15 @@ public final class DatesOfBirth {
         long days = earliest.toEpochDay()
                 + rng.nextLong(0, latest.toEpochDay() - earliest.toEpochDay());
         return LocalDate.ofEpochDay(days);
+    }
+
+    /** Infinite stream of birthdates using the default age range. Not parallel-safe. */
+    public Stream<LocalDate> stream() {
+        return Stream.generate(this::birthdate);
+    }
+
+    /** Eagerly produces {@code count} birthdates using the default age range. */
+    public List<LocalDate> list(int count) {
+        return stream().limit(count).toList();
     }
 }

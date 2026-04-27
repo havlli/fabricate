@@ -1,8 +1,10 @@
 package org.fabricate.provider;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 import java.util.function.Supplier;
+import java.util.stream.Stream;
 import org.fabricate.model.Address;
 import org.fabricate.model.Person;
 import org.jspecify.annotations.Nullable;
@@ -48,6 +50,16 @@ public final class Persons {
 
     public Builder builder() {
         return new Builder(this);
+    }
+
+    /** Infinite stream of fully-randomized {@link Person}s. Not parallel-safe. */
+    public Stream<Person> stream() {
+        return Stream.generate(this::person);
+    }
+
+    /** Eagerly produces {@code count} fully-randomized {@link Person}s. */
+    public List<Person> list(int count) {
+        return stream().limit(count).toList();
     }
 
     public static final class Builder {

@@ -2,6 +2,7 @@ package org.fabricate;
 
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Set;
 import org.fabricate.locale.LocaleRegistry;
 import org.fabricate.provider.Addresses;
 import org.fabricate.provider.DatesOfBirth;
@@ -69,6 +70,14 @@ public final class Fabricate {
 
     public static Builder builder() {
         return new Builder();
+    }
+
+    /**
+     * Locales available in the default {@link LocaleRegistry}: built-ins plus
+     * any {@link org.fabricate.spi.LocaleProvider} discovered on the module path.
+     */
+    public static Set<Locale> availableLocales() {
+        return LocaleRegistry.getDefault().available();
     }
 
     public LocaleData locale()       { return locale; }

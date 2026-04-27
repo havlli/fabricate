@@ -1,6 +1,8 @@
 package org.fabricate.provider;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Stream;
 import org.fabricate.random.Rng;
 
 public final class Identities {
@@ -34,5 +36,15 @@ public final class Identities {
         }
         String head = uuid.toString().substring(0, 8);
         return firstName.toLowerCase() + lastName.toLowerCase().charAt(0) + head;
+    }
+
+    /** Infinite stream of UUIDs. Use {@code .limit(n)} to bound. Not parallel-safe. */
+    public Stream<UUID> stream() {
+        return Stream.generate(this::uuid);
+    }
+
+    /** Eagerly produces {@code count} UUIDs. */
+    public List<UUID> list(int count) {
+        return stream().limit(count).toList();
     }
 }

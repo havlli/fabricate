@@ -54,6 +54,11 @@ class FabricateTest {
     }
 
     @Test
+    void availableLocales_includesBuiltIns() {
+        assertThat(Fabricate.availableLocales()).contains(Locale.ENGLISH, Locale.CHINESE);
+    }
+
+    @Test
     void person_hasAllRequiredFieldsPopulated() {
         Fabricate fab = Fabricate.builder().seed(7L).build();
 
