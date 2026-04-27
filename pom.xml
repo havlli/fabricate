@@ -6,7 +6,7 @@
 
     <groupId>io.github.havlli</groupId>
     <artifactId>fabricate</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>0.1.0</version>
     <packaging>jar</packaging>
 
     <name>fabricate</name>
@@ -225,7 +225,14 @@
                         <extensions>true</extensions>
                         <configuration>
                             <publishingServerId>central</publishingServerId>
-                            <autoPublish>true</autoPublish>
+                            <!--
+                                Leave the deployment in "validated" state so it can be
+                                inspected on https://central.sonatype.com/publishing/deployments
+                                before the publish button is flipped. Switch to true once
+                                a few releases have gone smoothly.
+                            -->
+                            <autoPublish>false</autoPublish>
+                            <waitUntil>validated</waitUntil>
                         </configuration>
                     </plugin>
                 </plugins>
