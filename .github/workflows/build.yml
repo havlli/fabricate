@@ -30,6 +30,10 @@ jobs:
       - name: Verify
         run: mvn -B -ntp verify
 
+      - name: Release dry run
+        if: matrix.java == 21
+        run: mvn -B -ntp -P release -Dgpg.skip verify
+
       - name: Upload coverage
         if: matrix.java == 21
         uses: actions/upload-artifact@v4
