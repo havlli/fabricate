@@ -6,19 +6,22 @@ This project publishes to **Maven Central** via the
 
 ## One-time setup
 
-1. **Sonatype Central account** — sign up at
-   <https://central.sonatype.com/> and verify the `io.github.havlli`
-   namespace (already verified for this project).
+1. **Sonatype Central account** — the `dev.havlli` namespace was verified
+   in the Central Publisher Portal via a DNS TXT record on `havlli.dev`
+   on 2026-10-11.
 
-2. **GPG signing key** — generate one if needed and publish the public
-   key to a keyserver:
+2. **GPG signing key** — use a signing key whose public key is available
+   from a keyserver. Key generation and public-key upload require separate
+   authorization. Select the signing key with `-Dgpg.keyname=<KEY_ID>`.
 
-   ```bash
-   gpg --gen-key
-   gpg --keyserver keyserver.ubuntu.com --send-keys <KEY_ID>
-   ```
+   The release profile uses non-interactive signing with loopback pinentry
+   (`--pinentry-mode loopback`). Supply the passphrase only through the
+   runtime environment variable `MAVEN_GPG_PASSPHRASE`, which
+   maven-gpg-plugin reads by default. Do not put a passphrase in command
+   arguments, the POM, settings files, logs, or version control.
 
-3. **Maven settings** — add credentials to `~/.m2/settings.xml`:
+3. **Maven settings** — configure the `central` server id in your local
+   `~/.m2/settings.xml`. This example contains placeholders only:
 
    ```xml
    <settings>
@@ -33,38 +36,45 @@ This project publishes to **Maven Central** via the
    ```
 
    Tokens are generated at <https://central.sonatype.com/account>.
+   Keep the actual settings file outside version control.
 
 ## Cutting a release
 
-1. Make sure the working tree is clean and tests pass:
+Publishing and tagging require separate approval. Confirm the working tree
+is clean and `pom.xml` contains the intended non-SNAPSHOT version (`0.1.0`
+for this release), then follow this order:
+
+1. Run the unsigned release dry run:
 
    ```bash
-   mise exec -- mvn -B verify
+   mise exec -- mvn -B -ntp -P release -Dgpg.skip verify
    ```
 
-2. Confirm `pom.xml` has the version you want to release (no `-SNAPSHOT`).
+   Check the main jar, sources jar, and javadoc jar in `target/`.
+   This command stops at verification and does not upload artifacts.
 
-3. Tag and deploy:
+2. After publishing approval, supply the signing passphrase through
+   `MAVEN_GPG_PASSPHRASE` and deploy with your signing key id:
 
    ```bash
-   git tag -s v$(mvn -q help:evaluate -Dexpression=project.version -DforceStdout) -m "release $(...)"
-   mise exec -- mvn -B -Prelease deploy
+   mise exec -- mvn -B -ntp -P release -Dgpg.keyname='<KEY_ID>' deploy
    ```
 
-   The `release` profile attaches the sources jar, javadoc jar, GPG
-   signatures, and uploads via the central plugin.
+   Replace `<KEY_ID>` with your key id before running the command. The
+   release profile attaches sources, javadoc, and GPG signatures, then
+   uploads through the `central` server. With `autoPublish=false` and
+   `waitUntil=validated`, the deployment stops in **VALIDATED** state.
 
-4. Verify on the
-   [Central Publisher portal](https://central.sonatype.com/publishing/deployments).
-   The deployment lands in **VALIDATED** state — review the artifacts
-   and click "Publish" to push it to Maven Central.
+3. Inspect the deployment and all artifacts in the
+   [Central Publisher Portal](https://central.sonatype.com/publishing/deployments).
 
-   (Once a few releases have gone smoothly, set `autoPublish=true` in
-   `pom.xml` to skip the manual button.)
+4. Publish the inspected deployment using the Portal's **Publish** button.
+   Confirm publication succeeds before tagging.
 
-5. Push the tag:
+5. After tagging approval, tag the released commit and push the tag:
 
    ```bash
+   git tag -s v0.1.0 -m "release 0.1.0"
    git push origin v0.1.0
    ```
 
@@ -82,14 +92,14 @@ resolution works:
 
 ```xml
 <dependency>
-  <groupId>io.github.havlli</groupId>
+  <groupId>dev.havlli</groupId>
   <artifactId>fabricate</artifactId>
   <version>0.1.0</version>
 </dependency>
 ```
 
 ```java
-System.out.println(org.fabricate.Fake.fullName());
+System.out.println(dev.havlli.fabricate.Fake.fullName());
 ```
 
 If the artifact resolves and the program prints a name, the release is

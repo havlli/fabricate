@@ -60,7 +60,7 @@ Or use any JDK 21+ and Maven 3.9+ already on your `PATH`.
 
 ```xml
 <dependency>
-    <groupId>io.github.havlli</groupId>
+    <groupId>dev.havlli</groupId>
     <artifactId>fabricate</artifactId>
     <version>0.1.0</version>
 </dependency>
