@@ -1,29 +1,29 @@
 @org.jspecify.annotations.NullMarked
-module org.fabricate {
+module dev.havlli.fabricate {
     requires static transitive org.jspecify;
     requires static transitive org.junit.jupiter.api;
 
-    exports org.fabricate;
-    exports org.fabricate.junit;
-    exports org.fabricate.locale;
-    exports org.fabricate.model;
-    exports org.fabricate.provider;
-    exports org.fabricate.random;
-    exports org.fabricate.sink;
-    exports org.fabricate.spi;
+    exports dev.havlli.fabricate;
+    exports dev.havlli.fabricate.junit;
+    exports dev.havlli.fabricate.locale;
+    exports dev.havlli.fabricate.model;
+    exports dev.havlli.fabricate.provider;
+    exports dev.havlli.fabricate.random;
+    exports dev.havlli.fabricate.sink;
+    exports dev.havlli.fabricate.spi;
 
-    uses org.fabricate.spi.LocaleProvider;
+    uses dev.havlli.fabricate.spi.LocaleProvider;
 
-    provides org.fabricate.spi.LocaleProvider with
-            org.fabricate.locale.EnglishLocaleProvider,
-            org.fabricate.locale.ChineseLocaleProvider,
-            org.fabricate.locale.RussianLocaleProvider,
-            org.fabricate.locale.JapaneseLocaleProvider,
-            org.fabricate.locale.KoreanLocaleProvider,
-            org.fabricate.locale.ArabicLocaleProvider,
-            org.fabricate.locale.GermanLocaleProvider,
-            org.fabricate.locale.SpanishLocaleProvider,
-            org.fabricate.locale.FrenchLocaleProvider,
-            org.fabricate.locale.PortugueseLocaleProvider,
-            org.fabricate.locale.HindiLocaleProvider;
+    provides dev.havlli.fabricate.spi.LocaleProvider with
+            dev.havlli.fabricate.locale.EnglishLocaleProvider,
+            dev.havlli.fabricate.locale.ChineseLocaleProvider,
+            dev.havlli.fabricate.locale.RussianLocaleProvider,
+            dev.havlli.fabricate.locale.JapaneseLocaleProvider,
+            dev.havlli.fabricate.locale.KoreanLocaleProvider,
+            dev.havlli.fabricate.locale.ArabicLocaleProvider,
+            dev.havlli.fabricate.locale.GermanLocaleProvider,
+            dev.havlli.fabricate.locale.SpanishLocaleProvider,
+            dev.havlli.fabricate.locale.FrenchLocaleProvider,
+            dev.havlli.fabricate.locale.PortugueseLocaleProvider,
+            dev.havlli.fabricate.locale.HindiLocaleProvider;
 }
