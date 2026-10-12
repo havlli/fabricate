@@ -1,0 +1,11 @@
+dev.havlli.fabricate.locale.EnglishLocaleProvider
+dev.havlli.fabricate.locale.ChineseLocaleProvider
+dev.havlli.fabricate.locale.RussianLocaleProvider
+dev.havlli.fabricate.locale.JapaneseLocaleProvider
+dev.havlli.fabricate.locale.KoreanLocaleProvider
+dev.havlli.fabricate.locale.ArabicLocaleProvider
+dev.havlli.fabricate.locale.GermanLocaleProvider
+dev.havlli.fabricate.locale.SpanishLocaleProvider
+dev.havlli.fabricate.locale.FrenchLocaleProvider
+dev.havlli.fabricate.locale.PortugueseLocaleProvider
+dev.havlli.fabricate.locale.HindiLocaleProvider
