@@ -63,10 +63,33 @@ Or use any JDK 21+ and Maven 3.9+ already on your `PATH`.
     <groupId>dev.havlli</groupId>
     <artifactId>fabricate</artifactId>
     <version>0.1.0</version>
+    <!-- optional: <scope>test</scope> when used only in tests -->
 </dependency>
 ```
 
+Gradle (Kotlin DSL):
+
+```kotlin
+testImplementation("dev.havlli:fabricate:0.1.0")
+```
+
+Gradle (Groovy):
+
+```groovy
+testImplementation 'dev.havlli:fabricate:0.1.0'
+```
+
 ```java
+import java.nio.file.Path;
+import java.time.LocalDate;
+import java.util.List;
+
+import dev.havlli.fabricate.Fake;
+import dev.havlli.fabricate.Fabricate;
+import dev.havlli.fabricate.Unique;
+import dev.havlli.fabricate.model.Person;
+import dev.havlli.fabricate.sink.Sinks;
+
 // Zero-setup facade with default seed (0L) for quick scripts
 String name = Fake.fullName();
 String iban = Fake.iban("DE");
@@ -116,6 +139,15 @@ Sinks.toSqlInserts(bulk, "person", Path.of("people.sql"));
 ## JUnit 5 extension
 
 ```java
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+
+import dev.havlli.fabricate.Fabricate;
+import dev.havlli.fabricate.junit.FabricateTest;
+import dev.havlli.fabricate.junit.Seed;
+import dev.havlli.fabricate.model.Person;
+
 @FabricateTest(seed = 42L)
 class UserServiceTest {
 
@@ -152,6 +184,10 @@ Built-in locales cover the major writing systems you'll need to test:
 | `Locale.of("hi")` | Devanagari (Hindi)                              |
 
 ```java
+import java.util.Locale;
+
+import dev.havlli.fabricate.Fabricate;
+
 Fabricate fab = Fabricate.builder()
         .locale(Locale.of("ar"))
         .seed(1L)
@@ -161,7 +197,7 @@ System.out.println(fab.names().fullName()); // e.g. محمد العلي
 ```
 
 Add your own locale by implementing `LocaleData` and registering a
-`LocaleProvider` via `META-INF/services/org.fabricate.spi.LocaleProvider`.
+`LocaleProvider` via `META-INF/services/dev.havlli.fabricate.spi.LocaleProvider`.
 
 ## Reproducibility guarantees
 
@@ -179,12 +215,12 @@ reproducible by design.
 
 ```java
 module my.app {
-    requires org.fabricate;
+    requires dev.havlli.fabricate;
     // optional, only if you use the JUnit extension:
     requires org.junit.jupiter.api;
 
     // expose your record types so BeanFiller can construct them
-    opens my.app.dto to org.fabricate;
+    opens my.app.dto to dev.havlli.fabricate;
 }
 ```
 
