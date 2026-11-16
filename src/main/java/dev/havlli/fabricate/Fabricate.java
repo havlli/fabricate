@@ -1,5 +1,7 @@
 package dev.havlli.fabricate;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -152,6 +154,62 @@ public final class Fabricate {
     /** Convenience: {@code templates().expand(template)}. */
     public String expand(String template) {
         return templates.expand(template);
+    }
+
+    /**
+     * Wraps {@code source} in a fluent generator bound to this Fabricate's RNG.
+     * The source is invoked only when values are requested.
+     *
+     * @param <T> the generated value type, which may be nullable
+     * @param source the supplier of generated values
+     * @return a new fluent generator
+     * @throws NullPointerException if {@code source} is null
+     */
+    public <T extends @Nullable Object> Gen<T> gen(Supplier<? extends T> source) {
+        return new DefaultGen<>(Objects.requireNonNull(source, "source"), rng);
+    }
+
+    /**
+     * Returns a generator that uniformly picks from a snapshot of {@code values}.
+     * Each draw uses the same RNG sequence as {@link #choice(Object...)}.
+     *
+     * @param <T> the generated value type, which may be nullable
+     * @param values the choices, allowing duplicates and nulls
+     * @return a new fluent generator
+     * @throws NullPointerException if {@code values} is null
+     * @throws IllegalArgumentException if {@code values} is empty
+     */
+    @SafeVarargs
+    public final <T extends @Nullable Object> Gen<T> oneOf(T... values) {
+        Objects.requireNonNull(values, "values");
+        if (values.length == 0) {
+            throw new IllegalArgumentException("oneOf requires at least one value");
+        }
+        List<T> snapshot = new ArrayList<>(values.length);
+        for (T value : values) {
+            snapshot.add(value);
+        }
+        return gen(() -> snapshot.get(numbers.intBetween(0, snapshot.size() - 1)));
+    }
+
+    /**
+     * Returns a generator that uniformly picks from a snapshot of {@code values}
+     * in iteration order. Each draw uses the same RNG sequence as
+     * {@link #choice(List)} for a list in that order.
+     *
+     * @param <T> the generated value type, which may be nullable
+     * @param values the choices, allowing duplicates and nulls
+     * @return a new fluent generator
+     * @throws NullPointerException if {@code values} is null
+     * @throws IllegalArgumentException if {@code values} is empty
+     */
+    public <T extends @Nullable Object> Gen<T> oneOf(Collection<? extends T> values) {
+        Objects.requireNonNull(values, "values");
+        List<T> snapshot = new ArrayList<>(values);
+        if (snapshot.isEmpty()) {
+            throw new IllegalArgumentException("oneOf requires at least one value");
+        }
+        return gen(() -> snapshot.get(rng.nextInt(snapshot.size())));
     }
 
     /** Picks one of the literal values uniformly. */
