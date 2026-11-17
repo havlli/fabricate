@@ -120,6 +120,24 @@ Sinks.toJsonLines(bulk, Path.of("people.jsonl"));
 Sinks.toSqlInserts(bulk, "person", Path.of("people.sql"));
 ```
 
+### Fluent generators
+
+Wrap any supplier with `fab.gen(...)`, or use `fab.oneOf(...)` for a pool of choices:
+
+```java
+import java.util.Optional;
+
+List<String> names = fab.gen(fab.names()::fullName).unique().list(100);
+List<String> statuses = fab.oneOf("PAID", "OPEN").stream().limit(20).toList();
+List<Optional<String>> emails = fab.gen(fab.emails()::email).optional(0.8).list(10);
+```
+
+`Gen<T>` also offers `get()`, `map(fn)`, `orNull(probability)`, and `set(count)`.
+Lists and sets are immutable; sets preserve insertion order. Each `unique()`
+wrapper keeps its own seen-set and throws `UniqueExhaustedException` if its
+retry budget runs out (default 100 attempts per value; override with `unique(budget)`).
+Generators share their owning `Fabricate`'s RNG and are intended for use on one thread.
+
 ## What you can generate
 
 | Provider              | Examples                                                      |

@@ -1,5 +1,14 @@
 # Changelog
 
+## [Unreleased]
+
+### Added
+
+- Fluent `Gen<T>` provider API via `Fabricate.gen(Supplier)` and
+  `Fabricate.oneOf(T...)` / `oneOf(Collection)`, with immutable lists and ordered
+  sets, sequential streams, independent uniqueness, mapping, and optional or
+  nullable values using the owning instance's RNG.
+
 ## 0.1.0 - Unreleased
 
 - Initial release of a lightweight Java 21 library for generating realistic
