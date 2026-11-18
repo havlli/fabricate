@@ -10,6 +10,10 @@ import java.util.function.UnaryOperator;
  * Implementations are typically immutable singletons. Built-in locales
  * live in {@code dev.havlli.fabricate.locale}; new locales are contributed via
  * {@link LocaleProvider} on the module path or classpath.
+ *
+ * <p><strong>Consumer-implemented type.</strong> Third parties implement this
+ * interface. New methods must be {@code default}; no abstract methods will be
+ * added before 1.0.
  */
 public interface LocaleData {
 

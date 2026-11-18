@@ -4,10 +4,15 @@
 
 ### Added
 
+- Public API snapshot test for contributors to review API changes explicitly.
 - Fluent `Gen<T>` provider API via `Fabricate.gen(Supplier)` and
   `Fabricate.oneOf(T...)` / `oneOf(Collection)`, with immutable lists and ordered
   sets, sequential streams, independent uniqueness, mapping, and optional or
   nullable values using the owning instance's RNG.
+
+### Fixed
+
+- `Fake.locale(Locale)` now preserves the current seed, including unseeded mode.
 
 ## 0.1.0 - Unreleased
 

@@ -8,6 +8,7 @@ import java.util.UUID;
 import java.util.function.Supplier;
 import dev.havlli.fabricate.model.Address;
 import dev.havlli.fabricate.model.Person;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Zero-setup static facade for one-shot fake-data needs.
@@ -42,22 +43,30 @@ public final class Fake {
     public static final long DEFAULT_SEED = 0L;
 
     private static volatile Fabricate instance = Fabricate.builder().seed(DEFAULT_SEED).build();
+    private static volatile @Nullable Long currentSeed = DEFAULT_SEED;
 
     private Fake() {}
 
     /** Reseeds the underlying {@link Fabricate}. */
     public static void seed(long seed) {
         instance = Fabricate.builder().seed(seed).locale(instance.locale().locale()).build();
+        currentSeed = seed;
     }
 
     /** Switches to a non-seeded (truly random) instance. */
     public static void unseed() {
         instance = Fabricate.builder().locale(instance.locale().locale()).build();
+        currentSeed = null;
     }
 
     /** Switches the active locale, preserving the current seed mode. */
     public static void locale(Locale locale) {
-        instance = Fabricate.builder().locale(locale).seed(DEFAULT_SEED).build();
+        Fabricate.Builder builder = Fabricate.builder().locale(locale);
+        Long seed = currentSeed;
+        if (seed != null) {
+            builder.seed(seed);
+        }
+        instance = builder.build();
     }
 
     /** Replaces the underlying {@link Fabricate} entirely. */

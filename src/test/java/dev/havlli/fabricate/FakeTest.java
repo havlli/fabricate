@@ -2,7 +2,10 @@ package dev.havlli.fabricate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
+import java.util.stream.IntStream;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
@@ -42,6 +45,46 @@ class FakeTest {
 
         assertThat(Fake.fabricate().locale().locale()).isEqualTo(Locale.CHINESE);
         assertThat(Fake.fullName()).doesNotContain(" ");
+    }
+
+    @Test
+    void locale_preservesExplicitSeed() {
+        Fake.seed(42L);
+        Fake.fullName();
+
+        for (Locale locale : List.of(Locale.CHINESE, Locale.ENGLISH)) {
+            Fake.locale(locale);
+            Fabricate expected = Fabricate.builder().seed(42L).locale(locale).build();
+            for (int i = 0; i < 10; i++) {
+                assertThat(Fake.fullName()).isEqualTo(expected.names().fullName());
+                assertThat(Fake.uuid()).isEqualTo(expected.identities().uuid());
+            }
+        }
+    }
+
+    @Test
+    void locale_preservesUnseededMode() {
+        Fake.unseed();
+        Fake.locale(Locale.CHINESE);
+        List<UUID> first = IntStream.range(0, 10).mapToObj(i -> Fake.uuid()).toList();
+
+        Fake.locale(Locale.CHINESE);
+        List<UUID> second = IntStream.range(0, 10).mapToObj(i -> Fake.uuid()).toList();
+
+        assertThat(second).isNotEqualTo(first);
+    }
+
+    @Test
+    void locale_preservesDefaultSeed() {
+        resetDefaults();
+        Fake.locale(Locale.CHINESE);
+        Fabricate expected = Fabricate.builder().seed(Fake.DEFAULT_SEED)
+                .locale(Locale.CHINESE).build();
+
+        for (int i = 0; i < 10; i++) {
+            assertThat(Fake.fullName()).isEqualTo(expected.names().fullName());
+            assertThat(Fake.uuid()).isEqualTo(expected.identities().uuid());
+        }
     }
 
     @Test
