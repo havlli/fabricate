@@ -138,6 +138,30 @@ wrapper keeps its own seen-set and throws `UniqueExhaustedException` if its
 retry budget runs out (default 100 attempts per value; override with `unique(budget)`).
 Generators share their owning `Fabricate`'s RNG and are intended for use on one thread.
 
+#### Records and beans
+
+Use `fab.of(...)` to generate records or POJOs with a no-arg constructor:
+
+```java
+import java.math.BigDecimal;
+import java.util.UUID;
+
+record Order(UUID id, String status, BigDecimal total) {}
+
+List<Order> orders = fab.of(Order.class)
+        .with("status", fab.oneOf("OPEN", "PAID"))
+        .with("total", BigDecimal.TEN)
+        .list(1_000);
+```
+
+`RecordGen<T>` is a `Gen<T>`, so `unique()`, `stream()`, and `map()` work too.
+Each `with` returns a new generator and accepts a fixed value, a supplier, or a
+`Gen`. Names match exactly; a later override replaces the earlier one. Use
+`(Object) null` for a fixed null on a non-primitive target. Overrides affect only
+the top-level object; nested records and beans still use heuristics. Overridden
+properties skip random generation, changing the RNG sequence of later properties.
+`fab.fill(Type.class)` remains available for a single value without overrides.
+
 ## What you can generate
 
 | Provider              | Examples                                                      |
