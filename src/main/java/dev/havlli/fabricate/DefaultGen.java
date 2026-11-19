@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 import dev.havlli.fabricate.random.Rng;
 import org.jspecify.annotations.Nullable;
 
-final class DefaultGen<T extends @Nullable Object> implements Gen<T> {
+class DefaultGen<T extends @Nullable Object> implements Gen<T> {
 
     private final Supplier<? extends T> source;
     private final Rng rng;

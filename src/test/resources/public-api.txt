@@ -53,6 +53,7 @@ METHOD public <T> T dev.havlli.fabricate.Fabricate.fill(java.lang.Class<T>)
 METHOD public <T> T dev.havlli.fabricate.random.Rng.pick(java.util.List<T>)
 METHOD public <T> dev.havlli.fabricate.Gen<T> dev.havlli.fabricate.Fabricate.gen(java.util.function.Supplier<? extends T>)
 METHOD public <T> dev.havlli.fabricate.Gen<T> dev.havlli.fabricate.Fabricate.oneOf(java.util.Collection<? extends T>)
+METHOD public <T> dev.havlli.fabricate.RecordGen<T> dev.havlli.fabricate.Fabricate.of(java.lang.Class<T>)
 METHOD public <T> dev.havlli.fabricate.WeightedPicker$Builder<T> dev.havlli.fabricate.Fabricate.weighted()
 METHOD public <T> java.util.List<T> dev.havlli.fabricate.Fabricate.repeat(int,java.util.function.Supplier<T>)
 METHOD public <T> java.util.List<T> dev.havlli.fabricate.Fabricate.sample(java.util.List<T>,int)
@@ -67,6 +68,9 @@ METHOD public abstract dev.havlli.fabricate.Gen<T> dev.havlli.fabricate.Gen.orNu
 METHOD public abstract dev.havlli.fabricate.Gen<T> dev.havlli.fabricate.Gen.unique()
 METHOD public abstract dev.havlli.fabricate.Gen<T> dev.havlli.fabricate.Gen.unique(int)
 METHOD public abstract dev.havlli.fabricate.Gen<java.util.Optional<T>> dev.havlli.fabricate.Gen.optional(double)
+METHOD public abstract dev.havlli.fabricate.RecordGen<T> dev.havlli.fabricate.RecordGen.with(java.lang.String,dev.havlli.fabricate.Gen<?>)
+METHOD public abstract dev.havlli.fabricate.RecordGen<T> dev.havlli.fabricate.RecordGen.with(java.lang.String,java.lang.Object)
+METHOD public abstract dev.havlli.fabricate.RecordGen<T> dev.havlli.fabricate.RecordGen.with(java.lang.String,java.util.function.Supplier<?>)
 METHOD public abstract dev.havlli.fabricate.spi.LocaleData dev.havlli.fabricate.spi.LocaleProvider.get()
 METHOD public abstract java.lang.String dev.havlli.fabricate.junit.FabricateTest.locale()
 METHOD public abstract java.lang.String dev.havlli.fabricate.spi.LocaleData.nameDelimiter()
@@ -570,6 +574,7 @@ SUPER dev.havlli.fabricate.Fabricate extends java.lang.Object
 SUPER dev.havlli.fabricate.Fabricate$Builder extends java.lang.Object
 SUPER dev.havlli.fabricate.Fake extends java.lang.Object
 SUPER dev.havlli.fabricate.Gen extends java.util.function.Supplier<T>
+SUPER dev.havlli.fabricate.RecordGen extends dev.havlli.fabricate.Gen<T>
 SUPER dev.havlli.fabricate.Sequence extends java.lang.Object
 SUPER dev.havlli.fabricate.Sequence$Counter extends java.lang.Object
 SUPER dev.havlli.fabricate.Sequence$Cycle extends java.lang.Object
@@ -717,6 +722,7 @@ TYPE class public static final class dev.havlli.fabricate.WeightedPicker$Builder
 TYPE class public static final class dev.havlli.fabricate.model.Address$Builder
 TYPE class public static final class dev.havlli.fabricate.provider.Persons$Builder
 TYPE interface public abstract interface dev.havlli.fabricate.Gen<T>
+TYPE interface public abstract interface dev.havlli.fabricate.RecordGen<T>
 TYPE interface public abstract interface dev.havlli.fabricate.spi.LocaleData
 TYPE interface public abstract interface dev.havlli.fabricate.spi.LocaleProvider
 TYPE record public final record dev.havlli.fabricate.model.Address

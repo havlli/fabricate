@@ -74,7 +74,7 @@ public final class Fabricate {
     private final DevOps devops;
     private final Dates dates;
     private final Geo geo;
-    private final BeanFiller beanFiller;
+    private final BeanEngine beanEngine;
     private final Templates templates;
 
     private Fabricate(LocaleData locale, Rng rng) {
@@ -99,7 +99,7 @@ public final class Fabricate {
         this.devops = new DevOps(rng);
         this.dates = new Dates(rng);
         this.geo = new Geo(rng);
-        this.beanFiller = new BeanFiller(this);
+        this.beanEngine = new BeanEngine(this);
         this.templates = new Templates(this);
     }
 
@@ -141,9 +141,25 @@ public final class Fabricate {
     public Commerce commerce()       { return commerce; }
     public DevOps devops()           { return devops; }
 
-    /** Reflectively populates an arbitrary record type with random values. */
+    /** Reflectively populates a record or POJO type with random values. */
     public <T> T fill(Class<T> type) {
-        return beanFiller.fill(type);
+        return beanEngine.fill(type);
+    }
+
+    /**
+     * Returns a fluent generator for a record or POJO with a no-arg constructor,
+     * using the same heuristics as {@link #fill(Class)}. Creating the generator
+     * consumes no random values. Overrides can be added with {@link RecordGen#with(String, Object)}.
+     *
+     * @param <T> the generated record or POJO type
+     * @param type the type to populate
+     * @return a new generator bound to this instance's RNG
+     * @throws IllegalArgumentException if the type is neither a record nor a fillable POJO
+     * @throws NullPointerException if {@code type} is null
+     */
+    public <T> RecordGen<T> of(Class<T> type) {
+        BeanEngine.validateType(type);
+        return new DefaultRecordGen<>(beanEngine, type, rng);
     }
 
     /** Returns the {@link Templates} expander bound to this Fabricate's providers. */
