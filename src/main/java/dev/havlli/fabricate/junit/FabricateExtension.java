@@ -40,6 +40,7 @@ public final class FabricateExtension implements BeforeEachCallback, ParameterRe
     }
 
     @Override
+    @SuppressWarnings("removal") // Preserve legacy provider behavior.
     public Object resolveParameter(ParameterContext parameterContext, ExtensionContext extensionContext) {
         Store store = extensionContext.getStore(NAMESPACE);
         Fabricate fab = store.get(FABRICATE_KEY, Fabricate.class);

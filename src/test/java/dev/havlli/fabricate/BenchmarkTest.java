@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
  * regression (e.g. accidentally adding a network call).
  */
 @Tag("bench")
+@SuppressWarnings("removal")
 class BenchmarkTest {
 
     private static final long WARMUP_NANOS = 200_000_000L; // 200 ms

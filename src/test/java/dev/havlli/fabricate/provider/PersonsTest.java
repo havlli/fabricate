@@ -8,6 +8,7 @@ import dev.havlli.fabricate.model.Address;
 import dev.havlli.fabricate.model.Person;
 import org.junit.jupiter.api.Test;
 
+@SuppressWarnings("removal")
 class PersonsTest {
 
     @Test

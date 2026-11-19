@@ -192,6 +192,7 @@ final class BeanEngine {
         }
     }
 
+    @SuppressWarnings("removal") // Preserve legacy provider behavior.
     private Object valueFor(String rawName, Class<?> type) {
         String name = normalize(rawName);
 

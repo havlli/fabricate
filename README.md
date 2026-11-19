@@ -28,16 +28,16 @@ Built for tests, demos, fixtures, and corpus generation. Java 21+. JPMS-ready.
 - **One-line corpus dumpers** — `Sinks.toCsv(rows, path)`,
   `Sinks.toJsonLines(rows, path)`, `Sinks.toSqlInserts(rows, table, path)`
   for any list of records.
-- **Stream APIs** — `fab.persons().stream()` for lazy unbounded sequences,
-  `fab.persons().list(n)` for bounded eager generation, `fab.repeat(n, …)`
+- **Stream APIs** — `fab.person().stream()` for lazy unbounded sequences,
+  `fab.person().list(n)` for bounded eager generation, `fab.repeat(n, …)`
   for arbitrary suppliers.
 - **Sequences** — `Sequence.counter("USR-", 1)` and
   `Sequence.cycle("admin", "user", "guest")` for deterministic IDs and
   round-robin values.
 - **Unique decorator** — `Unique.of(fab.emails()::email)` produces distinct
   values with a bounded retry budget; finite pools fail fast and explicitly.
-- **Builder overrides** — fix one field, randomize the rest:
-  `fab.persons().builder().firstName("Ada").build()`.
+- **Fluent overrides** — fix one field, randomize the rest:
+  `fab.person().firstName("Ada").get()`.
 - **Bean fill** — `fab.fill(MyRecord.class)` reflectively populates any
   record type, using component names as hints.
 - **JUnit 5 extension** — `@FabricateTest` injects a fresh, seeded
@@ -87,6 +87,7 @@ import java.util.List;
 import dev.havlli.fabricate.Fake;
 import dev.havlli.fabricate.Fabricate;
 import dev.havlli.fabricate.Unique;
+import dev.havlli.fabricate.model.Address;
 import dev.havlli.fabricate.model.Person;
 import dev.havlli.fabricate.sink.Sinks;
 
@@ -99,12 +100,14 @@ String env  = Fake.environment();
 // Or build a Fabricate when you need control
 Fabricate fab = Fabricate.builder().seed(42L).build();
 
-Person person     = fab.persons().person();
+Person person     = fab.person().get();
 String email      = fab.emails().email();
-List<Person> bulk = fab.persons().list(1_000);
+List<Person> bulk = fab.person().list(1_000);
 
 // override one field, randomize the rest
-Person ceo = fab.persons().builder().jobTitle("CEO").build();
+Person ceo = fab.person().jobTitle("CEO").get();
+List<Person> berliners = fab.person().address(fab.address().city("Berlin")).list(5);
+List<Address> de = fab.address().country("Germany").list(10);
 
 // distinct values from a finite pool
 Unique<String> distinctEmails = Unique.of(fab.emails()::email);
@@ -121,6 +124,11 @@ Sinks.toSqlInserts(bulk, "person", Path.of("people.sql"));
 ```
 
 ### Fluent generators
+
+`fab.person()` and `fab.address()` provide immutable field overrides: use a fixed
+value or a `Gen` to draw that field for each record. Email and username follow the
+generated names unless overridden. Overrides skip the field's default random
+draws; supplied generators may consume random values themselves.
 
 Wrap any supplier with `fab.gen(...)`, or use `fab.oneOf(...)` for a pool of choices:
 
@@ -168,7 +176,7 @@ properties skip random generation, changing the RNG sequence of later properties
 |-----------------------|---------------------------------------------------------------|
 | `numbers` / `booleans`| `intBetween`, `gaussian`, `withProbability`                   |
 | `texts`               | lorem `word`/`sentence`/`paragraph`, `slug`, `hex`, `alphanumeric` |
-| `names` / `emails` / `phones` / `addresses` | localised, full `Person` builder           |
+| `names` / `emails` / `phones` / `addresses` | localised field providers           |
 | `internet`            | `url`, `ipv4`/`ipv6`, `macAddress`, `userAgent`, `port`       |
 | `files`               | `fileName`, `path`, `mimeType`, `fileSizeBytes` (log-uniform) |
 | `finance`             | Luhn-valid `creditCard`, `cvv`, mod-97 `iban`, `currencyCode`, `money` |
@@ -195,7 +203,7 @@ class UserServiceTest {
 
     @Test
     void importsUsers(Fabricate fab) {
-        List<Person> users = fab.persons().list(100);
+        List<Person> users = fab.person().list(100);
         // ...
     }
 

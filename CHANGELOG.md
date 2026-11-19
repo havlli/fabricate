@@ -4,6 +4,10 @@
 
 ### Added
 
+- `Fabricate.person()` / `PersonGen` and `Fabricate.address()` / `AddressGen` for
+  fluent generation with immutable fixed-value and generator overrides, nested
+  address generators, and derived email and username defaults. Person uids accept
+  UUID values, UUID generators, and validated UUID strings.
 - `Fabricate.of(Class)` / `RecordGen<T>` for fluent record and bean generation
   with immutable fixed-value, supplier, and generator overrides.
 - Public API snapshot test for contributors to review API changes explicitly.
@@ -14,6 +18,10 @@
 
 ### Deprecated
 
+- `Fabricate.persons()`, `Persons.builder()`, and `Persons.Builder`, for removal
+  since 0.2.0; use `Fabricate.person()`.
+- `Address.builder()` and `Address.Builder`, for removal since 0.2.0; use
+  `Fabricate.address()` or the canonical `Address` constructor.
 - `BeanFiller`, for removal; use `Fabricate.of(Class)` or `Fabricate.fill(Class)`.
 
 ### Fixed

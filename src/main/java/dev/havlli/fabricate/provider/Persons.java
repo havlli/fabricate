@@ -13,8 +13,8 @@ import org.jspecify.annotations.Nullable;
  * Generates {@link Person} instances by composing the underlying providers.
  *
  * Consumers who want to override one field while randomizing the rest can
- * use {@link #builder()}: any unset field is filled lazily on
- * {@link Builder#build()}.
+ * use {@link dev.havlli.fabricate.Fabricate#person()}: any unset field is
+ * generated lazily on each draw.
  */
 public final class Persons {
 
@@ -44,10 +44,17 @@ public final class Persons {
         this.identities = identities;
     }
 
+    @SuppressWarnings("removal") // Retain the legacy provider's builder semantics.
     public Person person() {
         return builder().build();
     }
 
+    /**
+     * Returns a legacy mutable person builder.
+     *
+     * @deprecated Use {@link dev.havlli.fabricate.Fabricate#person()} instead.
+     */
+    @Deprecated(since = "0.2.0", forRemoval = true)
     public Builder builder() {
         return new Builder(this);
     }
@@ -62,6 +69,12 @@ public final class Persons {
         return stream().limit(count).toList();
     }
 
+    /**
+     * A legacy mutable person builder.
+     *
+     * @deprecated Use {@link dev.havlli.fabricate.Fabricate#person()} instead.
+     */
+    @Deprecated(since = "0.2.0", forRemoval = true)
     public static final class Builder {
 
         private final Persons owner;
