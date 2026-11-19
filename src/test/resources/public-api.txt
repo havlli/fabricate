@@ -64,10 +64,39 @@ METHOD public T dev.havlli.fabricate.Unique.get()
 METHOD public T dev.havlli.fabricate.WeightedPicker.pick()
 METHOD public abstract <R> dev.havlli.fabricate.Gen<R> dev.havlli.fabricate.Gen.map(java.util.function.Function<? super T, ? extends R>)
 METHOD public abstract T dev.havlli.fabricate.Gen.get()
+METHOD public abstract dev.havlli.fabricate.AddressGen dev.havlli.fabricate.AddressGen.city(dev.havlli.fabricate.Gen<? extends java.lang.String>)
+METHOD public abstract dev.havlli.fabricate.AddressGen dev.havlli.fabricate.AddressGen.city(java.lang.String)
+METHOD public abstract dev.havlli.fabricate.AddressGen dev.havlli.fabricate.AddressGen.country(dev.havlli.fabricate.Gen<? extends java.lang.String>)
+METHOD public abstract dev.havlli.fabricate.AddressGen dev.havlli.fabricate.AddressGen.country(java.lang.String)
+METHOD public abstract dev.havlli.fabricate.AddressGen dev.havlli.fabricate.AddressGen.postalCode(dev.havlli.fabricate.Gen<? extends java.lang.String>)
+METHOD public abstract dev.havlli.fabricate.AddressGen dev.havlli.fabricate.AddressGen.postalCode(java.lang.String)
+METHOD public abstract dev.havlli.fabricate.AddressGen dev.havlli.fabricate.AddressGen.state(dev.havlli.fabricate.Gen<? extends java.lang.String>)
+METHOD public abstract dev.havlli.fabricate.AddressGen dev.havlli.fabricate.AddressGen.state(java.lang.String)
+METHOD public abstract dev.havlli.fabricate.AddressGen dev.havlli.fabricate.AddressGen.street(dev.havlli.fabricate.Gen<? extends java.lang.String>)
+METHOD public abstract dev.havlli.fabricate.AddressGen dev.havlli.fabricate.AddressGen.street(java.lang.String)
 METHOD public abstract dev.havlli.fabricate.Gen<T> dev.havlli.fabricate.Gen.orNull(double)
 METHOD public abstract dev.havlli.fabricate.Gen<T> dev.havlli.fabricate.Gen.unique()
 METHOD public abstract dev.havlli.fabricate.Gen<T> dev.havlli.fabricate.Gen.unique(int)
 METHOD public abstract dev.havlli.fabricate.Gen<java.util.Optional<T>> dev.havlli.fabricate.Gen.optional(double)
+METHOD public abstract dev.havlli.fabricate.PersonGen dev.havlli.fabricate.PersonGen.address(dev.havlli.fabricate.Gen<? extends dev.havlli.fabricate.model.Address>)
+METHOD public abstract dev.havlli.fabricate.PersonGen dev.havlli.fabricate.PersonGen.address(dev.havlli.fabricate.model.Address)
+METHOD public abstract dev.havlli.fabricate.PersonGen dev.havlli.fabricate.PersonGen.dateOfBirth(dev.havlli.fabricate.Gen<? extends java.time.LocalDate>)
+METHOD public abstract dev.havlli.fabricate.PersonGen dev.havlli.fabricate.PersonGen.dateOfBirth(java.time.LocalDate)
+METHOD public abstract dev.havlli.fabricate.PersonGen dev.havlli.fabricate.PersonGen.email(dev.havlli.fabricate.Gen<? extends java.lang.String>)
+METHOD public abstract dev.havlli.fabricate.PersonGen dev.havlli.fabricate.PersonGen.email(java.lang.String)
+METHOD public abstract dev.havlli.fabricate.PersonGen dev.havlli.fabricate.PersonGen.firstName(dev.havlli.fabricate.Gen<? extends java.lang.String>)
+METHOD public abstract dev.havlli.fabricate.PersonGen dev.havlli.fabricate.PersonGen.firstName(java.lang.String)
+METHOD public abstract dev.havlli.fabricate.PersonGen dev.havlli.fabricate.PersonGen.jobTitle(dev.havlli.fabricate.Gen<? extends java.lang.String>)
+METHOD public abstract dev.havlli.fabricate.PersonGen dev.havlli.fabricate.PersonGen.jobTitle(java.lang.String)
+METHOD public abstract dev.havlli.fabricate.PersonGen dev.havlli.fabricate.PersonGen.lastName(dev.havlli.fabricate.Gen<? extends java.lang.String>)
+METHOD public abstract dev.havlli.fabricate.PersonGen dev.havlli.fabricate.PersonGen.lastName(java.lang.String)
+METHOD public abstract dev.havlli.fabricate.PersonGen dev.havlli.fabricate.PersonGen.phoneNumber(dev.havlli.fabricate.Gen<? extends java.lang.String>)
+METHOD public abstract dev.havlli.fabricate.PersonGen dev.havlli.fabricate.PersonGen.phoneNumber(java.lang.String)
+METHOD public abstract dev.havlli.fabricate.PersonGen dev.havlli.fabricate.PersonGen.uid(dev.havlli.fabricate.Gen<? extends java.util.UUID>)
+METHOD public abstract dev.havlli.fabricate.PersonGen dev.havlli.fabricate.PersonGen.uid(java.lang.String)
+METHOD public abstract dev.havlli.fabricate.PersonGen dev.havlli.fabricate.PersonGen.uid(java.util.UUID)
+METHOD public abstract dev.havlli.fabricate.PersonGen dev.havlli.fabricate.PersonGen.username(dev.havlli.fabricate.Gen<? extends java.lang.String>)
+METHOD public abstract dev.havlli.fabricate.PersonGen dev.havlli.fabricate.PersonGen.username(java.lang.String)
 METHOD public abstract dev.havlli.fabricate.RecordGen<T> dev.havlli.fabricate.RecordGen.with(java.lang.String,dev.havlli.fabricate.Gen<?>)
 METHOD public abstract dev.havlli.fabricate.RecordGen<T> dev.havlli.fabricate.RecordGen.with(java.lang.String,java.lang.Object)
 METHOD public abstract dev.havlli.fabricate.RecordGen<T> dev.havlli.fabricate.RecordGen.with(java.lang.String,java.util.function.Supplier<?>)
@@ -95,10 +124,12 @@ METHOD public boolean dev.havlli.fabricate.junit.FabricateExtension.supportsPara
 METHOD public boolean dev.havlli.fabricate.provider.Booleans.any()
 METHOD public boolean dev.havlli.fabricate.provider.Booleans.withProbability(double)
 METHOD public boolean dev.havlli.fabricate.provider.Dates.isWeekend(java.time.LocalDate)
+METHOD public dev.havlli.fabricate.AddressGen dev.havlli.fabricate.Fabricate.address()
 METHOD public dev.havlli.fabricate.Fabricate dev.havlli.fabricate.Fabricate$Builder.build()
 METHOD public dev.havlli.fabricate.Fabricate$Builder dev.havlli.fabricate.Fabricate$Builder.locale(java.util.Locale)
 METHOD public dev.havlli.fabricate.Fabricate$Builder dev.havlli.fabricate.Fabricate$Builder.localeRegistry(dev.havlli.fabricate.locale.LocaleRegistry)
 METHOD public dev.havlli.fabricate.Fabricate$Builder dev.havlli.fabricate.Fabricate$Builder.seed(long)
+METHOD public dev.havlli.fabricate.PersonGen dev.havlli.fabricate.Fabricate.person()
 METHOD public dev.havlli.fabricate.Templates dev.havlli.fabricate.Fabricate.templates()
 METHOD public dev.havlli.fabricate.Templates dev.havlli.fabricate.Templates.with(java.lang.String,java.util.function.Supplier<?>)
 METHOD public dev.havlli.fabricate.WeightedPicker$Builder<T> dev.havlli.fabricate.WeightedPicker$Builder.add(T,double)
@@ -569,11 +600,13 @@ METHOD public static void dev.havlli.fabricate.Trials.run(int,java.util.Locale,j
 METHOD public static void dev.havlli.fabricate.Trials.run(int,java.util.function.Consumer<dev.havlli.fabricate.Fabricate>)
 METHOD public void dev.havlli.fabricate.Unique.reset()
 METHOD public void dev.havlli.fabricate.junit.FabricateExtension.beforeEach(org.junit.jupiter.api.extension.ExtensionContext)
+SUPER dev.havlli.fabricate.AddressGen extends dev.havlli.fabricate.Gen<dev.havlli.fabricate.model.Address>
 SUPER dev.havlli.fabricate.BeanFiller extends java.lang.Object
 SUPER dev.havlli.fabricate.Fabricate extends java.lang.Object
 SUPER dev.havlli.fabricate.Fabricate$Builder extends java.lang.Object
 SUPER dev.havlli.fabricate.Fake extends java.lang.Object
 SUPER dev.havlli.fabricate.Gen extends java.util.function.Supplier<T>
+SUPER dev.havlli.fabricate.PersonGen extends dev.havlli.fabricate.Gen<dev.havlli.fabricate.model.Person>
 SUPER dev.havlli.fabricate.RecordGen extends dev.havlli.fabricate.Gen<T>
 SUPER dev.havlli.fabricate.Sequence extends java.lang.Object
 SUPER dev.havlli.fabricate.Sequence$Counter extends java.lang.Object
@@ -721,7 +754,9 @@ TYPE class public static final class dev.havlli.fabricate.Sequence$Cycle<T>
 TYPE class public static final class dev.havlli.fabricate.WeightedPicker$Builder<T>
 TYPE class public static final class dev.havlli.fabricate.model.Address$Builder
 TYPE class public static final class dev.havlli.fabricate.provider.Persons$Builder
+TYPE interface public abstract interface dev.havlli.fabricate.AddressGen
 TYPE interface public abstract interface dev.havlli.fabricate.Gen<T>
+TYPE interface public abstract interface dev.havlli.fabricate.PersonGen
 TYPE interface public abstract interface dev.havlli.fabricate.RecordGen<T>
 TYPE interface public abstract interface dev.havlli.fabricate.spi.LocaleData
 TYPE interface public abstract interface dev.havlli.fabricate.spi.LocaleProvider

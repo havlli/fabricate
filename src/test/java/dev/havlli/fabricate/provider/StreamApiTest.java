@@ -14,6 +14,7 @@ import dev.havlli.fabricate.model.Person;
 import dev.havlli.fabricate.random.Rng;
 import org.junit.jupiter.api.Test;
 
+@SuppressWarnings("removal")
 class StreamApiTest {
 
     @Test

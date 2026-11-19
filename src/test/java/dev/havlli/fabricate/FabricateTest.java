@@ -9,6 +9,7 @@ import java.util.stream.IntStream;
 import dev.havlli.fabricate.model.Person;
 import org.junit.jupiter.api.Test;
 
+@SuppressWarnings("removal")
 class FabricateTest {
 
     @Test

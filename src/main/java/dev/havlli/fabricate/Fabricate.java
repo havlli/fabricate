@@ -44,8 +44,8 @@ import org.jspecify.annotations.Nullable;
  *     .seed(42L)
  *     .build();
  *
- * Person p = fab.persons().person();
- * Person ceo = fab.persons().builder().jobTitle("CEO").build(); // override one field
+ * Person p = fab.person().get();
+ * Person ceo = fab.person().jobTitle("CEO").get(); // override one field
  * }
  *
  * Instances are immutable and thread-confined: create one per thread, or
@@ -131,6 +131,12 @@ public final class Fabricate {
     public JobTitles jobTitles()     { return jobTitles; }
     public Identities identities()   { return identities; }
     public Passwords passwords()     { return passwords; }
+    /**
+     * Returns the legacy person provider.
+     *
+     * @deprecated Use {@link #person()} for fluent person generation.
+     */
+    @Deprecated(since = "0.2.0", forRemoval = true)
     public Persons persons()         { return persons; }
     public Numbers numbers()         { return numbers; }
     public Booleans booleans()       { return booleans; }
@@ -140,6 +146,30 @@ public final class Fabricate {
     public Finance finance()         { return finance; }
     public Commerce commerce()       { return commerce; }
     public DevOps devops()           { return devops; }
+
+    /**
+     * Returns a new fluent person generator bound to this instance's RNG.
+     * With no overrides, draws match the legacy person provider's draw order.
+     * Overridden fields skip default generation and consume no RNG themselves;
+     * supplied generators may consume random values on each draw.
+     *
+     * @return a new immutable person generator configuration
+     */
+    public PersonGen person() {
+        return new DefaultPersonGen(this);
+    }
+
+    /**
+     * Returns a new fluent address generator bound to this instance's RNG.
+     * With no overrides, draws match {@link Addresses#address()} draw for draw.
+     * Overridden fields skip default generation and consume no RNG themselves;
+     * supplied generators may consume random values on each draw.
+     *
+     * @return a new immutable address generator configuration
+     */
+    public AddressGen address() {
+        return new DefaultAddressGen(this);
+    }
 
     /** Reflectively populates a record or POJO type with random values. */
     public <T> T fill(Class<T> type) {

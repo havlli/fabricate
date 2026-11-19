@@ -18,10 +18,24 @@ public record Address(
         Objects.requireNonNull(country, "country");
     }
 
+    /**
+     * Returns a legacy mutable address builder.
+     *
+     * @deprecated Use {@link dev.havlli.fabricate.Fabricate#address()} or
+     *             {@link Address#Address(String, String, String, String, String)}.
+     */
+    @Deprecated(since = "0.2.0", forRemoval = true)
     public static Builder builder() {
         return new Builder();
     }
 
+    /**
+     * A legacy mutable address builder.
+     *
+     * @deprecated Use {@link dev.havlli.fabricate.Fabricate#address()} or
+     *             {@link Address#Address(String, String, String, String, String)}.
+     */
+    @Deprecated(since = "0.2.0", forRemoval = true)
     public static final class Builder {
         private @Nullable String street;
         private @Nullable String city;

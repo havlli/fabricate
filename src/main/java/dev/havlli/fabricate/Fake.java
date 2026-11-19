@@ -101,6 +101,7 @@ public final class Fake {
     public static LocalDate dateOfBirth()      { return instance.datesOfBirth().birthdate(); }
 
     // --- Records ---
+    @SuppressWarnings("removal") // Preserve legacy provider behavior.
     public static Person person()              { return instance.persons().person(); }
     public static <T> T fill(Class<T> type)    { return instance.fill(type); }
 
