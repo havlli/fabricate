@@ -4,6 +4,10 @@
 
 ### Added
 
+- Instance sinks via `Sinks.csv()`, `Sinks.jsonLines()`, and `Sinks.sql(table)`
+  for iterable and stream input, with Path, Writer, and string output. SQL sinks
+  support immutable `batchSize(n)` configuration.
+
 - `Fabricate.person()` / `PersonGen` and `Fabricate.address()` / `AddressGen` for
   fluent generation with immutable fixed-value and generator overrides, nested
   address generators, and derived email and username defaults. Person uids accept
@@ -17,6 +21,10 @@
   nullable values using the owning instance's RNG.
 
 ### Deprecated
+
+- `Sinks.toCsv`, `toCsvString`, `toJsonLines`, `toJsonLinesString`,
+  `toSqlInserts`, and `toSqlInsertsString`, for removal since 0.2.0; use the
+  instance sinks. `Sinks.toJsonString(Record)` remains supported.
 
 - `Fabricate.persons()`, `Persons.builder()`, and `Persons.Builder`, for removal
   since 0.2.0; use `Fabricate.person()`.
