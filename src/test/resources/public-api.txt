@@ -102,6 +102,7 @@ METHOD public abstract dev.havlli.fabricate.RecordGen<T> dev.havlli.fabricate.Re
 METHOD public abstract dev.havlli.fabricate.RecordGen<T> dev.havlli.fabricate.RecordGen.with(java.lang.String,java.util.function.Supplier<?>)
 METHOD public abstract dev.havlli.fabricate.sink.SqlSink<T> dev.havlli.fabricate.sink.SqlSink.batchSize(int)
 METHOD public abstract dev.havlli.fabricate.spi.LocaleData dev.havlli.fabricate.spi.LocaleProvider.get()
+METHOD public abstract int dev.havlli.fabricate.junit.Fabricated.size()
 METHOD public abstract java.lang.String dev.havlli.fabricate.junit.FabricateTest.locale()
 METHOD public abstract java.lang.String dev.havlli.fabricate.sink.Sink.writeToString(java.lang.Iterable<? extends T>)
 METHOD public abstract java.lang.String dev.havlli.fabricate.sink.Sink.writeToString(java.util.stream.Stream<? extends T>)
@@ -631,6 +632,7 @@ SUPER dev.havlli.fabricate.junit.FabricateExtension extends java.lang.Object
 SUPER dev.havlli.fabricate.junit.FabricateExtension implements org.junit.jupiter.api.extension.BeforeEachCallback
 SUPER dev.havlli.fabricate.junit.FabricateExtension implements org.junit.jupiter.api.extension.ParameterResolver
 SUPER dev.havlli.fabricate.junit.FabricateTest extends java.lang.annotation.Annotation
+SUPER dev.havlli.fabricate.junit.Fabricated extends java.lang.annotation.Annotation
 SUPER dev.havlli.fabricate.junit.Seed extends java.lang.annotation.Annotation
 SUPER dev.havlli.fabricate.locale.ArabicLocale extends java.lang.Object
 SUPER dev.havlli.fabricate.locale.ArabicLocale implements dev.havlli.fabricate.spi.LocaleData
@@ -704,6 +706,7 @@ SUPER dev.havlli.fabricate.random.Rng extends java.lang.Object
 SUPER dev.havlli.fabricate.sink.Sinks extends java.lang.Object
 SUPER dev.havlli.fabricate.sink.SqlSink extends dev.havlli.fabricate.sink.Sink<T>
 TYPE annotation public abstract @interface dev.havlli.fabricate.junit.FabricateTest
+TYPE annotation public abstract @interface dev.havlli.fabricate.junit.Fabricated
 TYPE annotation public abstract @interface dev.havlli.fabricate.junit.Seed
 TYPE class public final class dev.havlli.fabricate.BeanFiller
 TYPE class public final class dev.havlli.fabricate.Fabricate
