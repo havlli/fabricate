@@ -44,6 +44,10 @@ import org.jspecify.annotations.Nullable;
  *     .seed(42L)
  *     .build();
  *
+ * String name = fab.name().full();
+ * String email = fab.internet().email();
+ * int score = fab.number().between(1, 500);
+ * String title = fab.job().title();
  * Person p = fab.person().get();
  * Person ceo = fab.person().jobTitle("CEO").get(); // override one field
  * }
@@ -55,25 +59,37 @@ public final class Fabricate {
 
     private final LocaleData locale;
     private final Rng rng;
-    private final Names names;
-    private final Emails emails;
-    private final Phones phones;
-    private final Addresses addresses;
-    private final DatesOfBirth datesOfBirth;
-    private final JobTitles jobTitles;
-    private final Identities identities;
-    private final Passwords passwords;
+    // Shared providers are package-private for internal delegates; public access is via generators.
+    final Names names;
+    final Emails emails;
+    final Phones phones;
+    final Addresses addresses;
+    final DatesOfBirth datesOfBirth;
+    final JobTitles jobTitles;
+    final Identities identities;
+    final Passwords passwords;
     private final Persons persons;
-    private final Numbers numbers;
-    private final Booleans booleans;
-    private final Texts texts;
+    final Numbers numbers;
+    final Booleans booleans;
+    final Texts texts;
     private final Internet internet;
-    private final Files files;
+    final Files files;
     private final Finance finance;
     private final Commerce commerce;
     private final DevOps devops;
-    private final Dates dates;
+    final Dates dates;
     private final Geo geo;
+    private final NameGen nameGen;
+    private final PhoneGen phoneGen;
+    private final DateOfBirthGen dateOfBirthGen;
+    private final DateGen dateGen;
+    private final JobGen jobGen;
+    private final IdentityGen identityGen;
+    private final PasswordGen passwordGen;
+    private final NumberGen numberGen;
+    private final BoolGen boolGen;
+    private final TextGen textGen;
+    private final FileGen fileGen;
     private final BeanEngine beanEngine;
     private final Templates templates;
 
@@ -92,13 +108,24 @@ public final class Fabricate {
         this.numbers = new Numbers(rng);
         this.booleans = new Booleans(rng);
         this.texts = new Texts(rng);
-        this.internet = new Internet(rng);
+        this.internet = new Internet(locale, rng);
         this.files = new Files(rng);
         this.finance = new Finance(rng);
         this.commerce = new Commerce(rng);
         this.devops = new DevOps(rng);
         this.dates = new Dates(rng);
         this.geo = new Geo(rng);
+        this.nameGen = new DefaultNameGen(this);
+        this.phoneGen = new DefaultPhoneGen(this);
+        this.dateOfBirthGen = new DefaultDateOfBirthGen(this);
+        this.dateGen = new DefaultDateGen(this);
+        this.jobGen = new DefaultJobGen(this);
+        this.identityGen = new DefaultIdentityGen(this);
+        this.passwordGen = new DefaultPasswordGen(this);
+        this.numberGen = new DefaultNumberGen(this);
+        this.boolGen = new DefaultBoolGen(this);
+        this.textGen = new DefaultTextGen(this);
+        this.fileGen = new DefaultFileGen(this);
         this.beanEngine = new BeanEngine(this);
         this.templates = new Templates(this);
     }
@@ -121,16 +148,102 @@ public final class Fabricate {
 
     public LocaleData locale()       { return locale; }
     public Rng rng()                 { return rng; }
-    public Names names()             { return names; }
-    public Emails emails()           { return emails; }
-    public Phones phones()           { return phones; }
-    public Addresses addresses()     { return addresses; }
-    public DatesOfBirth datesOfBirth()  { return datesOfBirth; }
-    public Dates dates()             { return dates; }
+
+    /**
+     * Returns the legacy name provider.
+     *
+     * @deprecated Use {@link #name()}.
+     */
+    @Deprecated(since = "0.2.0", forRemoval = true)
+    public Names names() { return names; }
+
+    /** Returns the name generator sharing this instance's provider. */
+    public NameGen name() { return nameGen; }
+
+    /**
+     * Returns the legacy email provider.
+     *
+     * @deprecated Use {@link #internet()} and {@link Internet#email()} or
+     *             {@link Internet#email(String, String)}.
+     */
+    @Deprecated(since = "0.2.0", forRemoval = true)
+    public Emails emails() { return emails; }
+
+    /**
+     * Returns the legacy phone provider.
+     *
+     * @deprecated Use {@link #phone()}.
+     */
+    @Deprecated(since = "0.2.0", forRemoval = true)
+    public Phones phones() { return phones; }
+
+    /** Returns the phone generator sharing this instance's provider. */
+    public PhoneGen phone() { return phoneGen; }
+
+    /**
+     * Returns the legacy address provider.
+     *
+     * @deprecated Use {@link #address()} and {@link AddressGen#get()}.
+     */
+    @Deprecated(since = "0.2.0", forRemoval = true)
+    public Addresses addresses() { return addresses; }
+
+    /**
+     * Returns the legacy date-of-birth provider.
+     *
+     * @deprecated Use {@link #dateOfBirth()}.
+     */
+    @Deprecated(since = "0.2.0", forRemoval = true)
+    public DatesOfBirth datesOfBirth() { return datesOfBirth; }
+
+    /** Returns the date-of-birth generator sharing this instance's provider. */
+    public DateOfBirthGen dateOfBirth() { return dateOfBirthGen; }
+
+    /**
+     * Returns the legacy date provider.
+     *
+     * @deprecated Use {@link #date()}.
+     */
+    @Deprecated(since = "0.2.0", forRemoval = true)
+    public Dates dates() { return dates; }
+
+    /** Returns the date generator sharing this instance's provider. */
+    public DateGen date() { return dateGen; }
     public Geo geo()                 { return geo; }
-    public JobTitles jobTitles()     { return jobTitles; }
-    public Identities identities()   { return identities; }
-    public Passwords passwords()     { return passwords; }
+
+    /**
+     * Returns the legacy job provider.
+     *
+     * @deprecated Use {@link #job()}.
+     */
+    @Deprecated(since = "0.2.0", forRemoval = true)
+    public JobTitles jobTitles() { return jobTitles; }
+
+    /** Returns the job generator sharing this instance's provider. */
+    public JobGen job() { return jobGen; }
+
+    /**
+     * Returns the legacy identity provider.
+     *
+     * @deprecated Use {@link #identity()}.
+     */
+    @Deprecated(since = "0.2.0", forRemoval = true)
+    public Identities identities() { return identities; }
+
+    /** Returns the identity generator sharing this instance's provider. */
+    public IdentityGen identity() { return identityGen; }
+
+    /**
+     * Returns the legacy password provider.
+     *
+     * @deprecated Use {@link #password()}.
+     */
+    @Deprecated(since = "0.2.0", forRemoval = true)
+    public Passwords passwords() { return passwords; }
+
+    /** Returns the password generator sharing this instance's provider. */
+    public PasswordGen password() { return passwordGen; }
+
     /**
      * Returns the legacy person provider.
      *
@@ -138,11 +251,51 @@ public final class Fabricate {
      */
     @Deprecated(since = "0.2.0", forRemoval = true)
     public Persons persons()         { return persons; }
-    public Numbers numbers()         { return numbers; }
-    public Booleans booleans()       { return booleans; }
-    public Texts texts()             { return texts; }
+
+    /**
+     * Returns the legacy number provider.
+     *
+     * @deprecated Use {@link #number()}.
+     */
+    @Deprecated(since = "0.2.0", forRemoval = true)
+    public Numbers numbers() { return numbers; }
+
+    /** Returns the number generator sharing this instance's provider. */
+    public NumberGen number() { return numberGen; }
+
+    /**
+     * Returns the legacy boolean provider.
+     *
+     * @deprecated Use {@link #bool()}.
+     */
+    @Deprecated(since = "0.2.0", forRemoval = true)
+    public Booleans booleans() { return booleans; }
+
+    /** Returns the boolean generator sharing this instance's provider. */
+    public BoolGen bool() { return boolGen; }
+
+    /**
+     * Returns the legacy text provider.
+     *
+     * @deprecated Use {@link #text()}.
+     */
+    @Deprecated(since = "0.2.0", forRemoval = true)
+    public Texts texts() { return texts; }
+
+    /** Returns the text generator sharing this instance's provider. */
+    public TextGen text() { return textGen; }
     public Internet internet()       { return internet; }
-    public Files files()             { return files; }
+
+    /**
+     * Returns the legacy file provider.
+     *
+     * @deprecated Use {@link #file()}.
+     */
+    @Deprecated(since = "0.2.0", forRemoval = true)
+    public Files files() { return files; }
+
+    /** Returns the file generator sharing this instance's provider. */
+    public FileGen file() { return fileGen; }
     public Finance finance()         { return finance; }
     public Commerce commerce()       { return commerce; }
     public DevOps devops()           { return devops; }

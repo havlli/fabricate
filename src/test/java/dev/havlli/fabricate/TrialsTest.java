@@ -21,7 +21,7 @@ class TrialsTest {
     @Test
     void run_failureReportsFailingSeed() {
         assertThatThrownBy(() -> Trials.run(20, fab -> {
-            String name = fab.names().firstName();
+            String name = fab.name().first();
             if (name.length() > 0) {
                 throw new RuntimeException("boom on " + name);
             }
@@ -33,7 +33,7 @@ class TrialsTest {
     @Test
     void run_passingThrough_doesNotFail() {
         Trials.run(10, fab -> {
-            assertThat(fab.names().firstName()).isNotBlank();
+            assertThat(fab.name().first()).isNotBlank();
         });
     }
 
@@ -69,8 +69,8 @@ class TrialsTest {
         java.util.List<String> firstRun = new java.util.ArrayList<>();
         java.util.List<String> secondRun = new java.util.ArrayList<>();
 
-        Trials.run(10, fab -> firstRun.add(fab.emails().email()));
-        Trials.run(10, fab -> secondRun.add(fab.emails().email()));
+        Trials.run(10, fab -> firstRun.add(fab.internet().email()));
+        Trials.run(10, fab -> secondRun.add(fab.internet().email()));
 
         assertThat(firstRun).isEqualTo(secondRun);
     }

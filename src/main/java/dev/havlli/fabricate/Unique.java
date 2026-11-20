@@ -16,7 +16,7 @@ import java.util.stream.Stream;
  *
  * {@snippet :
  * Fabricate fab = Fabricate.builder().seed(7L).build();
- * Unique<String> emails = Unique.of(fab.emails()::email);
+ * Unique<String> emails = Unique.of(fab.internet()::email);
  * List<String> distinct = emails.list(50);
  * }
  *

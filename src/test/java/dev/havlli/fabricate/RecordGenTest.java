@@ -312,7 +312,7 @@ class RecordGenTest {
         Fabricate expected = seeded();
         RecordGen<Counts> gen = generated.of(Counts.class).with("first", -1);
         for (int i = 0; i < 10; i++) {
-            assertThat(gen.get()).isEqualTo(new Counts(-1, expected.numbers().intBetween(0, 1_000_000)));
+            assertThat(gen.get()).isEqualTo(new Counts(-1, expected.number().between(0, 1_000_000)));
         }
         assertThat(generated.rng().delegate().nextLong()).isEqualTo(expected.rng().delegate().nextLong());
     }

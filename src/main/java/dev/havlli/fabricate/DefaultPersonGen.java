@@ -15,15 +15,15 @@ final class DefaultPersonGen extends DefaultGen<Person> implements PersonGen {
 
     DefaultPersonGen(Fabricate fab) {
         this(fab, new Sources(
-                fab.names()::firstName,
-                fab.names()::lastName,
+                fab.names::firstName,
+                fab.names::lastName,
                 null,
-                fab.identities()::uuid,
+                fab.identities::uuid,
                 null,
-                fab.phones()::phoneNumber,
-                fab.addresses()::address,
-                fab.datesOfBirth()::birthdate,
-                fab.jobTitles()::jobTitle));
+                fab.phones::phoneNumber,
+                fab.addresses::address,
+                fab.datesOfBirth::birthdate,
+                fab.jobTitles::jobTitle));
     }
 
     private DefaultPersonGen(Fabricate fab, Sources sources) {
@@ -183,10 +183,10 @@ final class DefaultPersonGen extends DefaultGen<Person> implements PersonGen {
         // Preserve Persons.Builder.build()'s order, including dependent defaults.
         String firstName = sources.firstName.get();
         String lastName = sources.lastName.get();
-        String email = sources.email != null ? sources.email.get() : fab.emails().email(firstName, lastName);
+        String email = sources.email != null ? sources.email.get() : fab.emails.email(firstName, lastName);
         UUID uid = sources.uid.get();
         String username = sources.username != null ? sources.username.get()
-                : fab.identities().username(firstName, lastName, uid);
+                : fab.identities.username(firstName, lastName, uid);
         String phoneNumber = sources.phoneNumber.get();
         Address address = sources.address.get();
         LocalDate dateOfBirth = sources.dateOfBirth.get();

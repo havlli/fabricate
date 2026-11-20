@@ -8,10 +8,10 @@ import dev.havlli.fabricate.random.Rng;
  * File-system primitives: file names, paths, extensions, MIME types.
  *
  * {@snippet :
- * String name = fab.files().fileName();         // ut-iure-debitis.pdf
- * String pdf  = fab.files().fileName("pdf");    // <slug>.pdf
- * String mime = fab.files().mimeType();         // application/json
- * String full = fab.files().path();             // /var/log/foo/bar/quux.log
+ * String name = fab.file().name();         // ut-iure-debitis.pdf
+ * String pdf  = fab.file().name("pdf");    // <slug>.pdf
+ * String mime = fab.file().mimeType();         // application/json
+ * String full = fab.file().path();             // /var/log/foo/bar/quux.log
  * }
  */
 public final class Files {

@@ -21,7 +21,6 @@ import org.junit.jupiter.api.Test;
  * regression (e.g. accidentally adding a network call).
  */
 @Tag("bench")
-@SuppressWarnings("removal")
 class BenchmarkTest {
 
     private static final long WARMUP_NANOS = 200_000_000L; // 200 ms
@@ -34,17 +33,17 @@ class BenchmarkTest {
 
         record Bench(String name, Supplier<?> body) {}
         java.util.List<Bench> benches = java.util.List.of(
-                new Bench("names.firstName", fab.names()::firstName),
-                new Bench("emails.email", fab.emails()::email),
-                new Bench("addresses.address", fab.addresses()::address),
+                new Bench("names.firstName", fab.name()::first),
+                new Bench("emails.email", fab.internet()::email),
+                new Bench("addresses.address", fab.address()::get),
                 new Bench("internet.url", fab.internet()::url),
                 new Bench("internet.ipv4", fab.internet()::ipv4),
                 new Bench("finance.iban", fab.finance()::iban),
                 new Bench("finance.creditCard", fab.finance()::creditCard),
                 new Bench("commerce.isbn13", fab.commerce()::isbn13),
                 new Bench("devops.semver", fab.devops()::semver),
-                new Bench("identities.uuid", fab.identities()::uuid),
-                new Bench("persons.person", (Supplier<Person>) fab.persons()::person),
+                new Bench("identities.uuid", fab.identity()::uuid),
+                new Bench("persons.person", (Supplier<Person>) fab.person()::get),
                 new Bench("fill(Person.class)", () -> fab.fill(Person.class))
         );
 

@@ -10,6 +10,7 @@ import java.util.function.Function;
 import dev.havlli.fabricate.model.Address;
 import org.junit.jupiter.api.Test;
 
+@SuppressWarnings("removal") // Compare against the legacy address provider’s semantics.
 class AddressGenTest {
 
     private static Fabricate seeded() {
