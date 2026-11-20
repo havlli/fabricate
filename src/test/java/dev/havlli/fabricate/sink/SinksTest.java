@@ -10,6 +10,7 @@ import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
+@SuppressWarnings("removal") // Deliberately exercise the legacy API and its encoding contract.
 class SinksTest {
 
     record Row(int id, String name, boolean active) {}

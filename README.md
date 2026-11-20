@@ -25,9 +25,9 @@ Built for tests, demos, fixtures, and corpus generation. Java 21+. JPMS-ready.
 - **Locale-aware** — built-in pools for English, Chinese, Russian (Cyrillic),
   Japanese (CJK + Kana), Korean (Hangul), Arabic (RTL), and German (Latin
   with umlauts). Plus an SPI (`LocaleProvider`) for adding your own.
-- **One-line corpus dumpers** — `Sinks.toCsv(rows, path)`,
-  `Sinks.toJsonLines(rows, path)`, `Sinks.toSqlInserts(rows, table, path)`
-  for any list of records.
+- **One-line corpus dumpers** — `Sinks.csv().write(rows, path)`,
+  `Sinks.jsonLines().write(rows, path)`, `Sinks.sql(table).write(rows, path)`
+  for any iterable or stream of records, with Path, Writer, and string output.
 - **Stream APIs** — `fab.person().stream()` for lazy unbounded sequences,
   `fab.person().list(n)` for bounded eager generation, `fab.repeat(n, …)`
   for arbitrary suppliers.
@@ -118,9 +118,13 @@ record Customer(String firstName, String email, LocalDate dateOfBirth) {}
 Customer c = fab.fill(Customer.class);
 
 // dump 1k rows to a CSV/JSONL/SQL fixture
-Sinks.toCsv(bulk, Path.of("people.csv"));
-Sinks.toJsonLines(bulk, Path.of("people.jsonl"));
-Sinks.toSqlInserts(bulk, "person", Path.of("people.sql"));
+Sinks.csv().write(bulk, Path.of("people.csv"));
+Sinks.jsonLines().write(bulk, Path.of("people.jsonl"));
+Sinks.sql("person").batchSize(500).write(bulk, Path.of("people.sql"));
+
+// stream directly to JSON Lines without collecting the records first
+Sinks.jsonLines().write(fab.person().stream().limit(10_000), Path.of("corpus.jsonl"));
+String csv = Sinks.csv().writeToString(bulk);
 ```
 
 ### Fluent generators
@@ -184,7 +188,7 @@ properties skip random generation, changing the RNG sequence of later properties
 | `devops`              | `semver`, `gitSha`, `httpStatus`, `branchName`, `dockerImage`, `cloudRegion` |
 | `dates`               | `between`, `recent`/`future`/`past`, `instantBetween`, `weekday`, `month` |
 | `Sequence`            | monotonic `Counter`, cyclic `Cycle`                           |
-| `Sinks`               | `toCsv`, `toJsonLines`, `toSqlInserts` over any record stream |
+| `Sinks`               | `csv()`, `jsonLines()`, `sql(table)` over record iterables or streams |
 
 ## JUnit 5 extension
 

@@ -100,8 +100,11 @@ METHOD public abstract dev.havlli.fabricate.PersonGen dev.havlli.fabricate.Perso
 METHOD public abstract dev.havlli.fabricate.RecordGen<T> dev.havlli.fabricate.RecordGen.with(java.lang.String,dev.havlli.fabricate.Gen<?>)
 METHOD public abstract dev.havlli.fabricate.RecordGen<T> dev.havlli.fabricate.RecordGen.with(java.lang.String,java.lang.Object)
 METHOD public abstract dev.havlli.fabricate.RecordGen<T> dev.havlli.fabricate.RecordGen.with(java.lang.String,java.util.function.Supplier<?>)
+METHOD public abstract dev.havlli.fabricate.sink.SqlSink<T> dev.havlli.fabricate.sink.SqlSink.batchSize(int)
 METHOD public abstract dev.havlli.fabricate.spi.LocaleData dev.havlli.fabricate.spi.LocaleProvider.get()
 METHOD public abstract java.lang.String dev.havlli.fabricate.junit.FabricateTest.locale()
+METHOD public abstract java.lang.String dev.havlli.fabricate.sink.Sink.writeToString(java.lang.Iterable<? extends T>)
+METHOD public abstract java.lang.String dev.havlli.fabricate.sink.Sink.writeToString(java.util.stream.Stream<? extends T>)
 METHOD public abstract java.lang.String dev.havlli.fabricate.spi.LocaleData.nameDelimiter()
 METHOD public abstract java.util.List<T> dev.havlli.fabricate.Gen.list(int)
 METHOD public abstract java.util.List<java.lang.String> dev.havlli.fabricate.spi.LocaleData.cities()
@@ -120,6 +123,10 @@ METHOD public abstract java.util.function.UnaryOperator<java.lang.String> dev.ha
 METHOD public abstract java.util.stream.Stream<T> dev.havlli.fabricate.Gen.stream()
 METHOD public abstract long dev.havlli.fabricate.junit.FabricateTest.seed()
 METHOD public abstract long dev.havlli.fabricate.junit.Seed.value()
+METHOD public abstract void dev.havlli.fabricate.sink.Sink.write(java.lang.Iterable<? extends T>,java.io.Writer)
+METHOD public abstract void dev.havlli.fabricate.sink.Sink.write(java.lang.Iterable<? extends T>,java.nio.file.Path)
+METHOD public abstract void dev.havlli.fabricate.sink.Sink.write(java.util.stream.Stream<? extends T>,java.io.Writer)
+METHOD public abstract void dev.havlli.fabricate.sink.Sink.write(java.util.stream.Stream<? extends T>,java.nio.file.Path)
 METHOD public boolean dev.havlli.fabricate.junit.FabricateExtension.supportsParameter(org.junit.jupiter.api.extension.ParameterContext,org.junit.jupiter.api.extension.ExtensionContext)
 METHOD public boolean dev.havlli.fabricate.provider.Booleans.any()
 METHOD public boolean dev.havlli.fabricate.provider.Booleans.withProbability(double)
@@ -489,6 +496,9 @@ METHOD public long dev.havlli.fabricate.provider.DevOps.latencyMs()
 METHOD public long dev.havlli.fabricate.provider.Files.fileSizeBytes()
 METHOD public long dev.havlli.fabricate.provider.Numbers.longBetween(long,long)
 METHOD public long dev.havlli.fabricate.random.Rng.nextLong(long,long)
+METHOD public static <T extends java.lang.Record> dev.havlli.fabricate.sink.Sink<T> dev.havlli.fabricate.sink.Sinks.csv()
+METHOD public static <T extends java.lang.Record> dev.havlli.fabricate.sink.Sink<T> dev.havlli.fabricate.sink.Sinks.jsonLines()
+METHOD public static <T extends java.lang.Record> dev.havlli.fabricate.sink.SqlSink<T> dev.havlli.fabricate.sink.Sinks.sql(java.lang.String)
 METHOD public static <T extends java.lang.Record> java.lang.String dev.havlli.fabricate.sink.Sinks.toCsvString(java.util.List<T>)
 METHOD public static <T extends java.lang.Record> java.lang.String dev.havlli.fabricate.sink.Sinks.toJsonLinesString(java.util.List<T>)
 METHOD public static <T extends java.lang.Record> java.lang.String dev.havlli.fabricate.sink.Sinks.toSqlInsertsString(java.util.List<T>,java.lang.String)
@@ -692,6 +702,7 @@ SUPER dev.havlli.fabricate.provider.Phones extends java.lang.Object
 SUPER dev.havlli.fabricate.provider.Texts extends java.lang.Object
 SUPER dev.havlli.fabricate.random.Rng extends java.lang.Object
 SUPER dev.havlli.fabricate.sink.Sinks extends java.lang.Object
+SUPER dev.havlli.fabricate.sink.SqlSink extends dev.havlli.fabricate.sink.Sink<T>
 TYPE annotation public abstract @interface dev.havlli.fabricate.junit.FabricateTest
 TYPE annotation public abstract @interface dev.havlli.fabricate.junit.Seed
 TYPE class public final class dev.havlli.fabricate.BeanFiller
@@ -758,6 +769,8 @@ TYPE interface public abstract interface dev.havlli.fabricate.AddressGen
 TYPE interface public abstract interface dev.havlli.fabricate.Gen<T>
 TYPE interface public abstract interface dev.havlli.fabricate.PersonGen
 TYPE interface public abstract interface dev.havlli.fabricate.RecordGen<T>
+TYPE interface public abstract interface dev.havlli.fabricate.sink.Sink<T extends java.lang.Record>
+TYPE interface public abstract interface dev.havlli.fabricate.sink.SqlSink<T extends java.lang.Record>
 TYPE interface public abstract interface dev.havlli.fabricate.spi.LocaleData
 TYPE interface public abstract interface dev.havlli.fabricate.spi.LocaleProvider
 TYPE record public final record dev.havlli.fabricate.model.Address
