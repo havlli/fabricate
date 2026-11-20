@@ -15,8 +15,8 @@ class CharsetLocaleTest {
         Fabricate fab = Fabricate.builder().locale(Locale.of("ru")).seed(0L).build();
 
         for (int i = 0; i < 30; i++) {
-            assertThat(allCharsIn(fab.names().firstName(), Set.of(UnicodeBlock.CYRILLIC))).isTrue();
-            assertThat(allCharsIn(fab.names().lastName(), Set.of(UnicodeBlock.CYRILLIC))).isTrue();
+            assertThat(allCharsIn(fab.name().first(), Set.of(UnicodeBlock.CYRILLIC))).isTrue();
+            assertThat(allCharsIn(fab.name().last(), Set.of(UnicodeBlock.CYRILLIC))).isTrue();
         }
     }
 
@@ -29,8 +29,8 @@ class CharsetLocaleTest {
                 UnicodeBlock.KATAKANA);
 
         for (int i = 0; i < 30; i++) {
-            assertThat(allCharsIn(fab.names().firstName(), blocks)).isTrue();
-            assertThat(allCharsIn(fab.names().lastName(), blocks)).isTrue();
+            assertThat(allCharsIn(fab.name().first(), blocks)).isTrue();
+            assertThat(allCharsIn(fab.name().last(), blocks)).isTrue();
         }
     }
 
@@ -43,8 +43,8 @@ class CharsetLocaleTest {
                 UnicodeBlock.HANGUL_COMPATIBILITY_JAMO);
 
         for (int i = 0; i < 30; i++) {
-            assertThat(allCharsIn(fab.names().firstName(), blocks)).isTrue();
-            assertThat(allCharsIn(fab.names().lastName(), blocks)).isTrue();
+            assertThat(allCharsIn(fab.name().first(), blocks)).isTrue();
+            assertThat(allCharsIn(fab.name().last(), blocks)).isTrue();
         }
     }
 
@@ -53,8 +53,8 @@ class CharsetLocaleTest {
         Fabricate fab = Fabricate.builder().locale(Locale.of("ar")).seed(0L).build();
 
         for (int i = 0; i < 30; i++) {
-            assertThat(allCharsIn(fab.names().firstName(), Set.of(UnicodeBlock.ARABIC))).isTrue();
-            assertThat(allCharsIn(fab.names().lastName(), Set.of(UnicodeBlock.ARABIC))).isTrue();
+            assertThat(allCharsIn(fab.name().first(), Set.of(UnicodeBlock.ARABIC))).isTrue();
+            assertThat(allCharsIn(fab.name().last(), Set.of(UnicodeBlock.ARABIC))).isTrue();
         }
     }
 
@@ -63,7 +63,7 @@ class CharsetLocaleTest {
         Fabricate fab = Fabricate.builder().locale(Locale.GERMAN).seed(0L).build();
 
         for (int i = 0; i < 50; i++) {
-            String email = fab.emails().email();
+            String email = fab.internet().email();
             assertThat(email).doesNotContainAnyWhitespaces();
             assertThat(email).matches("[^@]+@[^@]+");
             String local = email.substring(0, email.indexOf('@'));
@@ -78,8 +78,8 @@ class CharsetLocaleTest {
         Set<UnicodeBlock> blocks = Set.of(
                 UnicodeBlock.BASIC_LATIN, UnicodeBlock.LATIN_1_SUPPLEMENT, UnicodeBlock.LATIN_EXTENDED_A);
         for (int i = 0; i < 30; i++) {
-            assertThat(allCharsIn(fab.names().firstName(), blocks)).isTrue();
-            assertThat(allCharsIn(fab.names().lastName(), blocks)).isTrue();
+            assertThat(allCharsIn(fab.name().first(), blocks)).isTrue();
+            assertThat(allCharsIn(fab.name().last(), blocks)).isTrue();
         }
     }
 
@@ -97,8 +97,8 @@ class CharsetLocaleTest {
         Fabricate fab = Fabricate.builder().locale(Locale.of("hi")).seed(0L).build();
 
         for (int i = 0; i < 30; i++) {
-            assertThat(allCharsIn(fab.names().firstName(), Set.of(UnicodeBlock.DEVANAGARI))).isTrue();
-            assertThat(allCharsIn(fab.names().lastName(), Set.of(UnicodeBlock.DEVANAGARI))).isTrue();
+            assertThat(allCharsIn(fab.name().first(), Set.of(UnicodeBlock.DEVANAGARI))).isTrue();
+            assertThat(allCharsIn(fab.name().last(), Set.of(UnicodeBlock.DEVANAGARI))).isTrue();
         }
     }
 
@@ -107,7 +107,7 @@ class CharsetLocaleTest {
         Fabricate fab = Fabricate.builder().locale(Locale.of("hi")).seed(0L).build();
 
         for (int i = 0; i < 30; i++) {
-            String email = fab.emails().email();
+            String email = fab.internet().email();
             String local = email.substring(0, email.indexOf('@'));
             assertThat(local).matches("[\\x00-\\x7F]+");
         }
@@ -122,10 +122,10 @@ class CharsetLocaleTest {
         for (Locale locale : new Locale[]{Locale.of("es"), Locale.FRENCH, Locale.of("pt")}) {
             Fabricate fab = Fabricate.builder().locale(locale).seed(0L).build();
             for (int i = 0; i < 30; i++) {
-                assertThat(allCharsIn(fab.names().firstName(), blocks))
+                assertThat(allCharsIn(fab.name().first(), blocks))
                         .as("firstName for " + locale)
                         .isTrue();
-                assertThat(allCharsIn(fab.names().lastName(), blocks))
+                assertThat(allCharsIn(fab.name().last(), blocks))
                         .as("lastName for " + locale)
                         .isTrue();
             }
@@ -137,7 +137,7 @@ class CharsetLocaleTest {
         for (Locale locale : new Locale[]{Locale.of("es"), Locale.FRENCH, Locale.of("pt")}) {
             Fabricate fab = Fabricate.builder().locale(locale).seed(1L).build();
             for (int i = 0; i < 30; i++) {
-                String email = fab.emails().email();
+                String email = fab.internet().email();
                 String local = email.substring(0, email.indexOf('@'));
                 assertThat(local)
                         .as("email local part for " + locale)

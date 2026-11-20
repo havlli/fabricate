@@ -14,10 +14,10 @@ import dev.havlli.fabricate.random.Rng;
  * Date and time primitives — relative ranges, instants, weekdays, months.
  *
  * {@snippet :
- * LocalDate d  = fab.dates().between(LocalDate.of(2020,1,1), LocalDate.now());
- * LocalDate r  = fab.dates().recent(30);   // within the last 30 days
- * LocalDate f  = fab.dates().future(60);   // within the next 60 days
- * Instant   i  = fab.dates().instantBetween(Instant.now().minusSeconds(3600), Instant.now());
+ * LocalDate d  = fab.date().between(LocalDate.of(2020,1,1), LocalDate.now());
+ * LocalDate r  = fab.date().recent(30);   // within the last 30 days
+ * LocalDate f  = fab.date().future(60);   // within the next 60 days
+ * Instant   i  = fab.date().instantBetween(Instant.now().minusSeconds(3600), Instant.now());
  * }
  */
 public final class Dates {

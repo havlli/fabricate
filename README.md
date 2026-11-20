@@ -34,7 +34,7 @@ Built for tests, demos, fixtures, and corpus generation. Java 21+. JPMS-ready.
 - **Sequences** — `Sequence.counter("USR-", 1)` and
   `Sequence.cycle("admin", "user", "guest")` for deterministic IDs and
   round-robin values.
-- **Unique decorator** — `Unique.of(fab.emails()::email)` produces distinct
+- **Unique decorator** — `Unique.of(fab.internet()::email)` produces distinct
   values with a bounded retry budget; finite pools fail fast and explicitly.
 - **Fluent overrides** — fix one field, randomize the rest:
   `fab.person().firstName("Ada").get()`.
@@ -100,8 +100,11 @@ String env  = Fake.environment();
 // Or build a Fabricate when you need control
 Fabricate fab = Fabricate.builder().seed(42L).build();
 
+String fullName   = fab.name().full();
+int score         = fab.number().between(1, 500);
+String title      = fab.job().title();
 Person person     = fab.person().get();
-String email      = fab.emails().email();
+String email      = fab.internet().email();
 List<Person> bulk = fab.person().list(1_000);
 
 // override one field, randomize the rest
@@ -110,7 +113,7 @@ List<Person> berliners = fab.person().address(fab.address().city("Berlin")).list
 List<Address> de = fab.address().country("Germany").list(10);
 
 // distinct values from a finite pool
-Unique<String> distinctEmails = Unique.of(fab.emails()::email);
+Unique<String> distinctEmails = Unique.of(fab.internet()::email);
 List<String> noDuplicates = distinctEmails.list(50);
 
 // fill any record by reflection
@@ -139,9 +142,9 @@ Wrap any supplier with `fab.gen(...)`, or use `fab.oneOf(...)` for a pool of cho
 ```java
 import java.util.Optional;
 
-List<String> names = fab.gen(fab.names()::fullName).unique().list(100);
+List<String> names = fab.gen(fab.name()::full).unique().list(100);
 List<String> statuses = fab.oneOf("PAID", "OPEN").stream().limit(20).toList();
-List<Optional<String>> emails = fab.gen(fab.emails()::email).optional(0.8).list(10);
+List<Optional<String>> emails = fab.gen(fab.internet()::email).optional(0.8).list(10);
 ```
 
 `Gen<T>` also offers `get()`, `map(fn)`, `orNull(probability)`, and `set(count)`.
@@ -230,6 +233,37 @@ empty list. Raw lists, wildcards, and unsupported types are rejected.
 Unannotated `Fabricate`, `Person`, and `Address` parameters remain supported;
 leave `Fabricate` itself unannotated.
 
+## Singular accessors
+
+Provider interfaces live in `dev.havlli.fabricate`. Obtain them from `Fabricate`;
+users must not implement them. Each accessor shares the existing provider and
+random sequence, so migrating a call preserves draw order for the same seed.
+
+| Legacy call | Replacement |
+|---|---|
+| `names().firstName()` / `lastName()` / `fullName()` | `name().first()` / `last()` / `full()` |
+| `emails().email()` / `email(first, last)` | `internet().email()` / `email(first, last)` |
+| `phones().phoneNumber()` | `phone().number()` |
+| `addresses().address()` | `address().get()` |
+| `datesOfBirth().birthdate()` / `birthdate(min, max)` | `dateOfBirth().get()` / `get(min, max)` |
+| `dates()` | `date()` (same methods) |
+| `jobTitles().jobTitle()` | `job().title()` |
+| `identities()` | `identity()` (`uuid()` / `username(...)`) |
+| `passwords().password(...)` | `password().get(...)` |
+| `numbers().intBetween(...)` / `longBetween(...)` / `doubleBetween(...)` | `number().between(...)` overloads |
+| `booleans().any()` | `bool().get()` |
+| `texts()` | `text()` (same methods) |
+| `files().fileName(...)` / `fileSizeBytes()` | `file().name(...)` / `sizeBytes()` |
+
+The legacy accessors remain available, deprecated for removal since 0.2.0.
+`name()`, `phone()`, `dateOfBirth()`, `job()`, and `identity()` retain `list(count)`
+and lazy `stream()` methods; names draw full names and identities draw UUIDs.
+Email `list` and `stream` remain on the legacy `emails()` provider; for composition,
+use `fab.gen(fab.internet()::email)`. Address components remain available on the
+legacy `Addresses` provider. `number().gaussian(...)`, `bool().withProbability(...)`,
+and the other file methods retain their names. Passwords still use `SecureRandom`
+and are independent of the Fabricate seed.
+
 ## Locales
 
 Built-in locales cover the major writing systems you'll need to test:
@@ -258,7 +292,7 @@ Fabricate fab = Fabricate.builder()
         .seed(1L)
         .build();
 
-System.out.println(fab.names().fullName()); // e.g. محمد العلي
+System.out.println(fab.name().full()); // e.g. محمد العلي
 ```
 
 Add your own locale by implementing `LocaleData` and registering a

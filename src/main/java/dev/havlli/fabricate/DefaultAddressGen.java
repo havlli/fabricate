@@ -11,11 +11,11 @@ final class DefaultAddressGen extends DefaultGen<Address> implements AddressGen 
 
     DefaultAddressGen(Fabricate fab) {
         this(fab, new Sources(
-                fab.addresses()::street,
-                fab.addresses()::city,
-                fab.addresses()::state,
-                fab.addresses()::postalCode,
-                fab.addresses()::country));
+                fab.addresses::street,
+                fab.addresses::city,
+                fab.addresses::state,
+                fab.addresses::postalCode,
+                fab.addresses::country));
     }
 
     private DefaultAddressGen(Fabricate fab, Sources sources) {

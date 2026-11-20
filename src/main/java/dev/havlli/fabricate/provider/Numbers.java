@@ -6,10 +6,10 @@ import dev.havlli.fabricate.random.Rng;
  * Numeric primitives in fluent ranges.
  *
  * {@snippet :
- * int score      = fab.numbers().intBetween(0, 100);
- * long timestamp = fab.numbers().longBetween(1_000_000L, 2_000_000L);
- * double weight  = fab.numbers().doubleBetween(40.0, 90.0);
- * double iq      = fab.numbers().gaussian(100.0, 15.0);
+ * int score      = fab.number().between(0, 100);
+ * long timestamp = fab.number().between(1_000_000L, 2_000_000L);
+ * double weight  = fab.number().between(40.0, 90.0);
+ * double iq      = fab.number().gaussian(100.0, 15.0);
  * }
  */
 public final class Numbers {

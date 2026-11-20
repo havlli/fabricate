@@ -80,53 +80,52 @@ public final class Fake {
     }
 
     // --- Names ---
-    public static String firstName()           { return instance.names().firstName(); }
-    public static String lastName()            { return instance.names().lastName(); }
-    public static String fullName()            { return instance.names().fullName(); }
+    public static String firstName()           { return instance.name().first(); }
+    public static String lastName()            { return instance.name().last(); }
+    public static String fullName()            { return instance.name().full(); }
 
     // --- Contact ---
-    public static String email()               { return instance.emails().email(); }
-    public static String phoneNumber()         { return instance.phones().phoneNumber(); }
+    public static String email()               { return instance.internet().email(); }
+    public static String phoneNumber()         { return instance.phone().number(); }
 
     // --- Identity ---
-    public static UUID uuid()                  { return instance.identities().uuid(); }
+    public static UUID uuid()                  { return instance.identity().uuid(); }
 
     // --- Address / Job ---
-    public static Address address()            { return instance.addresses().address(); }
-    public static String city()                { return instance.addresses().city(); }
-    public static String country()             { return instance.addresses().country(); }
-    public static String jobTitle()            { return instance.jobTitles().jobTitle(); }
+    public static Address address()            { return instance.address().get(); }
+    public static String city()                { return instance.addresses.city(); }
+    public static String country()             { return instance.addresses.country(); }
+    public static String jobTitle()            { return instance.job().title(); }
 
     // --- Time ---
-    public static LocalDate dateOfBirth()      { return instance.datesOfBirth().birthdate(); }
+    public static LocalDate dateOfBirth()      { return instance.dateOfBirth().get(); }
 
     // --- Records ---
-    @SuppressWarnings("removal") // Preserve legacy provider behavior.
-    public static Person person()              { return instance.persons().person(); }
+    public static Person person()              { return instance.person().get(); }
     public static <T> T fill(Class<T> type)    { return instance.fill(type); }
 
     // --- Primitives ---
-    public static int intBetween(int min, int max)            { return instance.numbers().intBetween(min, max); }
-    public static long longBetween(long min, long max)        { return instance.numbers().longBetween(min, max); }
-    public static double doubleBetween(double min, double max) { return instance.numbers().doubleBetween(min, max); }
-    public static boolean coinFlip()                          { return instance.booleans().any(); }
-    public static boolean withProbability(double p)           { return instance.booleans().withProbability(p); }
+    public static int intBetween(int min, int max)            { return instance.number().between(min, max); }
+    public static long longBetween(long min, long max)        { return instance.number().between(min, max); }
+    public static double doubleBetween(double min, double max) { return instance.number().between(min, max); }
+    public static boolean coinFlip()                          { return instance.bool().get(); }
+    public static boolean withProbability(double p)           { return instance.bool().withProbability(p); }
     @SafeVarargs
     public static <T> T choice(T... values)                   { return instance.choice(values); }
     public static <T> T choice(List<T> values)                { return instance.choice(values); }
     public static <T> Optional<T> optional(double p, Supplier<T> s) { return instance.optional(p, s); }
 
     // --- Text ---
-    public static String word()                { return instance.texts().word(); }
-    public static String sentence()            { return instance.texts().sentence(); }
-    public static String paragraph()           { return instance.texts().paragraph(); }
-    public static String slug()                { return instance.texts().slug(); }
-    public static String hex(int length)       { return instance.texts().hex(length); }
-    public static String alphanumeric(int length) { return instance.texts().alphanumeric(length); }
+    public static String word()                { return instance.text().word(); }
+    public static String sentence()            { return instance.text().sentence(); }
+    public static String paragraph()           { return instance.text().paragraph(); }
+    public static String slug()                { return instance.text().slug(); }
+    public static String hex(int length)       { return instance.text().hex(length); }
+    public static String alphanumeric(int length) { return instance.text().alphanumeric(length); }
 
     // --- Password ---
-    public static String password()            { return instance.passwords().password(); }
-    public static String password(int length)  { return instance.passwords().password(length); }
+    public static String password()            { return instance.password().get(); }
+    public static String password(int length)  { return instance.password().get(length); }
 
     // --- Internet ---
     public static String url()                 { return instance.internet().url(); }
@@ -153,10 +152,10 @@ public final class Fake {
     public static String geohash(int length)   { return instance.geo().geohash(length); }
 
     // --- Files ---
-    public static String fileName()            { return instance.files().fileName(); }
-    public static String filePath()            { return instance.files().path(); }
-    public static String mimeType()            { return instance.files().mimeType(); }
-    public static long fileSizeBytes()         { return instance.files().fileSizeBytes(); }
+    public static String fileName()            { return instance.file().name(); }
+    public static String filePath()            { return instance.file().path(); }
+    public static String mimeType()            { return instance.file().mimeType(); }
+    public static long fileSizeBytes()         { return instance.file().sizeBytes(); }
 
     // --- Finance ---
     public static String creditCard()          { return instance.finance().creditCard(); }
@@ -183,16 +182,16 @@ public final class Fake {
 
     // --- Dates ---
     public static LocalDate dateBetween(LocalDate from, LocalDate to) {
-        return instance.dates().between(from, to);
+        return instance.date().between(from, to);
     }
-    public static LocalDate dateRecent(int days)  { return instance.dates().recent(days); }
-    public static LocalDate dateFuture(int days)  { return instance.dates().future(days); }
-    public static LocalDate datePast(int years)   { return instance.dates().past(years); }
-    public static LocalDate workingDayInNext(int days) { return instance.dates().workingDayInNext(days); }
+    public static LocalDate dateRecent(int days)  { return instance.date().recent(days); }
+    public static LocalDate dateFuture(int days)  { return instance.date().future(days); }
+    public static LocalDate datePast(int years)   { return instance.date().past(years); }
+    public static LocalDate workingDayInNext(int days) { return instance.date().workingDayInNext(days); }
     public static LocalDate workingDayBetween(LocalDate from, LocalDate to) {
-        return instance.dates().workingDayBetween(from, to);
+        return instance.date().workingDayBetween(from, to);
     }
     public static LocalDate weekendDayBetween(LocalDate from, LocalDate to) {
-        return instance.dates().weekendDayBetween(from, to);
+        return instance.date().weekendDayBetween(from, to);
     }
 }

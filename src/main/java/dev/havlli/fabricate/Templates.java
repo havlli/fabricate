@@ -98,20 +98,20 @@ public final class Templates {
 
     private static Map<String, Supplier<?>> defaultTokens(Fabricate fab) {
         Map<String, Supplier<?>> m = new HashMap<>();
-        m.put("firstName", () -> fab.names().firstName());
-        m.put("lastName", () -> fab.names().lastName());
-        m.put("fullName", () -> fab.names().fullName());
-        m.put("email", () -> fab.emails().email());
-        m.put("phone", () -> fab.phones().phoneNumber());
-        m.put("city", () -> fab.addresses().city());
-        m.put("country", () -> fab.addresses().country());
-        m.put("jobTitle", () -> fab.jobTitles().jobTitle());
-        m.put("uuid", () -> fab.identities().uuid());
-        m.put("dateOfBirth", () -> fab.datesOfBirth().birthdate());
+        m.put("firstName", () -> fab.name().first());
+        m.put("lastName", () -> fab.name().last());
+        m.put("fullName", () -> fab.name().full());
+        m.put("email", () -> fab.internet().email());
+        m.put("phone", () -> fab.phone().number());
+        m.put("city", () -> fab.addresses.city());
+        m.put("country", () -> fab.addresses.country());
+        m.put("jobTitle", () -> fab.job().title());
+        m.put("uuid", () -> fab.identity().uuid());
+        m.put("dateOfBirth", () -> fab.dateOfBirth().get());
 
-        m.put("word", () -> fab.texts().word());
-        m.put("sentence", () -> fab.texts().sentence());
-        m.put("slug", () -> fab.texts().slug());
+        m.put("word", () -> fab.text().word());
+        m.put("sentence", () -> fab.text().sentence());
+        m.put("slug", () -> fab.text().slug());
 
         m.put("url", () -> fab.internet().url());
         m.put("urlWithQuery", () -> fab.internet().urlWithQuery());
@@ -152,9 +152,9 @@ public final class Templates {
         m.put("httpMethod", () -> fab.devops().httpMethod());
         m.put("dockerImage", () -> fab.devops().dockerImage());
 
-        m.put("fileName", () -> fab.files().fileName());
-        m.put("filePath", () -> fab.files().path());
-        m.put("mimeType", () -> fab.files().mimeType());
+        m.put("fileName", () -> fab.file().name());
+        m.put("filePath", () -> fab.file().path());
+        m.put("mimeType", () -> fab.file().mimeType());
         return m;
     }
 }

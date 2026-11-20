@@ -9,7 +9,7 @@ import java.util.function.Consumer;
  *
  * {@snippet :
  * Trials.run(100, fab -> {
- *     Person p = fab.persons().person();
+ *     Person p = fab.person().get();
  *     assertThat(p.email()).contains("@");
  * });
  *

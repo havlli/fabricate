@@ -192,7 +192,6 @@ final class BeanEngine {
         }
     }
 
-    @SuppressWarnings("removal") // Preserve legacy provider behavior.
     private Object valueFor(String rawName, Class<?> type) {
         String name = normalize(rawName);
 
@@ -200,25 +199,25 @@ final class BeanEngine {
         if (special != null) return special;
 
         if (type == String.class)         return stringValue(name);
-        if (type == int.class || type == Integer.class)       return fab.numbers().intBetween(0, 1_000_000);
+        if (type == int.class || type == Integer.class)       return fab.numbers.intBetween(0, 1_000_000);
         if (type == long.class || type == Long.class)         return fab.rng().delegate().nextLong();
-        if (type == short.class || type == Short.class)       return (short) fab.numbers().intBetween(0, Short.MAX_VALUE);
-        if (type == byte.class || type == Byte.class)         return (byte) fab.numbers().intBetween(0, 127);
+        if (type == short.class || type == Short.class)       return (short) fab.numbers.intBetween(0, Short.MAX_VALUE);
+        if (type == byte.class || type == Byte.class)         return (byte) fab.numbers.intBetween(0, 127);
         if (type == boolean.class || type == Boolean.class)   return fab.rng().delegate().nextBoolean();
         if (type == double.class || type == Double.class)     return fab.rng().delegate().nextDouble();
         if (type == float.class || type == Float.class)       return (float) fab.rng().delegate().nextDouble();
-        if (type == char.class || type == Character.class)    return (char) ('a' + fab.numbers().intBetween(0, 25));
+        if (type == char.class || type == Character.class)    return (char) ('a' + fab.numbers.intBetween(0, 25));
 
-        if (type == UUID.class)           return fab.identities().uuid();
-        if (type == LocalDate.class)      return fab.datesOfBirth().birthdate();
-        if (type == LocalDateTime.class)  return fab.dates().localDateTimeBetween(
+        if (type == UUID.class)           return fab.identities.uuid();
+        if (type == LocalDate.class)      return fab.datesOfBirth.birthdate();
+        if (type == LocalDateTime.class)  return fab.dates.localDateTimeBetween(
                 LocalDateTime.now().minusYears(1), LocalDateTime.now().plusYears(1));
-        if (type == Instant.class)        return fab.dates().recentInstant(60 * 24 * 30);
+        if (type == Instant.class)        return fab.dates.recentInstant(60 * 24 * 30);
         if (type == BigDecimal.class)     return new BigDecimal(String.format(Locale.ROOT,
-                "%d.%02d", fab.numbers().intBetween(0, 9999), fab.numbers().intBetween(0, 99)));
+                "%d.%02d", fab.numbers.intBetween(0, 9999), fab.numbers.intBetween(0, 99)));
         if (type == URI.class)            return URI.create(fab.internet().url());
-        if (type == Address.class)        return fab.addresses().address();
-        if (type == Person.class)         return fab.persons().person();
+        if (type == Address.class)        return fab.addresses.address();
+        if (type == Person.class)         return fab.person().get();
         if (type.isRecord())              return fillRecord(type, Map.of());
         if (canFillPojo(type))            return fillPojo(type, Map.of());
 
@@ -232,13 +231,13 @@ final class BeanEngine {
             return switch (name) {
                 case "port" -> fab.internet().port();
                 case "httpstatus", "statuscode", "status" -> fab.devops().httpStatus();
-                case "age" -> fab.numbers().intBetween(0, 99);
+                case "age" -> fab.numbers.intBetween(0, 99);
                 default -> null;
             };
         }
         if (type == long.class || type == Long.class) {
             return switch (name) {
-                case "filesize", "filesizebytes", "size", "bytes" -> fab.files().fileSizeBytes();
+                case "filesize", "filesizebytes", "size", "bytes" -> fab.files.fileSizeBytes();
                 case "latencyms", "latency" -> fab.devops().latencyMs();
                 default -> null;
             };
@@ -255,20 +254,20 @@ final class BeanEngine {
 
     private String stringValue(String name) {
         return switch (name) {
-            case "firstname"           -> fab.names().firstName();
-            case "lastname"            -> fab.names().lastName();
-            case "fullname", "name"    -> fab.names().fullName();
-            case "email"               -> fab.emails().email();
-            case "phone", "phonenumber" -> fab.phones().phoneNumber();
-            case "street"              -> fab.addresses().street();
-            case "city"                -> fab.addresses().city();
-            case "state"               -> fab.addresses().state();
-            case "country"             -> fab.addresses().country();
+            case "firstname"           -> fab.names.firstName();
+            case "lastname"            -> fab.names.lastName();
+            case "fullname", "name"    -> fab.names.fullName();
+            case "email"               -> fab.emails.email();
+            case "phone", "phonenumber" -> fab.phones.phoneNumber();
+            case "street"              -> fab.addresses.street();
+            case "city"                -> fab.addresses.city();
+            case "state"               -> fab.addresses.state();
+            case "country"             -> fab.addresses.country();
             case "countrycode"         -> fab.geo().countryCodeIso2();
             case "timezone", "tz"      -> fab.geo().timezone();
-            case "postalcode", "zip"   -> fab.addresses().postalCode();
-            case "jobtitle", "title"   -> fab.jobTitles().jobTitle();
-            case "id", "uid"           -> fab.identities().uuid().toString();
+            case "postalcode", "zip"   -> fab.addresses.postalCode();
+            case "jobtitle", "title"   -> fab.jobTitles.jobTitle();
+            case "id", "uid"           -> fab.identities.uuid().toString();
             case "username"            -> fab.internet().username();
             case "url", "website", "homepage" -> fab.internet().url();
             case "domain"              -> fab.internet().domain();
@@ -294,13 +293,13 @@ final class BeanEngine {
             case "gitsha", "sha", "commitsha" -> fab.devops().gitSha();
             case "branch", "branchname" -> fab.devops().branchName();
             case "dockerimage", "image" -> fab.devops().dockerImage();
-            case "filename"            -> fab.files().fileName();
-            case "filepath", "path"    -> fab.files().path();
-            case "mimetype", "contenttype" -> fab.files().mimeType();
-            case "slug"                -> fab.texts().slug();
-            case "description", "summary", "bio" -> fab.texts().sentence();
-            case "password"            -> fab.passwords().password();
-            default -> fab.names().firstName();
+            case "filename"            -> fab.files.fileName();
+            case "filepath", "path"    -> fab.files.path();
+            case "mimetype", "contenttype" -> fab.files.mimeType();
+            case "slug"                -> fab.texts.slug();
+            case "description", "summary", "bio" -> fab.texts.sentence();
+            case "password"            -> fab.passwords.password();
+            default -> fab.names.firstName();
         };
     }
 

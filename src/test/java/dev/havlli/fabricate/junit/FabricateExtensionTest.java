@@ -64,7 +64,7 @@ class FabricateExtensionTest {
             assertThat(customer.firstName).isNotBlank();
             assertThat(fab.locale().locale()).isEqualTo(Locale.GERMAN);
             // Resolution must consume the same per-test RNG that the unannotated Fabricate exposes.
-            assertThat(fab.names().fullName()).isEqualTo(expected.names().fullName());
+            assertThat(fab.name().full()).isEqualTo(expected.name().full());
         }
 
         @Test
@@ -97,7 +97,7 @@ class FabricateExtensionTest {
             assertThat(people).isEmpty();
             assertThat(addresses).isEmpty();
             Fabricate expected = Fabricate.builder().seed(42L).locale(Locale.GERMAN).build();
-            assertThat(fab.names().fullName()).isEqualTo(expected.names().fullName());
+            assertThat(fab.name().full()).isEqualTo(expected.name().full());
         }
 
         @Test
@@ -205,8 +205,8 @@ class FabricateExtensionTest {
             // The class-level seed=42 means each test gets a fresh Fabricate
             // seeded the same way; the first name drawn must therefore match
             // a separately-built Fabricate using the same seed.
-            String drawnHere = fab.names().fullName();
-            String drawnIndependently = Fabricate.builder().seed(42L).build().names().fullName();
+            String drawnHere = fab.name().full();
+            String drawnIndependently = Fabricate.builder().seed(42L).build().name().full();
 
             assertThat(drawnHere).isEqualTo(drawnIndependently);
         }
@@ -220,8 +220,8 @@ class FabricateExtensionTest {
         @Test
         @Seed(99L)
         void methodSeedOverridesClassSeed(Fabricate fab) {
-            String drawn = fab.names().fullName();
-            String expected = Fabricate.builder().seed(99L).build().names().fullName();
+            String drawn = fab.name().full();
+            String expected = Fabricate.builder().seed(99L).build().name().full();
 
             assertThat(drawn).isEqualTo(expected);
         }
