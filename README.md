@@ -199,15 +199,17 @@ import org.junit.jupiter.api.Test;
 
 import dev.havlli.fabricate.Fabricate;
 import dev.havlli.fabricate.junit.FabricateTest;
+import dev.havlli.fabricate.junit.Fabricated;
 import dev.havlli.fabricate.junit.Seed;
 import dev.havlli.fabricate.model.Person;
 
-@FabricateTest(seed = 42L)
+@FabricateTest(seed = 42L, locale = "de")
 class UserServiceTest {
+    record Order(String product, int quantity) {}
 
     @Test
-    void importsUsers(Fabricate fab) {
-        List<Person> users = fab.person().list(100);
+    void importsUsers(@Fabricated Order order,
+                      @Fabricated(size = 10) List<Person> users, Fabricate fab) {
         // ...
     }
 
@@ -218,6 +220,15 @@ class UserServiceTest {
     }
 }
 ```
+
+`@Fabricated` uses the per-test `Fabricate` instance, including the class seed
+and locale and any method-level `@Seed` override. `Person` and `Address` use
+their dedicated generators; other records and POJOs with a no-arg constructor
+use `fab.of(type)` and its usual name and type heuristics. `List<T>` requires a
+concrete supported element class and an explicit `size >= 0`; zero produces an
+empty list. Raw lists, wildcards, and unsupported types are rejected.
+Unannotated `Fabricate`, `Person`, and `Address` parameters remain supported;
+leave `Fabricate` itself unannotated.
 
 ## Locales
 

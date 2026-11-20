@@ -16,17 +16,22 @@ import org.junit.jupiter.api.extension.ExtendWith;
  *   <li>{@link dev.havlli.fabricate.model.Person} — a fully-randomized person.</li>
  *   <li>{@link dev.havlli.fabricate.model.Address} — a fully-randomized address.</li>
  * </ul>
+ * Parameters marked with {@link Fabricated @Fabricated} may also be records,
+ * fillable POJOs, or {@code List<T>} of supported types. Lists require an explicit
+ * nonnegative {@link Fabricated#size() size}.
  *
  * The class-level {@link #seed()} is the default; individual methods can
  * override via {@link Seed @Seed}. {@link #locale()} accepts a BCP-47 tag
  * such as {@code "en"} or {@code "zh"}.
  *
  * {@snippet :
- * @FabricateTest(seed = 42L)
+ * @FabricateTest(seed = 42L, locale = "de")
  * class UserServiceTest {
+ *     record Order(String product, int quantity) {}
+ *
  *     @Test
- *     void importsUsers(Fabricate fab) {
- *         List<Person> users = fab.persons().list(100);
+ *     void importsUsers(@Fabricated Order order,
+ *                       @Fabricated(size = 10) List<Person> users, Fabricate fab) {
  *         // ...
  *     }
  * }

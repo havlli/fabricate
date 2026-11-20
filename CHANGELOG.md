@@ -4,6 +4,8 @@
 
 ### Added
 
+- `@Fabricated` JUnit parameter injection for records, POJOs, people, addresses,
+  and explicitly sized lists, using the test's configured seed and locale.
 - Instance sinks via `Sinks.csv()`, `Sinks.jsonLines()`, and `Sinks.sql(table)`
   for iterable and stream input, with Path, Writer, and string output. SQL sinks
   support immutable `batchSize(n)` configuration.
