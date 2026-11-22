@@ -77,15 +77,13 @@ Or use any JDK 21+ and Maven 3.9+ already on your `PATH`.
 
 ## Quick start
 
-These examples describe the 0.2.0 API in this source tree. The Maven version
-remains `0.1.0` during development; the coordinates below match the locally
-built artifact and do not announce a 0.2.0 release.
+Add `dev.havlli:fabricate:0.2.0` as a test (or compile) dependency:
 
 ```xml
 <dependency>
     <groupId>dev.havlli</groupId>
     <artifactId>fabricate</artifactId>
-    <version>0.1.0</version>
+    <version>0.2.0</version>
     <!-- optional: <scope>test</scope> when used only in tests -->
 </dependency>
 ```
@@ -93,13 +91,13 @@ built artifact and do not announce a 0.2.0 release.
 Gradle (Kotlin DSL):
 
 ```kotlin
-testImplementation("dev.havlli:fabricate:0.1.0")
+testImplementation("dev.havlli:fabricate:0.2.0")
 ```
 
 Gradle (Groovy):
 
 ```groovy
-testImplementation 'dev.havlli:fabricate:0.1.0'
+testImplementation 'dev.havlli:fabricate:0.2.0'
 ```
 
 ```java

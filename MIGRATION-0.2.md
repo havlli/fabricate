@@ -2,8 +2,7 @@
 
 0.2.0 is the pre-1.0 transition to fluent generators and a smaller public API.
 This guide covers increments 1–8 and the additive `Fake` deprecations in
-increment 9. It describes the source API; the Maven version remains `0.1.0`
-until release work is scheduled separately.
+increment 9.
 
 Removed accessors and implementation types require source changes. `BeanFiller`,
 `Address.builder()` / `Address.Builder`, the static bulk sink methods, and the
