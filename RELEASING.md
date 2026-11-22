@@ -41,7 +41,7 @@ This project publishes to **Maven Central** via the
 ## Cutting a release
 
 Publishing and tagging require separate approval. Confirm the working tree
-is clean and `pom.xml` contains the intended non-SNAPSHOT version (`0.1.0`
+is clean and `pom.xml` contains the intended non-SNAPSHOT version (`0.2.0`
 for this release), then follow this order:
 
 1. Run the unsigned release dry run:
@@ -74,15 +74,15 @@ for this release), then follow this order:
 5. After tagging approval, tag the released commit and push the tag:
 
    ```bash
-   git tag -s v0.1.0 -m "release 0.1.0"
-   git push origin v0.1.0
+   git tag -s v0.2.0 -m "release 0.2.0"
+   git push origin v0.2.0
    ```
 
 6. Bump to the next snapshot for further development:
 
    ```bash
-   # edit pom.xml: 0.1.0 → 0.1.1-SNAPSHOT
-   git commit -am "back to dev: 0.1.1-SNAPSHOT"
+   # edit pom.xml: 0.2.0 → 0.2.1-SNAPSHOT
+   git commit -am "back to dev: 0.2.1-SNAPSHOT"
    ```
 
 ## Post-release smoke test
@@ -94,12 +94,12 @@ resolution works:
 <dependency>
   <groupId>dev.havlli</groupId>
   <artifactId>fabricate</artifactId>
-  <version>0.1.0</version>
+  <version>0.2.0</version>
 </dependency>
 ```
 
 ```java
-System.out.println(dev.havlli.fabricate.Fake.fullName());
+System.out.println(dev.havlli.fabricate.Fake.full());
 ```
 
 If the artifact resolves and the program prints a name, the release is

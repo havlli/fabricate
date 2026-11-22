@@ -84,7 +84,7 @@
 
 - `Fake.locale(Locale)` now preserves the current seed, including unseeded mode.
 
-## 0.1.0 - Unreleased
+## 0.1.0 - 2026-10-12
 
 - Initial release of a lightweight Java 21 library for generating realistic
   random data, with locale support, reproducible generation, streaming,
