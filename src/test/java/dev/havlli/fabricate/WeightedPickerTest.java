@@ -5,14 +5,14 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.HashMap;
 import java.util.Map;
-import dev.havlli.fabricate.random.Rng;
+import java.util.Random;
 import org.junit.jupiter.api.Test;
 
 class WeightedPickerTest {
 
     @Test
     void builder_distributesAccordingToWeights() {
-        WeightedPicker<String> picker = WeightedPicker.<String>builder(Rng.seeded(0L))
+        WeightedPicker<String> picker = WeightedPicker.<String>builder(new Random(0L))
                 .add("active", 80)
                 .add("pending", 15)
                 .add("banned", 5)
@@ -33,7 +33,7 @@ class WeightedPickerTest {
     void of_withMap_normalizesWeights() {
         // Weights don't sum to 1; ensure normalization works.
         WeightedPicker<String> picker = WeightedPicker.of(
-                Rng.seeded(1L),
+                new Random(1L),
                 Map.of("a", 7.0, "b", 3.0));
 
         Map<String, Integer> counts = new HashMap<>();
@@ -48,13 +48,13 @@ class WeightedPickerTest {
 
     @Test
     void emptyBuilder_throws() {
-        assertThatThrownBy(() -> WeightedPicker.<String>builder(Rng.seeded(0L)).build())
+        assertThatThrownBy(() -> WeightedPicker.<String>builder(new Random(0L)).build())
                 .isInstanceOf(IllegalStateException.class);
     }
 
     @Test
     void invalidWeight_throws() {
-        WeightedPicker.Builder<String> b = WeightedPicker.builder(Rng.seeded(0L));
+        WeightedPicker.Builder<String> b = WeightedPicker.builder(new Random(0L));
 
         assertThatThrownBy(() -> b.add("x", 0.0)).isInstanceOf(IllegalArgumentException.class);
         assertThatThrownBy(() -> b.add("x", -1.0)).isInstanceOf(IllegalArgumentException.class);

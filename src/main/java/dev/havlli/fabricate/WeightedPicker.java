@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import dev.havlli.fabricate.random.Rng;
+import java.util.random.RandomGenerator;
 
 /**
  * Picks values from a finite set with caller-supplied weights.
@@ -13,7 +13,7 @@ import dev.havlli.fabricate.random.Rng;
  * can express ratios directly:
  *
  * {@snippet :
- * WeightedPicker<String> status = WeightedPicker.<String>builder(fab.rng())
+ * WeightedPicker<String> status = WeightedPicker.<String>builder(fab.random())
  *         .add("active",  80)
  *         .add("pending", 15)
  *         .add("banned",   5)
@@ -26,37 +26,37 @@ import dev.havlli.fabricate.random.Rng;
  *
  * {@snippet :
  * WeightedPicker<String> p = WeightedPicker.of(
- *         fab.rng(),
+ *         fab.random(),
  *         Map.of("US", 0.7, "DE", 0.2, "JP", 0.1));
  * }
  *
- * Instances are immutable after construction; the underlying {@link Rng} is
+ * Instances are immutable after construction; the underlying {@link RandomGenerator} is
  * the only thread-confined state.
  */
 public final class WeightedPicker<T> {
 
-    private final Rng rng;
+    private final RandomGenerator rng;
     private final List<T> values;
     private final double[] cumulative;
 
-    private WeightedPicker(Rng rng, List<T> values, double[] cumulative) {
+    private WeightedPicker(RandomGenerator rng, List<T> values, double[] cumulative) {
         this.rng = rng;
         this.values = values;
         this.cumulative = cumulative;
     }
 
-    public static <T> WeightedPicker<T> of(Rng rng, Map<T, ? extends Number> weights) {
+    public static <T> WeightedPicker<T> of(RandomGenerator rng, Map<T, ? extends Number> weights) {
         Builder<T> b = builder(rng);
         weights.forEach((value, weight) -> b.add(value, weight.doubleValue()));
         return b.build();
     }
 
-    public static <T> Builder<T> builder(Rng rng) {
+    public static <T> Builder<T> builder(RandomGenerator rng) {
         return new Builder<>(rng);
     }
 
     public T pick() {
-        double r = rng.delegate().nextDouble() * cumulative[cumulative.length - 1];
+        double r = rng.nextDouble() * cumulative[cumulative.length - 1];
         // Linear scan is fine: typical N is small (< 20 buckets);
         // a binary search would barely move the needle and add complexity.
         for (int i = 0; i < cumulative.length; i++) {
@@ -69,11 +69,11 @@ public final class WeightedPicker<T> {
 
     public static final class Builder<T> {
 
-        private final Rng rng;
+        private final RandomGenerator rng;
         private final List<T> values = new ArrayList<>();
         private final List<Double> weights = new ArrayList<>();
 
-        private Builder(Rng rng) {
+        private Builder(RandomGenerator rng) {
             this.rng = Objects.requireNonNull(rng, "rng");
         }
 

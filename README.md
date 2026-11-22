@@ -45,6 +45,25 @@ Built for tests, demos, fixtures, and corpus generation. Java 21+. JPMS-ready.
 - **No runtime dependencies** — JSpecify and JUnit Jupiter are both
   declared `optional`/`requires static`; consumers pay for what they use.
 
+## Breaking changes (planned 0.2.0)
+
+- Removed the public `dev.havlli.fabricate.provider`, `.locale`, and `.random`
+  packages: concrete providers (including `Persons.Builder`), locale implementations
+  and their `INSTANCE` fields, locale providers, `LocaleRegistry`, and `Rng` are
+  now implementation details in non-exported packages. Direct construction/imports
+  of these types are no longer supported.
+- Replaced `Fabricate.rng()` with `random()`, returning `RandomGenerator`.
+  `WeightedPicker.of(...)` and `builder(...)` now accept `RandomGenerator`.
+- Replaced `Builder.localeRegistry(...)` with `locale(LocaleData)` for supplying
+  third-party data directly. `locale(Locale)` still selects a registered locale.
+- Removed plural accessors `names()`, `emails()`, `phones()`, `addresses()`,
+  `datesOfBirth()`, `dates()`, `jobTitles()`, `identities()`, `passwords()`,
+  `numbers()`, `booleans()`, `texts()`, `files()`, and `persons()`. Use the singular
+  accessors, including `internet().email(...)`, `address()`, and `person()`.
+- `internet()`, `geo()`, `finance()`, `commerce()`, and `devops()` now return
+  `InternetGen`, `GeoGen`, `FinanceGen`, `CommerceGen`, and `DevOpsGen` respectively.
+  Method names and seeded fluent draw order are unchanged.
+
 ## Building from source
 
 The repo pins JDK and Maven versions via [mise](https://mise.jdx.dev):
@@ -254,13 +273,13 @@ random sequence, so migrating a call preserves draw order for the same seed.
 | `booleans().any()` | `bool().get()` |
 | `texts()` | `text()` (same methods) |
 | `files().fileName(...)` / `fileSizeBytes()` | `file().name(...)` / `sizeBytes()` |
+| `persons().person()` / `builder().firstName("Ada").build()` | `person().get()` / `person().firstName("Ada").get()` |
 
-The legacy accessors remain available, deprecated for removal since 0.2.0.
+The legacy accessors are removed for 0.2.0.
 `name()`, `phone()`, `dateOfBirth()`, `job()`, and `identity()` retain `list(count)`
 and lazy `stream()` methods; names draw full names and identities draw UUIDs.
-Email `list` and `stream` remain on the legacy `emails()` provider; for composition,
-use `fab.gen(fab.internet()::email)`. Address components remain available on the
-legacy `Addresses` provider. `number().gaussian(...)`, `bool().withProbability(...)`,
+For email lists and streams, use `fab.gen(fab.internet()::email)`.
+Read address components from a generated `Address` record. `number().gaussian(...)`, `bool().withProbability(...)`,
 and the other file methods retain their names. Passwords still use `SecureRandom`
 and are independent of the Fabricate seed.
 
@@ -296,7 +315,11 @@ System.out.println(fab.name().full()); // e.g. محمد العلي
 ```
 
 Add your own locale by implementing `LocaleData` and registering a
-`LocaleProvider` via `META-INF/services/dev.havlli.fabricate.spi.LocaleProvider`.
+`LocaleProvider` via `META-INF/services/dev.havlli.fabricate.spi.LocaleProvider`
+on the classpath, or `provides dev.havlli.fabricate.spi.LocaleProvider with ...`
+in your module descriptor. For an individual instance, pass your data directly
+with `Fabricate.builder().locale(myLocaleData).seed(42).build()`. The last
+`locale(...)` call wins.
 
 ## Reproducibility guarantees
 
@@ -305,8 +328,8 @@ built with the same seed produce identical sequences across every
 provider as long as the calls are made in the same order. For
 parallelism, build one `Fabricate` per worker rather than sharing.
 
-`Identities.uuid()` is seedable (does not call `UUID.randomUUID()`), so
-seeded test runs produce stable UUIDs. `Passwords` deliberately uses
+`identity().uuid()` is seedable (does not call `UUID.randomUUID()`), so
+seeded test runs produce stable UUIDs. `password()` deliberately uses
 `SecureRandom` and is **not** seeded — generated passwords are never
 reproducible by design.
 

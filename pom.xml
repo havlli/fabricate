@@ -131,6 +131,23 @@
                     -->
                     <excludedGroups>bench</excludedGroups>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>module-path-spi</id>
+                        <phase>integration-test</phase>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                        <configuration>
+                            <includes>
+                                <include>**/ModulePathIT.java</include>
+                            </includes>
+                            <systemPropertyVariables>
+                                <fabricate.jar>${project.build.directory}/${project.build.finalName}.jar</fabricate.jar>
+                            </systemPropertyVariables>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
 
             <plugin>
@@ -205,6 +222,7 @@
                             -->
                             <doclint>all,-missing</doclint>
                             <quiet>true</quiet>
+                            <excludePackageNames>dev.havlli.fabricate.internal*</excludePackageNames>
                         </configuration>
                         <executions>
                             <execution>

@@ -8,27 +8,43 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Supplier;
-import dev.havlli.fabricate.locale.LocaleRegistry;
-import dev.havlli.fabricate.provider.Addresses;
-import dev.havlli.fabricate.provider.Booleans;
-import dev.havlli.fabricate.provider.Commerce;
-import dev.havlli.fabricate.provider.Dates;
-import dev.havlli.fabricate.provider.DatesOfBirth;
-import dev.havlli.fabricate.provider.DevOps;
-import dev.havlli.fabricate.provider.Emails;
-import dev.havlli.fabricate.provider.Files;
-import dev.havlli.fabricate.provider.Finance;
-import dev.havlli.fabricate.provider.Geo;
-import dev.havlli.fabricate.provider.Identities;
-import dev.havlli.fabricate.provider.Internet;
-import dev.havlli.fabricate.provider.JobTitles;
-import dev.havlli.fabricate.provider.Names;
-import dev.havlli.fabricate.provider.Numbers;
-import dev.havlli.fabricate.provider.Passwords;
-import dev.havlli.fabricate.provider.Persons;
-import dev.havlli.fabricate.provider.Phones;
-import dev.havlli.fabricate.provider.Texts;
-import dev.havlli.fabricate.random.Rng;
+import java.util.random.RandomGenerator;
+import dev.havlli.fabricate.internal.BeanEngine;
+import dev.havlli.fabricate.internal.DefaultAddressGen;
+import dev.havlli.fabricate.internal.DefaultBoolGen;
+import dev.havlli.fabricate.internal.DefaultDateGen;
+import dev.havlli.fabricate.internal.DefaultDateOfBirthGen;
+import dev.havlli.fabricate.internal.DefaultFileGen;
+import dev.havlli.fabricate.internal.DefaultGen;
+import dev.havlli.fabricate.internal.DefaultIdentityGen;
+import dev.havlli.fabricate.internal.DefaultJobGen;
+import dev.havlli.fabricate.internal.DefaultNameGen;
+import dev.havlli.fabricate.internal.DefaultNumberGen;
+import dev.havlli.fabricate.internal.DefaultPasswordGen;
+import dev.havlli.fabricate.internal.DefaultPersonGen;
+import dev.havlli.fabricate.internal.DefaultPhoneGen;
+import dev.havlli.fabricate.internal.DefaultRecordGen;
+import dev.havlli.fabricate.internal.DefaultTextGen;
+import dev.havlli.fabricate.internal.locale.LocaleRegistry;
+import dev.havlli.fabricate.internal.provider.Addresses;
+import dev.havlli.fabricate.internal.provider.Booleans;
+import dev.havlli.fabricate.internal.provider.Commerce;
+import dev.havlli.fabricate.internal.provider.Dates;
+import dev.havlli.fabricate.internal.provider.DatesOfBirth;
+import dev.havlli.fabricate.internal.provider.DevOps;
+import dev.havlli.fabricate.internal.provider.Emails;
+import dev.havlli.fabricate.internal.provider.Files;
+import dev.havlli.fabricate.internal.provider.Finance;
+import dev.havlli.fabricate.internal.provider.Geo;
+import dev.havlli.fabricate.internal.provider.Identities;
+import dev.havlli.fabricate.internal.provider.Internet;
+import dev.havlli.fabricate.internal.provider.JobTitles;
+import dev.havlli.fabricate.internal.provider.Names;
+import dev.havlli.fabricate.internal.provider.Numbers;
+import dev.havlli.fabricate.internal.provider.Passwords;
+import dev.havlli.fabricate.internal.provider.Phones;
+import dev.havlli.fabricate.internal.provider.Texts;
+import dev.havlli.fabricate.internal.random.Rng;
 import dev.havlli.fabricate.spi.LocaleData;
 import org.jspecify.annotations.Nullable;
 
@@ -59,25 +75,25 @@ public final class Fabricate {
 
     private final LocaleData locale;
     private final Rng rng;
-    // Shared providers are package-private for internal delegates; public access is via generators.
-    final Names names;
-    final Emails emails;
-    final Phones phones;
+    // Seeded providers share the same RNG; public access is via generator interfaces.
+    private final Names names;
+    private final Emails emails;
+    private final Phones phones;
+    // Shared with the package-private delegates in Fake and Templates.
     final Addresses addresses;
-    final DatesOfBirth datesOfBirth;
-    final JobTitles jobTitles;
-    final Identities identities;
-    final Passwords passwords;
-    private final Persons persons;
-    final Numbers numbers;
-    final Booleans booleans;
-    final Texts texts;
+    private final DatesOfBirth datesOfBirth;
+    private final JobTitles jobTitles;
+    private final Identities identities;
+    private final Passwords passwords;
+    private final Numbers numbers;
+    private final Booleans booleans;
+    private final Texts texts;
     private final Internet internet;
-    final Files files;
+    private final Files files;
     private final Finance finance;
     private final Commerce commerce;
     private final DevOps devops;
-    final Dates dates;
+    private final Dates dates;
     private final Geo geo;
     private final NameGen nameGen;
     private final PhoneGen phoneGen;
@@ -104,7 +120,6 @@ public final class Fabricate {
         this.jobTitles = new JobTitles(locale, rng);
         this.identities = new Identities(rng);
         this.passwords = new Passwords();
-        this.persons = new Persons(names, emails, phones, addresses, datesOfBirth, jobTitles, identities);
         this.numbers = new Numbers(rng);
         this.booleans = new Booleans(rng);
         this.texts = new Texts(rng);
@@ -115,18 +130,18 @@ public final class Fabricate {
         this.devops = new DevOps(rng);
         this.dates = new Dates(rng);
         this.geo = new Geo(rng);
-        this.nameGen = new DefaultNameGen(this);
-        this.phoneGen = new DefaultPhoneGen(this);
-        this.dateOfBirthGen = new DefaultDateOfBirthGen(this);
-        this.dateGen = new DefaultDateGen(this);
-        this.jobGen = new DefaultJobGen(this);
-        this.identityGen = new DefaultIdentityGen(this);
-        this.passwordGen = new DefaultPasswordGen(this);
-        this.numberGen = new DefaultNumberGen(this);
-        this.boolGen = new DefaultBoolGen(this);
-        this.textGen = new DefaultTextGen(this);
-        this.fileGen = new DefaultFileGen(this);
-        this.beanEngine = new BeanEngine(this);
+        this.nameGen = new DefaultNameGen(names);
+        this.phoneGen = new DefaultPhoneGen(phones);
+        this.dateOfBirthGen = new DefaultDateOfBirthGen(datesOfBirth);
+        this.dateGen = new DefaultDateGen(dates);
+        this.jobGen = new DefaultJobGen(jobTitles);
+        this.identityGen = new DefaultIdentityGen(identities);
+        this.passwordGen = new DefaultPasswordGen(passwords);
+        this.numberGen = new DefaultNumberGen(numbers);
+        this.boolGen = new DefaultBoolGen(booleans);
+        this.textGen = new DefaultTextGen(texts);
+        this.fileGen = new DefaultFileGen(files);
+        this.beanEngine = new BeanEngine(this, addresses);
         this.templates = new Templates(this);
     }
 
@@ -139,166 +154,55 @@ public final class Fabricate {
     }
 
     /**
-     * Locales available in the default {@link LocaleRegistry}: built-ins plus
+     * Locales available in the default locale registry: built-ins plus
      * any {@link dev.havlli.fabricate.spi.LocaleProvider} discovered on the module path.
      */
     public static Set<Locale> availableLocales() {
         return LocaleRegistry.getDefault().available();
     }
 
-    public LocaleData locale()       { return locale; }
-    public Rng rng()                 { return rng; }
+    public LocaleData locale() { return locale; }
 
-    /**
-     * Returns the legacy name provider.
-     *
-     * @deprecated Use {@link #name()}.
-     */
-    @Deprecated(since = "0.2.0", forRemoval = true)
-    public Names names() { return names; }
+    /** Returns the random generator shared by this instance’s fluent API. */
+    public RandomGenerator random() { return rng.delegate(); }
 
     /** Returns the name generator sharing this instance's provider. */
     public NameGen name() { return nameGen; }
 
-    /**
-     * Returns the legacy email provider.
-     *
-     * @deprecated Use {@link #internet()} and {@link Internet#email()} or
-     *             {@link Internet#email(String, String)}.
-     */
-    @Deprecated(since = "0.2.0", forRemoval = true)
-    public Emails emails() { return emails; }
-
-    /**
-     * Returns the legacy phone provider.
-     *
-     * @deprecated Use {@link #phone()}.
-     */
-    @Deprecated(since = "0.2.0", forRemoval = true)
-    public Phones phones() { return phones; }
-
     /** Returns the phone generator sharing this instance's provider. */
     public PhoneGen phone() { return phoneGen; }
-
-    /**
-     * Returns the legacy address provider.
-     *
-     * @deprecated Use {@link #address()} and {@link AddressGen#get()}.
-     */
-    @Deprecated(since = "0.2.0", forRemoval = true)
-    public Addresses addresses() { return addresses; }
-
-    /**
-     * Returns the legacy date-of-birth provider.
-     *
-     * @deprecated Use {@link #dateOfBirth()}.
-     */
-    @Deprecated(since = "0.2.0", forRemoval = true)
-    public DatesOfBirth datesOfBirth() { return datesOfBirth; }
 
     /** Returns the date-of-birth generator sharing this instance's provider. */
     public DateOfBirthGen dateOfBirth() { return dateOfBirthGen; }
 
-    /**
-     * Returns the legacy date provider.
-     *
-     * @deprecated Use {@link #date()}.
-     */
-    @Deprecated(since = "0.2.0", forRemoval = true)
-    public Dates dates() { return dates; }
-
     /** Returns the date generator sharing this instance's provider. */
     public DateGen date() { return dateGen; }
-    public Geo geo()                 { return geo; }
-
-    /**
-     * Returns the legacy job provider.
-     *
-     * @deprecated Use {@link #job()}.
-     */
-    @Deprecated(since = "0.2.0", forRemoval = true)
-    public JobTitles jobTitles() { return jobTitles; }
+    public GeoGen geo() { return geo; }
 
     /** Returns the job generator sharing this instance's provider. */
     public JobGen job() { return jobGen; }
 
-    /**
-     * Returns the legacy identity provider.
-     *
-     * @deprecated Use {@link #identity()}.
-     */
-    @Deprecated(since = "0.2.0", forRemoval = true)
-    public Identities identities() { return identities; }
-
     /** Returns the identity generator sharing this instance's provider. */
     public IdentityGen identity() { return identityGen; }
-
-    /**
-     * Returns the legacy password provider.
-     *
-     * @deprecated Use {@link #password()}.
-     */
-    @Deprecated(since = "0.2.0", forRemoval = true)
-    public Passwords passwords() { return passwords; }
 
     /** Returns the password generator sharing this instance's provider. */
     public PasswordGen password() { return passwordGen; }
 
-    /**
-     * Returns the legacy person provider.
-     *
-     * @deprecated Use {@link #person()} for fluent person generation.
-     */
-    @Deprecated(since = "0.2.0", forRemoval = true)
-    public Persons persons()         { return persons; }
-
-    /**
-     * Returns the legacy number provider.
-     *
-     * @deprecated Use {@link #number()}.
-     */
-    @Deprecated(since = "0.2.0", forRemoval = true)
-    public Numbers numbers() { return numbers; }
-
     /** Returns the number generator sharing this instance's provider. */
     public NumberGen number() { return numberGen; }
-
-    /**
-     * Returns the legacy boolean provider.
-     *
-     * @deprecated Use {@link #bool()}.
-     */
-    @Deprecated(since = "0.2.0", forRemoval = true)
-    public Booleans booleans() { return booleans; }
 
     /** Returns the boolean generator sharing this instance's provider. */
     public BoolGen bool() { return boolGen; }
 
-    /**
-     * Returns the legacy text provider.
-     *
-     * @deprecated Use {@link #text()}.
-     */
-    @Deprecated(since = "0.2.0", forRemoval = true)
-    public Texts texts() { return texts; }
-
     /** Returns the text generator sharing this instance's provider. */
     public TextGen text() { return textGen; }
-    public Internet internet()       { return internet; }
-
-    /**
-     * Returns the legacy file provider.
-     *
-     * @deprecated Use {@link #file()}.
-     */
-    @Deprecated(since = "0.2.0", forRemoval = true)
-    public Files files() { return files; }
+    public InternetGen internet() { return internet; }
 
     /** Returns the file generator sharing this instance's provider. */
     public FileGen file() { return fileGen; }
-    public Finance finance()         { return finance; }
-    public Commerce commerce()       { return commerce; }
-    public DevOps devops()           { return devops; }
+    public FinanceGen finance() { return finance; }
+    public CommerceGen commerce() { return commerce; }
+    public DevOpsGen devops() { return devops; }
 
     /**
      * Returns a new fluent person generator bound to this instance's RNG.
@@ -314,14 +218,14 @@ public final class Fabricate {
 
     /**
      * Returns a new fluent address generator bound to this instance's RNG.
-     * With no overrides, draws match {@link Addresses#address()} draw for draw.
+     * With no overrides, draws preserve the original address provider’s draw order.
      * Overridden fields skip default generation and consume no RNG themselves;
      * supplied generators may consume random values on each draw.
      *
      * @return a new immutable address generator configuration
      */
     public AddressGen address() {
-        return new DefaultAddressGen(this);
+        return new DefaultAddressGen(this, addresses);
     }
 
     /** Reflectively populates a record or POJO type with random values. */
@@ -342,7 +246,7 @@ public final class Fabricate {
      */
     public <T> RecordGen<T> of(Class<T> type) {
         BeanEngine.validateType(type);
-        return new DefaultRecordGen<>(beanEngine, type, rng);
+        return new DefaultRecordGen<>(beanEngine, type, random());
     }
 
     /** Returns the {@link Templates} expander bound to this Fabricate's providers. */
@@ -365,7 +269,7 @@ public final class Fabricate {
      * @throws NullPointerException if {@code source} is null
      */
     public <T extends @Nullable Object> Gen<T> gen(Supplier<? extends T> source) {
-        return new DefaultGen<>(Objects.requireNonNull(source, "source"), rng);
+        return new DefaultGen<>(Objects.requireNonNull(source, "source"), random());
     }
 
     /**
@@ -472,21 +376,23 @@ public final class Fabricate {
                 : Optional.empty();
     }
 
-    /** Convenience entry point for {@link WeightedPicker#builder(Rng)} bound to this RNG. */
+    /** Convenience entry point for {@link WeightedPicker#builder(RandomGenerator)} bound to this RNG. */
     public <T> WeightedPicker.Builder<T> weighted() {
-        return WeightedPicker.builder(rng);
+        return WeightedPicker.builder(random());
     }
 
     public static final class Builder {
 
         private Locale locale = Locale.ENGLISH;
         private @Nullable Long seed;
-        private LocaleRegistry registry = LocaleRegistry.getDefault();
+        private @Nullable LocaleData localeData;
 
         private Builder() {}
 
+        /** Selects a registered locale, replacing any previously supplied locale data. */
         public Builder locale(Locale locale) {
             this.locale = Objects.requireNonNull(locale, "locale");
+            this.localeData = null;
             return this;
         }
 
@@ -495,13 +401,14 @@ public final class Fabricate {
             return this;
         }
 
-        public Builder localeRegistry(LocaleRegistry registry) {
-            this.registry = Objects.requireNonNull(registry, "registry");
+        /** Uses the supplied locale data directly, replacing any previous locale selection. */
+        public Builder locale(LocaleData locale) {
+            this.localeData = Objects.requireNonNull(locale, "locale");
             return this;
         }
 
         public Fabricate build() {
-            LocaleData data = registry.get(locale);
+            LocaleData data = localeData != null ? localeData : LocaleRegistry.getDefault().get(locale);
             Rng rng = (seed != null) ? Rng.seeded(seed) : Rng.create();
             return new Fabricate(data, rng);
         }

@@ -27,6 +27,8 @@ class PublicApiSnapshotTest {
     void publicApiMatchesSnapshot() throws Exception {
         List<String> actual = snapshot();
         assertFalse(actual.isEmpty(), "No public API found; check class discovery");
+        assertFalse(actual.stream().anyMatch(line -> line.contains("dev.havlli.fabricate.internal")),
+                "Exported declarations must not expose implementation types");
         if (Boolean.getBoolean(UPDATE_PROPERTY)) {
             Files.createDirectories(GOLDEN.getParent());
             Files.writeString(GOLDEN, String.join("\n", actual) + "\n", StandardCharsets.UTF_8);

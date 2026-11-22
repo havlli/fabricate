@@ -1,5 +1,6 @@
 package dev.havlli.fabricate;
 
+import dev.havlli.fabricate.internal.LegacyProviders;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -21,35 +22,35 @@ class AddressGenTest {
     void streetOverridesAreImmutableLazyAndRejectNulls() {
         checkOverride(AddressGen::street, AddressGen::street, Address::street,
                 (fab, value) -> new Address(
-                        value, fab.addresses().city(), fab.addresses().state(), fab.addresses().postalCode(), fab.addresses().country()));
+                        value, LegacyProviders.addresses(fab).city(), LegacyProviders.addresses(fab).state(), LegacyProviders.addresses(fab).postalCode(), LegacyProviders.addresses(fab).country()));
     }
 
     @Test
     void cityOverridesAreImmutableLazyAndRejectNulls() {
         checkOverride(AddressGen::city, AddressGen::city, Address::city,
                 (fab, value) -> new Address(
-                        fab.addresses().street(), value, fab.addresses().state(), fab.addresses().postalCode(), fab.addresses().country()));
+                        LegacyProviders.addresses(fab).street(), value, LegacyProviders.addresses(fab).state(), LegacyProviders.addresses(fab).postalCode(), LegacyProviders.addresses(fab).country()));
     }
 
     @Test
     void stateOverridesAreImmutableLazyAndRejectNulls() {
         checkOverride(AddressGen::state, AddressGen::state, Address::state,
                 (fab, value) -> new Address(
-                        fab.addresses().street(), fab.addresses().city(), value, fab.addresses().postalCode(), fab.addresses().country()));
+                        LegacyProviders.addresses(fab).street(), LegacyProviders.addresses(fab).city(), value, LegacyProviders.addresses(fab).postalCode(), LegacyProviders.addresses(fab).country()));
     }
 
     @Test
     void postalCodeOverridesAreImmutableLazyAndRejectNulls() {
         checkOverride(AddressGen::postalCode, AddressGen::postalCode, Address::postalCode,
                 (fab, value) -> new Address(
-                        fab.addresses().street(), fab.addresses().city(), fab.addresses().state(), value, fab.addresses().country()));
+                        LegacyProviders.addresses(fab).street(), LegacyProviders.addresses(fab).city(), LegacyProviders.addresses(fab).state(), value, LegacyProviders.addresses(fab).country()));
     }
 
     @Test
     void countryOverridesAreImmutableLazyAndRejectNulls() {
         checkOverride(AddressGen::country, AddressGen::country, Address::country,
                 (fab, value) -> new Address(
-                        fab.addresses().street(), fab.addresses().city(), fab.addresses().state(), fab.addresses().postalCode(), value));
+                        LegacyProviders.addresses(fab).street(), LegacyProviders.addresses(fab).city(), LegacyProviders.addresses(fab).state(), LegacyProviders.addresses(fab).postalCode(), value));
     }
 
     private static void checkOverride(
@@ -66,7 +67,7 @@ class AddressGenTest {
         assertThat(overridden).isNotSameAs(base);
         assertThat(dynamic).isNotSameAs(base);
         assertThat(calls).hasValue(0);
-        assertThat(base.get()).isEqualTo(reference.addresses().address());
+        assertThat(base.get()).isEqualTo(LegacyProviders.addresses(reference).address());
         assertThat(overridden.get()).isEqualTo(expected.apply(reference, "fixed"));
         for (int i = 1; i <= 3; i++) {
             assertThat(dynamic.get()).isEqualTo(expected.apply(reference, "draw-" + i));
@@ -77,7 +78,7 @@ class AddressGenTest {
         assertThat(read.apply(overridden.get())).isEqualTo("fixed");
         expected.apply(reference, "replacement");
         expected.apply(reference, "fixed");
-        assertThat(fab.rng().nextInt(1_000_000)).isEqualTo(reference.rng().nextInt(1_000_000));
+        assertThat(fab.random().nextInt(1_000_000)).isEqualTo(reference.random().nextInt(1_000_000));
         assertThatThrownBy(() -> fixed.apply(base, null))
                 .isInstanceOf(NullPointerException.class).hasMessage("value");
         assertThatThrownBy(() -> generated.apply(base, null))
@@ -92,8 +93,8 @@ class AddressGenTest {
                 Fabricate reference = Fabricate.builder().locale(locale).seed(seed).build();
                 AddressGen gen = fab.address();
                 for (int i = 0; i < 20; i++) {
-                    assertThat(gen.get()).isEqualTo(reference.addresses().address());
-                    assertThat(fab.rng().nextInt(1_000_000)).isEqualTo(reference.rng().nextInt(1_000_000));
+                    assertThat(gen.get()).isEqualTo(LegacyProviders.addresses(reference).address());
+                    assertThat(fab.random().nextInt(1_000_000)).isEqualTo(reference.random().nextInt(1_000_000));
                 }
             }
         }
@@ -120,6 +121,6 @@ class AddressGenTest {
     void allFixedFieldsConsumeNoRandomness() {
         Fabricate fab = seeded();
         fab.address().street("s").city("c").state("st").postalCode("p").country("co").list(5);
-        assertThat(fab.rng().nextInt(1_000_000)).isEqualTo(seeded().rng().nextInt(1_000_000));
+        assertThat(fab.random().nextInt(1_000_000)).isEqualTo(seeded().random().nextInt(1_000_000));
     }
 }
