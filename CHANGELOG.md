@@ -2,6 +2,25 @@
 
 ## [Unreleased]
 
+### Breaking changes (0.2.0)
+
+- Removed the public `dev.havlli.fabricate.provider`, `.locale`, and `.random`
+  packages: concrete providers (including `Persons.Builder`), locale implementations
+  and their `INSTANCE` fields, locale providers, `LocaleRegistry`, and `Rng` are
+  now implementation details in non-exported packages. Direct construction/imports
+  of these types are no longer supported.
+- Replaced `Fabricate.rng()` with `random()`, returning `RandomGenerator`.
+  `WeightedPicker.of(...)` and `builder(...)` now accept `RandomGenerator`.
+- Replaced `Builder.localeRegistry(...)` with `locale(LocaleData)` for supplying
+  third-party data directly. `locale(Locale)` still selects a registered locale.
+- Removed plural accessors `names()`, `emails()`, `phones()`, `addresses()`,
+  `datesOfBirth()`, `dates()`, `jobTitles()`, `identities()`, `passwords()`,
+  `numbers()`, `booleans()`, `texts()`, `files()`, and `persons()`. Use the singular
+  accessors, including `internet().email(...)`, `address()`, and `person()`.
+- `internet()`, `geo()`, `finance()`, `commerce()`, and `devops()` now return
+  `InternetGen`, `GeoGen`, `FinanceGen`, `CommerceGen`, and `DevOpsGen` respectively.
+  Method names and seeded fluent draw order are unchanged.
+
 ### Added
 
 - Singular provider accessors: `name()`, `phone()`, `dateOfBirth()`, `date()`,
@@ -9,8 +28,10 @@
   with public provider-role interfaces in `dev.havlli.fabricate` and non-stuttering
   methods such as `name().full()`, `job().title()`, and `number().between(...)`.
   They share the existing providers and preserve seeded draw order.
-- `Internet.email()` and `email(first, last)` share the existing locale-aware
-  email provider; `internet()` retains its `Internet` return type.
+- `InternetGen.email()` and `email(first, last)` share the existing locale-aware
+  email provider.
+- External module-path SPI integration coverage against the packaged jar, including
+  direct `LocaleData` injection and checks that implementation packages are hidden.
 
 - `@Fabricated` JUnit parameter injection for records, POJOs, people, addresses,
   and explicitly sized lists, using the test's configured seed and locale.
@@ -30,20 +51,18 @@
   sets, sequential streams, independent uniqueness, mapping, and optional or
   nullable values using the owning instance's RNG.
 
-### Deprecated
+### Changed
 
-- `Fabricate.names()`, `emails()`, `phones()`, `addresses()`, `datesOfBirth()`,
-  `dates()`, `jobTitles()`, `identities()`, `passwords()`, `numbers()`, `booleans()`,
-  `texts()`, and `files()`, for removal since 0.2.0. Use the singular accessors,
-  `internet().email(...)`, and `address().get()`. Legacy providers remain usable
-  with the same draw order; passwords remain independent of the seed.
+- Generator, bean, locale, random, provider, and sink implementations are excluded
+  from exports, public API snapshots, and release Javadoc. Public utility types,
+  model records, sinks, and the locale SPI retain their packages.
+
+### Deprecated
 
 - `Sinks.toCsv`, `toCsvString`, `toJsonLines`, `toJsonLinesString`,
   `toSqlInserts`, and `toSqlInsertsString`, for removal since 0.2.0; use the
   instance sinks. `Sinks.toJsonString(Record)` remains supported.
 
-- `Fabricate.persons()`, `Persons.builder()`, and `Persons.Builder`, for removal
-  since 0.2.0; use `Fabricate.person()`.
 - `Address.builder()` and `Address.Builder`, for removal since 0.2.0; use
   `Fabricate.address()` or the canonical `Address` constructor.
 - `BeanFiller`, for removal; use `Fabricate.of(Class)` or `Fabricate.fill(Class)`.

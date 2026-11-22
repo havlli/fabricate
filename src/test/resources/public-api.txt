@@ -1,57 +1,12 @@
 CONSTRUCTOR public dev.havlli.fabricate.UniqueExhaustedException(int,int)
 CONSTRUCTOR public dev.havlli.fabricate.junit.FabricateExtension()
-CONSTRUCTOR public dev.havlli.fabricate.locale.ArabicLocaleProvider()
-CONSTRUCTOR public dev.havlli.fabricate.locale.ChineseLocaleProvider()
-CONSTRUCTOR public dev.havlli.fabricate.locale.EnglishLocaleProvider()
-CONSTRUCTOR public dev.havlli.fabricate.locale.FrenchLocaleProvider()
-CONSTRUCTOR public dev.havlli.fabricate.locale.GermanLocaleProvider()
-CONSTRUCTOR public dev.havlli.fabricate.locale.HindiLocaleProvider()
-CONSTRUCTOR public dev.havlli.fabricate.locale.JapaneseLocaleProvider()
-CONSTRUCTOR public dev.havlli.fabricate.locale.KoreanLocaleProvider()
-CONSTRUCTOR public dev.havlli.fabricate.locale.PortugueseLocaleProvider()
-CONSTRUCTOR public dev.havlli.fabricate.locale.RussianLocaleProvider()
-CONSTRUCTOR public dev.havlli.fabricate.locale.SpanishLocaleProvider()
 CONSTRUCTOR public dev.havlli.fabricate.model.Address(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)
 CONSTRUCTOR public dev.havlli.fabricate.model.Person(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,dev.havlli.fabricate.model.Address,java.time.LocalDate,java.lang.String)
-CONSTRUCTOR public dev.havlli.fabricate.provider.Addresses(dev.havlli.fabricate.spi.LocaleData,dev.havlli.fabricate.random.Rng)
-CONSTRUCTOR public dev.havlli.fabricate.provider.Booleans(dev.havlli.fabricate.random.Rng)
-CONSTRUCTOR public dev.havlli.fabricate.provider.Commerce(dev.havlli.fabricate.random.Rng)
-CONSTRUCTOR public dev.havlli.fabricate.provider.Dates(dev.havlli.fabricate.random.Rng)
-CONSTRUCTOR public dev.havlli.fabricate.provider.Dates(dev.havlli.fabricate.random.Rng,java.time.Clock)
-CONSTRUCTOR public dev.havlli.fabricate.provider.DatesOfBirth(dev.havlli.fabricate.random.Rng)
-CONSTRUCTOR public dev.havlli.fabricate.provider.DatesOfBirth(dev.havlli.fabricate.random.Rng,java.time.Clock)
-CONSTRUCTOR public dev.havlli.fabricate.provider.DevOps(dev.havlli.fabricate.random.Rng)
-CONSTRUCTOR public dev.havlli.fabricate.provider.Emails(dev.havlli.fabricate.spi.LocaleData,dev.havlli.fabricate.random.Rng)
-CONSTRUCTOR public dev.havlli.fabricate.provider.Files(dev.havlli.fabricate.random.Rng)
-CONSTRUCTOR public dev.havlli.fabricate.provider.Finance(dev.havlli.fabricate.random.Rng)
-CONSTRUCTOR public dev.havlli.fabricate.provider.Geo(dev.havlli.fabricate.random.Rng)
-CONSTRUCTOR public dev.havlli.fabricate.provider.Identities(dev.havlli.fabricate.random.Rng)
-CONSTRUCTOR public dev.havlli.fabricate.provider.Internet(dev.havlli.fabricate.random.Rng)
-CONSTRUCTOR public dev.havlli.fabricate.provider.Internet(dev.havlli.fabricate.spi.LocaleData,dev.havlli.fabricate.random.Rng)
-CONSTRUCTOR public dev.havlli.fabricate.provider.JobTitles(dev.havlli.fabricate.spi.LocaleData,dev.havlli.fabricate.random.Rng)
-CONSTRUCTOR public dev.havlli.fabricate.provider.Names(dev.havlli.fabricate.spi.LocaleData,dev.havlli.fabricate.random.Rng)
-CONSTRUCTOR public dev.havlli.fabricate.provider.Numbers(dev.havlli.fabricate.random.Rng)
-CONSTRUCTOR public dev.havlli.fabricate.provider.Passwords()
-CONSTRUCTOR public dev.havlli.fabricate.provider.Persons(dev.havlli.fabricate.provider.Names,dev.havlli.fabricate.provider.Emails,dev.havlli.fabricate.provider.Phones,dev.havlli.fabricate.provider.Addresses,dev.havlli.fabricate.provider.DatesOfBirth,dev.havlli.fabricate.provider.JobTitles,dev.havlli.fabricate.provider.Identities)
-CONSTRUCTOR public dev.havlli.fabricate.provider.Phones(dev.havlli.fabricate.spi.LocaleData,dev.havlli.fabricate.random.Rng)
-CONSTRUCTOR public dev.havlli.fabricate.provider.Texts(dev.havlli.fabricate.random.Rng)
-FIELD public static final dev.havlli.fabricate.locale.ArabicLocale dev.havlli.fabricate.locale.ArabicLocale.INSTANCE
-FIELD public static final dev.havlli.fabricate.locale.ChineseLocale dev.havlli.fabricate.locale.ChineseLocale.INSTANCE
-FIELD public static final dev.havlli.fabricate.locale.EnglishLocale dev.havlli.fabricate.locale.EnglishLocale.INSTANCE
-FIELD public static final dev.havlli.fabricate.locale.FrenchLocale dev.havlli.fabricate.locale.FrenchLocale.INSTANCE
-FIELD public static final dev.havlli.fabricate.locale.GermanLocale dev.havlli.fabricate.locale.GermanLocale.INSTANCE
-FIELD public static final dev.havlli.fabricate.locale.HindiLocale dev.havlli.fabricate.locale.HindiLocale.INSTANCE
-FIELD public static final dev.havlli.fabricate.locale.JapaneseLocale dev.havlli.fabricate.locale.JapaneseLocale.INSTANCE
-FIELD public static final dev.havlli.fabricate.locale.KoreanLocale dev.havlli.fabricate.locale.KoreanLocale.INSTANCE
-FIELD public static final dev.havlli.fabricate.locale.PortugueseLocale dev.havlli.fabricate.locale.PortugueseLocale.INSTANCE
-FIELD public static final dev.havlli.fabricate.locale.RussianLocale dev.havlli.fabricate.locale.RussianLocale.INSTANCE
-FIELD public static final dev.havlli.fabricate.locale.SpanishLocale dev.havlli.fabricate.locale.SpanishLocale.INSTANCE
 FIELD public static final int dev.havlli.fabricate.Unique.DEFAULT_RETRY_BUDGET
 FIELD public static final long dev.havlli.fabricate.Fake.DEFAULT_SEED
 METHOD public <T> T dev.havlli.fabricate.BeanFiller.fill(java.lang.Class<T>)
 METHOD public <T> T dev.havlli.fabricate.Fabricate.choice(java.util.List<T>)
 METHOD public <T> T dev.havlli.fabricate.Fabricate.fill(java.lang.Class<T>)
-METHOD public <T> T dev.havlli.fabricate.random.Rng.pick(java.util.List<T>)
 METHOD public <T> dev.havlli.fabricate.Gen<T> dev.havlli.fabricate.Fabricate.gen(java.util.function.Supplier<? extends T>)
 METHOD public <T> dev.havlli.fabricate.Gen<T> dev.havlli.fabricate.Fabricate.oneOf(java.util.Collection<? extends T>)
 METHOD public <T> dev.havlli.fabricate.RecordGen<T> dev.havlli.fabricate.Fabricate.of(java.lang.Class<T>)
@@ -106,10 +61,34 @@ METHOD public abstract dev.havlli.fabricate.RecordGen<T> dev.havlli.fabricate.Re
 METHOD public abstract dev.havlli.fabricate.RecordGen<T> dev.havlli.fabricate.RecordGen.with(java.lang.String,java.util.function.Supplier<?>)
 METHOD public abstract dev.havlli.fabricate.sink.SqlSink<T> dev.havlli.fabricate.sink.SqlSink.batchSize(int)
 METHOD public abstract dev.havlli.fabricate.spi.LocaleData dev.havlli.fabricate.spi.LocaleProvider.get()
+METHOD public abstract double dev.havlli.fabricate.GeoGen.latitude()
+METHOD public abstract double dev.havlli.fabricate.GeoGen.longitude()
 METHOD public abstract double dev.havlli.fabricate.NumberGen.between(double,double)
 METHOD public abstract double dev.havlli.fabricate.NumberGen.gaussian(double,double)
+METHOD public abstract int dev.havlli.fabricate.DevOpsGen.httpStatus()
+METHOD public abstract int dev.havlli.fabricate.InternetGen.port()
 METHOD public abstract int dev.havlli.fabricate.NumberGen.between(int,int)
 METHOD public abstract int dev.havlli.fabricate.junit.Fabricated.size()
+METHOD public abstract java.lang.String dev.havlli.fabricate.CommerceGen.colorHex()
+METHOD public abstract java.lang.String dev.havlli.fabricate.CommerceGen.colorName()
+METHOD public abstract java.lang.String dev.havlli.fabricate.CommerceGen.colorRgb()
+METHOD public abstract java.lang.String dev.havlli.fabricate.CommerceGen.department()
+METHOD public abstract java.lang.String dev.havlli.fabricate.CommerceGen.ean13()
+METHOD public abstract java.lang.String dev.havlli.fabricate.CommerceGen.isbn13()
+METHOD public abstract java.lang.String dev.havlli.fabricate.CommerceGen.productName()
+METHOD public abstract java.lang.String dev.havlli.fabricate.CommerceGen.sku()
+METHOD public abstract java.lang.String dev.havlli.fabricate.DevOpsGen.branchName()
+METHOD public abstract java.lang.String dev.havlli.fabricate.DevOpsGen.cloudRegion()
+METHOD public abstract java.lang.String dev.havlli.fabricate.DevOpsGen.dockerImage()
+METHOD public abstract java.lang.String dev.havlli.fabricate.DevOpsGen.environment()
+METHOD public abstract java.lang.String dev.havlli.fabricate.DevOpsGen.gitSha()
+METHOD public abstract java.lang.String dev.havlli.fabricate.DevOpsGen.gitShaShort()
+METHOD public abstract java.lang.String dev.havlli.fabricate.DevOpsGen.httpMethod()
+METHOD public abstract java.lang.String dev.havlli.fabricate.DevOpsGen.logLevel()
+METHOD public abstract java.lang.String dev.havlli.fabricate.DevOpsGen.namespace()
+METHOD public abstract java.lang.String dev.havlli.fabricate.DevOpsGen.podName()
+METHOD public abstract java.lang.String dev.havlli.fabricate.DevOpsGen.semver()
+METHOD public abstract java.lang.String dev.havlli.fabricate.DevOpsGen.semverPreRelease()
 METHOD public abstract java.lang.String dev.havlli.fabricate.FileGen.directory()
 METHOD public abstract java.lang.String dev.havlli.fabricate.FileGen.extension()
 METHOD public abstract java.lang.String dev.havlli.fabricate.FileGen.mimeType()
@@ -117,7 +96,37 @@ METHOD public abstract java.lang.String dev.havlli.fabricate.FileGen.mimeTypeFor
 METHOD public abstract java.lang.String dev.havlli.fabricate.FileGen.name()
 METHOD public abstract java.lang.String dev.havlli.fabricate.FileGen.name(java.lang.String)
 METHOD public abstract java.lang.String dev.havlli.fabricate.FileGen.path()
+METHOD public abstract java.lang.String dev.havlli.fabricate.FinanceGen.cardExpiry()
+METHOD public abstract java.lang.String dev.havlli.fabricate.FinanceGen.creditCard()
+METHOD public abstract java.lang.String dev.havlli.fabricate.FinanceGen.creditCard(java.lang.String)
+METHOD public abstract java.lang.String dev.havlli.fabricate.FinanceGen.currencyCode()
+METHOD public abstract java.lang.String dev.havlli.fabricate.FinanceGen.cvv()
+METHOD public abstract java.lang.String dev.havlli.fabricate.FinanceGen.cvv4()
+METHOD public abstract java.lang.String dev.havlli.fabricate.FinanceGen.iban()
+METHOD public abstract java.lang.String dev.havlli.fabricate.FinanceGen.iban(java.lang.String)
+METHOD public abstract java.lang.String dev.havlli.fabricate.FinanceGen.money()
+METHOD public abstract java.lang.String dev.havlli.fabricate.FinanceGen.money(java.lang.String)
+METHOD public abstract java.lang.String dev.havlli.fabricate.GeoGen.coordinate()
+METHOD public abstract java.lang.String dev.havlli.fabricate.GeoGen.countryCodeIso2()
+METHOD public abstract java.lang.String dev.havlli.fabricate.GeoGen.countryCodeIso3()
+METHOD public abstract java.lang.String dev.havlli.fabricate.GeoGen.geohash(int)
+METHOD public abstract java.lang.String dev.havlli.fabricate.GeoGen.timezone()
 METHOD public abstract java.lang.String dev.havlli.fabricate.IdentityGen.username(java.lang.String,java.lang.String,java.util.UUID)
+METHOD public abstract java.lang.String dev.havlli.fabricate.InternetGen.apiKey()
+METHOD public abstract java.lang.String dev.havlli.fabricate.InternetGen.bearerToken()
+METHOD public abstract java.lang.String dev.havlli.fabricate.InternetGen.domain()
+METHOD public abstract java.lang.String dev.havlli.fabricate.InternetGen.email()
+METHOD public abstract java.lang.String dev.havlli.fabricate.InternetGen.email(java.lang.String,java.lang.String)
+METHOD public abstract java.lang.String dev.havlli.fabricate.InternetGen.imageUrl()
+METHOD public abstract java.lang.String dev.havlli.fabricate.InternetGen.ipv4()
+METHOD public abstract java.lang.String dev.havlli.fabricate.InternetGen.ipv6()
+METHOD public abstract java.lang.String dev.havlli.fabricate.InternetGen.ipv6Compressed()
+METHOD public abstract java.lang.String dev.havlli.fabricate.InternetGen.macAddress()
+METHOD public abstract java.lang.String dev.havlli.fabricate.InternetGen.slug()
+METHOD public abstract java.lang.String dev.havlli.fabricate.InternetGen.url()
+METHOD public abstract java.lang.String dev.havlli.fabricate.InternetGen.urlWithQuery()
+METHOD public abstract java.lang.String dev.havlli.fabricate.InternetGen.userAgent()
+METHOD public abstract java.lang.String dev.havlli.fabricate.InternetGen.username()
 METHOD public abstract java.lang.String dev.havlli.fabricate.JobGen.title()
 METHOD public abstract java.lang.String dev.havlli.fabricate.NameGen.first()
 METHOD public abstract java.lang.String dev.havlli.fabricate.NameGen.full()
@@ -180,6 +189,7 @@ METHOD public abstract java.util.stream.Stream<java.lang.String> dev.havlli.fabr
 METHOD public abstract java.util.stream.Stream<java.lang.String> dev.havlli.fabricate.PhoneGen.stream()
 METHOD public abstract java.util.stream.Stream<java.time.LocalDate> dev.havlli.fabricate.DateOfBirthGen.stream()
 METHOD public abstract java.util.stream.Stream<java.util.UUID> dev.havlli.fabricate.IdentityGen.stream()
+METHOD public abstract long dev.havlli.fabricate.DevOpsGen.latencyMs()
 METHOD public abstract long dev.havlli.fabricate.FileGen.sizeBytes()
 METHOD public abstract long dev.havlli.fabricate.NumberGen.between(long,long)
 METHOD public abstract long dev.havlli.fabricate.junit.FabricateTest.seed()
@@ -189,19 +199,21 @@ METHOD public abstract void dev.havlli.fabricate.sink.Sink.write(java.lang.Itera
 METHOD public abstract void dev.havlli.fabricate.sink.Sink.write(java.util.stream.Stream<? extends T>,java.io.Writer)
 METHOD public abstract void dev.havlli.fabricate.sink.Sink.write(java.util.stream.Stream<? extends T>,java.nio.file.Path)
 METHOD public boolean dev.havlli.fabricate.junit.FabricateExtension.supportsParameter(org.junit.jupiter.api.extension.ParameterContext,org.junit.jupiter.api.extension.ExtensionContext)
-METHOD public boolean dev.havlli.fabricate.provider.Booleans.any()
-METHOD public boolean dev.havlli.fabricate.provider.Booleans.withProbability(double)
-METHOD public boolean dev.havlli.fabricate.provider.Dates.isWeekend(java.time.LocalDate)
 METHOD public dev.havlli.fabricate.AddressGen dev.havlli.fabricate.Fabricate.address()
 METHOD public dev.havlli.fabricate.BoolGen dev.havlli.fabricate.Fabricate.bool()
+METHOD public dev.havlli.fabricate.CommerceGen dev.havlli.fabricate.Fabricate.commerce()
 METHOD public dev.havlli.fabricate.DateGen dev.havlli.fabricate.Fabricate.date()
 METHOD public dev.havlli.fabricate.DateOfBirthGen dev.havlli.fabricate.Fabricate.dateOfBirth()
+METHOD public dev.havlli.fabricate.DevOpsGen dev.havlli.fabricate.Fabricate.devops()
 METHOD public dev.havlli.fabricate.Fabricate dev.havlli.fabricate.Fabricate$Builder.build()
+METHOD public dev.havlli.fabricate.Fabricate$Builder dev.havlli.fabricate.Fabricate$Builder.locale(dev.havlli.fabricate.spi.LocaleData)
 METHOD public dev.havlli.fabricate.Fabricate$Builder dev.havlli.fabricate.Fabricate$Builder.locale(java.util.Locale)
-METHOD public dev.havlli.fabricate.Fabricate$Builder dev.havlli.fabricate.Fabricate$Builder.localeRegistry(dev.havlli.fabricate.locale.LocaleRegistry)
 METHOD public dev.havlli.fabricate.Fabricate$Builder dev.havlli.fabricate.Fabricate$Builder.seed(long)
 METHOD public dev.havlli.fabricate.FileGen dev.havlli.fabricate.Fabricate.file()
+METHOD public dev.havlli.fabricate.FinanceGen dev.havlli.fabricate.Fabricate.finance()
+METHOD public dev.havlli.fabricate.GeoGen dev.havlli.fabricate.Fabricate.geo()
 METHOD public dev.havlli.fabricate.IdentityGen dev.havlli.fabricate.Fabricate.identity()
+METHOD public dev.havlli.fabricate.InternetGen dev.havlli.fabricate.Fabricate.internet()
 METHOD public dev.havlli.fabricate.JobGen dev.havlli.fabricate.Fabricate.job()
 METHOD public dev.havlli.fabricate.NameGen dev.havlli.fabricate.Fabricate.name()
 METHOD public dev.havlli.fabricate.NumberGen dev.havlli.fabricate.Fabricate.number()
@@ -215,61 +227,12 @@ METHOD public dev.havlli.fabricate.WeightedPicker$Builder<T> dev.havlli.fabricat
 METHOD public dev.havlli.fabricate.WeightedPicker<T> dev.havlli.fabricate.WeightedPicker$Builder.build()
 METHOD public dev.havlli.fabricate.model.Address dev.havlli.fabricate.model.Address$Builder.build()
 METHOD public dev.havlli.fabricate.model.Address dev.havlli.fabricate.model.Person.address()
-METHOD public dev.havlli.fabricate.model.Address dev.havlli.fabricate.provider.Addresses.address()
 METHOD public dev.havlli.fabricate.model.Address$Builder dev.havlli.fabricate.model.Address$Builder.city(java.lang.String)
 METHOD public dev.havlli.fabricate.model.Address$Builder dev.havlli.fabricate.model.Address$Builder.country(java.lang.String)
 METHOD public dev.havlli.fabricate.model.Address$Builder dev.havlli.fabricate.model.Address$Builder.postalCode(java.lang.String)
 METHOD public dev.havlli.fabricate.model.Address$Builder dev.havlli.fabricate.model.Address$Builder.state(java.lang.String)
 METHOD public dev.havlli.fabricate.model.Address$Builder dev.havlli.fabricate.model.Address$Builder.street(java.lang.String)
-METHOD public dev.havlli.fabricate.model.Person dev.havlli.fabricate.provider.Persons$Builder.build()
-METHOD public dev.havlli.fabricate.model.Person dev.havlli.fabricate.provider.Persons.person()
-METHOD public dev.havlli.fabricate.provider.Addresses dev.havlli.fabricate.Fabricate.addresses()
-METHOD public dev.havlli.fabricate.provider.Booleans dev.havlli.fabricate.Fabricate.booleans()
-METHOD public dev.havlli.fabricate.provider.Commerce dev.havlli.fabricate.Fabricate.commerce()
-METHOD public dev.havlli.fabricate.provider.Dates dev.havlli.fabricate.Fabricate.dates()
-METHOD public dev.havlli.fabricate.provider.DatesOfBirth dev.havlli.fabricate.Fabricate.datesOfBirth()
-METHOD public dev.havlli.fabricate.provider.DevOps dev.havlli.fabricate.Fabricate.devops()
-METHOD public dev.havlli.fabricate.provider.Emails dev.havlli.fabricate.Fabricate.emails()
-METHOD public dev.havlli.fabricate.provider.Files dev.havlli.fabricate.Fabricate.files()
-METHOD public dev.havlli.fabricate.provider.Finance dev.havlli.fabricate.Fabricate.finance()
-METHOD public dev.havlli.fabricate.provider.Geo dev.havlli.fabricate.Fabricate.geo()
-METHOD public dev.havlli.fabricate.provider.Identities dev.havlli.fabricate.Fabricate.identities()
-METHOD public dev.havlli.fabricate.provider.Internet dev.havlli.fabricate.Fabricate.internet()
-METHOD public dev.havlli.fabricate.provider.JobTitles dev.havlli.fabricate.Fabricate.jobTitles()
-METHOD public dev.havlli.fabricate.provider.Names dev.havlli.fabricate.Fabricate.names()
-METHOD public dev.havlli.fabricate.provider.Numbers dev.havlli.fabricate.Fabricate.numbers()
-METHOD public dev.havlli.fabricate.provider.Passwords dev.havlli.fabricate.Fabricate.passwords()
-METHOD public dev.havlli.fabricate.provider.Persons dev.havlli.fabricate.Fabricate.persons()
-METHOD public dev.havlli.fabricate.provider.Persons$Builder dev.havlli.fabricate.provider.Persons$Builder.address(dev.havlli.fabricate.model.Address)
-METHOD public dev.havlli.fabricate.provider.Persons$Builder dev.havlli.fabricate.provider.Persons$Builder.dateOfBirth(java.time.LocalDate)
-METHOD public dev.havlli.fabricate.provider.Persons$Builder dev.havlli.fabricate.provider.Persons$Builder.email(java.lang.String)
-METHOD public dev.havlli.fabricate.provider.Persons$Builder dev.havlli.fabricate.provider.Persons$Builder.firstName(java.lang.String)
-METHOD public dev.havlli.fabricate.provider.Persons$Builder dev.havlli.fabricate.provider.Persons$Builder.jobTitle(java.lang.String)
-METHOD public dev.havlli.fabricate.provider.Persons$Builder dev.havlli.fabricate.provider.Persons$Builder.lastName(java.lang.String)
-METHOD public dev.havlli.fabricate.provider.Persons$Builder dev.havlli.fabricate.provider.Persons$Builder.phoneNumber(java.lang.String)
-METHOD public dev.havlli.fabricate.provider.Persons$Builder dev.havlli.fabricate.provider.Persons$Builder.uid(java.util.UUID)
-METHOD public dev.havlli.fabricate.provider.Persons$Builder dev.havlli.fabricate.provider.Persons$Builder.username(java.lang.String)
-METHOD public dev.havlli.fabricate.provider.Persons$Builder dev.havlli.fabricate.provider.Persons.builder()
-METHOD public dev.havlli.fabricate.provider.Phones dev.havlli.fabricate.Fabricate.phones()
-METHOD public dev.havlli.fabricate.provider.Texts dev.havlli.fabricate.Fabricate.texts()
-METHOD public dev.havlli.fabricate.random.Rng dev.havlli.fabricate.Fabricate.rng()
 METHOD public dev.havlli.fabricate.spi.LocaleData dev.havlli.fabricate.Fabricate.locale()
-METHOD public dev.havlli.fabricate.spi.LocaleData dev.havlli.fabricate.locale.ArabicLocaleProvider.get()
-METHOD public dev.havlli.fabricate.spi.LocaleData dev.havlli.fabricate.locale.ChineseLocaleProvider.get()
-METHOD public dev.havlli.fabricate.spi.LocaleData dev.havlli.fabricate.locale.EnglishLocaleProvider.get()
-METHOD public dev.havlli.fabricate.spi.LocaleData dev.havlli.fabricate.locale.FrenchLocaleProvider.get()
-METHOD public dev.havlli.fabricate.spi.LocaleData dev.havlli.fabricate.locale.GermanLocaleProvider.get()
-METHOD public dev.havlli.fabricate.spi.LocaleData dev.havlli.fabricate.locale.HindiLocaleProvider.get()
-METHOD public dev.havlli.fabricate.spi.LocaleData dev.havlli.fabricate.locale.JapaneseLocaleProvider.get()
-METHOD public dev.havlli.fabricate.spi.LocaleData dev.havlli.fabricate.locale.KoreanLocaleProvider.get()
-METHOD public dev.havlli.fabricate.spi.LocaleData dev.havlli.fabricate.locale.LocaleRegistry.get(java.util.Locale)
-METHOD public dev.havlli.fabricate.spi.LocaleData dev.havlli.fabricate.locale.PortugueseLocaleProvider.get()
-METHOD public dev.havlli.fabricate.spi.LocaleData dev.havlli.fabricate.locale.RussianLocaleProvider.get()
-METHOD public dev.havlli.fabricate.spi.LocaleData dev.havlli.fabricate.locale.SpanishLocaleProvider.get()
-METHOD public double dev.havlli.fabricate.provider.Geo.latitude()
-METHOD public double dev.havlli.fabricate.provider.Geo.longitude()
-METHOD public double dev.havlli.fabricate.provider.Numbers.doubleBetween(double,double)
-METHOD public double dev.havlli.fabricate.provider.Numbers.gaussian(double,double)
 METHOD public final <T> T dev.havlli.fabricate.Fabricate.choice(T...)
 METHOD public final <T> dev.havlli.fabricate.Gen<T> dev.havlli.fabricate.Fabricate.oneOf(T...)
 METHOD public final boolean dev.havlli.fabricate.model.Address.equals(java.lang.Object)
@@ -281,26 +244,11 @@ METHOD public final java.lang.String dev.havlli.fabricate.model.Person.toString(
 METHOD public int dev.havlli.fabricate.Unique.seenCount()
 METHOD public int dev.havlli.fabricate.UniqueExhaustedException.retryBudget()
 METHOD public int dev.havlli.fabricate.UniqueExhaustedException.seenCount()
-METHOD public int dev.havlli.fabricate.provider.DevOps.httpStatus()
-METHOD public int dev.havlli.fabricate.provider.Internet.port()
-METHOD public int dev.havlli.fabricate.provider.Numbers.intBetween(int,int)
-METHOD public int dev.havlli.fabricate.random.Rng.nextInt(int)
 METHOD public java.lang.Object dev.havlli.fabricate.junit.FabricateExtension.resolveParameter(org.junit.jupiter.api.extension.ParameterContext,org.junit.jupiter.api.extension.ExtensionContext)
 METHOD public java.lang.String dev.havlli.fabricate.Fabricate.expand(java.lang.String)
 METHOD public java.lang.String dev.havlli.fabricate.Sequence$Counter.format()
 METHOD public java.lang.String dev.havlli.fabricate.Sequence$Counter.format(java.util.function.LongFunction<java.lang.String>)
 METHOD public java.lang.String dev.havlli.fabricate.Templates.expand(java.lang.String)
-METHOD public java.lang.String dev.havlli.fabricate.locale.ArabicLocale.nameDelimiter()
-METHOD public java.lang.String dev.havlli.fabricate.locale.ChineseLocale.nameDelimiter()
-METHOD public java.lang.String dev.havlli.fabricate.locale.EnglishLocale.nameDelimiter()
-METHOD public java.lang.String dev.havlli.fabricate.locale.FrenchLocale.nameDelimiter()
-METHOD public java.lang.String dev.havlli.fabricate.locale.GermanLocale.nameDelimiter()
-METHOD public java.lang.String dev.havlli.fabricate.locale.HindiLocale.nameDelimiter()
-METHOD public java.lang.String dev.havlli.fabricate.locale.JapaneseLocale.nameDelimiter()
-METHOD public java.lang.String dev.havlli.fabricate.locale.KoreanLocale.nameDelimiter()
-METHOD public java.lang.String dev.havlli.fabricate.locale.PortugueseLocale.nameDelimiter()
-METHOD public java.lang.String dev.havlli.fabricate.locale.RussianLocale.nameDelimiter()
-METHOD public java.lang.String dev.havlli.fabricate.locale.SpanishLocale.nameDelimiter()
 METHOD public java.lang.String dev.havlli.fabricate.model.Address.city()
 METHOD public java.lang.String dev.havlli.fabricate.model.Address.country()
 METHOD public java.lang.String dev.havlli.fabricate.model.Address.postalCode()
@@ -313,263 +261,12 @@ METHOD public java.lang.String dev.havlli.fabricate.model.Person.lastName()
 METHOD public java.lang.String dev.havlli.fabricate.model.Person.phoneNumber()
 METHOD public java.lang.String dev.havlli.fabricate.model.Person.uid()
 METHOD public java.lang.String dev.havlli.fabricate.model.Person.username()
-METHOD public java.lang.String dev.havlli.fabricate.provider.Addresses.city()
-METHOD public java.lang.String dev.havlli.fabricate.provider.Addresses.country()
-METHOD public java.lang.String dev.havlli.fabricate.provider.Addresses.postalCode()
-METHOD public java.lang.String dev.havlli.fabricate.provider.Addresses.state()
-METHOD public java.lang.String dev.havlli.fabricate.provider.Addresses.street()
-METHOD public java.lang.String dev.havlli.fabricate.provider.Commerce.colorHex()
-METHOD public java.lang.String dev.havlli.fabricate.provider.Commerce.colorName()
-METHOD public java.lang.String dev.havlli.fabricate.provider.Commerce.colorRgb()
-METHOD public java.lang.String dev.havlli.fabricate.provider.Commerce.department()
-METHOD public java.lang.String dev.havlli.fabricate.provider.Commerce.ean13()
-METHOD public java.lang.String dev.havlli.fabricate.provider.Commerce.isbn13()
-METHOD public java.lang.String dev.havlli.fabricate.provider.Commerce.productName()
-METHOD public java.lang.String dev.havlli.fabricate.provider.Commerce.sku()
-METHOD public java.lang.String dev.havlli.fabricate.provider.DevOps.branchName()
-METHOD public java.lang.String dev.havlli.fabricate.provider.DevOps.cloudRegion()
-METHOD public java.lang.String dev.havlli.fabricate.provider.DevOps.dockerImage()
-METHOD public java.lang.String dev.havlli.fabricate.provider.DevOps.environment()
-METHOD public java.lang.String dev.havlli.fabricate.provider.DevOps.gitSha()
-METHOD public java.lang.String dev.havlli.fabricate.provider.DevOps.gitShaShort()
-METHOD public java.lang.String dev.havlli.fabricate.provider.DevOps.httpMethod()
-METHOD public java.lang.String dev.havlli.fabricate.provider.DevOps.logLevel()
-METHOD public java.lang.String dev.havlli.fabricate.provider.DevOps.namespace()
-METHOD public java.lang.String dev.havlli.fabricate.provider.DevOps.podName()
-METHOD public java.lang.String dev.havlli.fabricate.provider.DevOps.semver()
-METHOD public java.lang.String dev.havlli.fabricate.provider.DevOps.semverPreRelease()
-METHOD public java.lang.String dev.havlli.fabricate.provider.Emails.email()
-METHOD public java.lang.String dev.havlli.fabricate.provider.Emails.email(java.lang.String,java.lang.String)
-METHOD public java.lang.String dev.havlli.fabricate.provider.Files.directory()
-METHOD public java.lang.String dev.havlli.fabricate.provider.Files.extension()
-METHOD public java.lang.String dev.havlli.fabricate.provider.Files.fileName()
-METHOD public java.lang.String dev.havlli.fabricate.provider.Files.fileName(java.lang.String)
-METHOD public java.lang.String dev.havlli.fabricate.provider.Files.mimeType()
-METHOD public java.lang.String dev.havlli.fabricate.provider.Files.mimeTypeFor(java.lang.String)
-METHOD public java.lang.String dev.havlli.fabricate.provider.Files.path()
-METHOD public java.lang.String dev.havlli.fabricate.provider.Finance.cardExpiry()
-METHOD public java.lang.String dev.havlli.fabricate.provider.Finance.creditCard()
-METHOD public java.lang.String dev.havlli.fabricate.provider.Finance.creditCard(java.lang.String)
-METHOD public java.lang.String dev.havlli.fabricate.provider.Finance.currencyCode()
-METHOD public java.lang.String dev.havlli.fabricate.provider.Finance.cvv()
-METHOD public java.lang.String dev.havlli.fabricate.provider.Finance.cvv4()
-METHOD public java.lang.String dev.havlli.fabricate.provider.Finance.iban()
-METHOD public java.lang.String dev.havlli.fabricate.provider.Finance.iban(java.lang.String)
-METHOD public java.lang.String dev.havlli.fabricate.provider.Finance.money()
-METHOD public java.lang.String dev.havlli.fabricate.provider.Finance.money(java.lang.String)
-METHOD public java.lang.String dev.havlli.fabricate.provider.Geo.coordinate()
-METHOD public java.lang.String dev.havlli.fabricate.provider.Geo.countryCodeIso2()
-METHOD public java.lang.String dev.havlli.fabricate.provider.Geo.countryCodeIso3()
-METHOD public java.lang.String dev.havlli.fabricate.provider.Geo.geohash(int)
-METHOD public java.lang.String dev.havlli.fabricate.provider.Geo.timezone()
-METHOD public java.lang.String dev.havlli.fabricate.provider.Identities.username(java.lang.String,java.lang.String,java.util.UUID)
-METHOD public java.lang.String dev.havlli.fabricate.provider.Internet.apiKey()
-METHOD public java.lang.String dev.havlli.fabricate.provider.Internet.bearerToken()
-METHOD public java.lang.String dev.havlli.fabricate.provider.Internet.domain()
-METHOD public java.lang.String dev.havlli.fabricate.provider.Internet.email()
-METHOD public java.lang.String dev.havlli.fabricate.provider.Internet.email(java.lang.String,java.lang.String)
-METHOD public java.lang.String dev.havlli.fabricate.provider.Internet.imageUrl()
-METHOD public java.lang.String dev.havlli.fabricate.provider.Internet.ipv4()
-METHOD public java.lang.String dev.havlli.fabricate.provider.Internet.ipv6()
-METHOD public java.lang.String dev.havlli.fabricate.provider.Internet.ipv6Compressed()
-METHOD public java.lang.String dev.havlli.fabricate.provider.Internet.macAddress()
-METHOD public java.lang.String dev.havlli.fabricate.provider.Internet.slug()
-METHOD public java.lang.String dev.havlli.fabricate.provider.Internet.url()
-METHOD public java.lang.String dev.havlli.fabricate.provider.Internet.urlWithQuery()
-METHOD public java.lang.String dev.havlli.fabricate.provider.Internet.userAgent()
-METHOD public java.lang.String dev.havlli.fabricate.provider.Internet.username()
-METHOD public java.lang.String dev.havlli.fabricate.provider.JobTitles.jobTitle()
-METHOD public java.lang.String dev.havlli.fabricate.provider.Names.firstName()
-METHOD public java.lang.String dev.havlli.fabricate.provider.Names.fullName()
-METHOD public java.lang.String dev.havlli.fabricate.provider.Names.lastName()
-METHOD public java.lang.String dev.havlli.fabricate.provider.Passwords.password()
-METHOD public java.lang.String dev.havlli.fabricate.provider.Passwords.password(int)
-METHOD public java.lang.String dev.havlli.fabricate.provider.Passwords.password(int,java.lang.String)
-METHOD public java.lang.String dev.havlli.fabricate.provider.Phones.phoneNumber()
-METHOD public java.lang.String dev.havlli.fabricate.provider.Texts.aboutLength(int)
-METHOD public java.lang.String dev.havlli.fabricate.provider.Texts.alphanumeric(int)
-METHOD public java.lang.String dev.havlli.fabricate.provider.Texts.hex(int)
-METHOD public java.lang.String dev.havlli.fabricate.provider.Texts.paragraph()
-METHOD public java.lang.String dev.havlli.fabricate.provider.Texts.paragraphs(int)
-METHOD public java.lang.String dev.havlli.fabricate.provider.Texts.sentence()
-METHOD public java.lang.String dev.havlli.fabricate.provider.Texts.slug()
-METHOD public java.lang.String dev.havlli.fabricate.provider.Texts.word()
-METHOD public java.lang.String dev.havlli.fabricate.provider.Texts.words(int)
-METHOD public java.time.DayOfWeek dev.havlli.fabricate.provider.Dates.weekday()
-METHOD public java.time.Duration dev.havlli.fabricate.provider.Dates.durationUpTo(long)
-METHOD public java.time.Instant dev.havlli.fabricate.provider.Dates.instantBetween(java.time.Instant,java.time.Instant)
-METHOD public java.time.Instant dev.havlli.fabricate.provider.Dates.recentInstant(int)
 METHOD public java.time.LocalDate dev.havlli.fabricate.model.Person.dateOfBirth()
-METHOD public java.time.LocalDate dev.havlli.fabricate.provider.Dates.between(java.time.LocalDate,java.time.LocalDate)
-METHOD public java.time.LocalDate dev.havlli.fabricate.provider.Dates.future(int)
-METHOD public java.time.LocalDate dev.havlli.fabricate.provider.Dates.past(int)
-METHOD public java.time.LocalDate dev.havlli.fabricate.provider.Dates.recent(int)
-METHOD public java.time.LocalDate dev.havlli.fabricate.provider.Dates.weekendDayBetween(java.time.LocalDate,java.time.LocalDate)
-METHOD public java.time.LocalDate dev.havlli.fabricate.provider.Dates.workingDayBetween(java.time.LocalDate,java.time.LocalDate)
-METHOD public java.time.LocalDate dev.havlli.fabricate.provider.Dates.workingDayInNext(int)
-METHOD public java.time.LocalDate dev.havlli.fabricate.provider.DatesOfBirth.birthdate()
-METHOD public java.time.LocalDate dev.havlli.fabricate.provider.DatesOfBirth.birthdate(int,int)
-METHOD public java.time.LocalDateTime dev.havlli.fabricate.provider.Dates.localDateTimeBetween(java.time.LocalDateTime,java.time.LocalDateTime)
-METHOD public java.time.Month dev.havlli.fabricate.provider.Dates.month()
 METHOD public java.util.List<T> dev.havlli.fabricate.Unique.list(int)
-METHOD public java.util.List<dev.havlli.fabricate.model.Address> dev.havlli.fabricate.provider.Addresses.list(int)
-METHOD public java.util.List<dev.havlli.fabricate.model.Person> dev.havlli.fabricate.provider.Persons.list(int)
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.ArabicLocale.cities()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.ArabicLocale.countries()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.ArabicLocale.emailDomains()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.ArabicLocale.firstNames()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.ArabicLocale.jobTitles()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.ArabicLocale.lastNames()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.ArabicLocale.phoneCountryCodes()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.ArabicLocale.postalCodes()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.ArabicLocale.states()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.ArabicLocale.streets()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.ChineseLocale.cities()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.ChineseLocale.countries()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.ChineseLocale.emailDomains()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.ChineseLocale.firstNames()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.ChineseLocale.jobTitles()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.ChineseLocale.lastNames()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.ChineseLocale.phoneCountryCodes()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.ChineseLocale.postalCodes()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.ChineseLocale.states()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.ChineseLocale.streets()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.EnglishLocale.cities()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.EnglishLocale.countries()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.EnglishLocale.emailDomains()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.EnglishLocale.firstNames()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.EnglishLocale.jobTitles()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.EnglishLocale.lastNames()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.EnglishLocale.phoneCountryCodes()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.EnglishLocale.postalCodes()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.EnglishLocale.states()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.EnglishLocale.streets()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.FrenchLocale.cities()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.FrenchLocale.countries()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.FrenchLocale.emailDomains()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.FrenchLocale.firstNames()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.FrenchLocale.jobTitles()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.FrenchLocale.lastNames()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.FrenchLocale.phoneCountryCodes()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.FrenchLocale.postalCodes()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.FrenchLocale.states()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.FrenchLocale.streets()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.GermanLocale.cities()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.GermanLocale.countries()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.GermanLocale.emailDomains()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.GermanLocale.firstNames()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.GermanLocale.jobTitles()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.GermanLocale.lastNames()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.GermanLocale.phoneCountryCodes()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.GermanLocale.postalCodes()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.GermanLocale.states()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.GermanLocale.streets()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.HindiLocale.cities()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.HindiLocale.countries()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.HindiLocale.emailDomains()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.HindiLocale.firstNames()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.HindiLocale.jobTitles()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.HindiLocale.lastNames()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.HindiLocale.phoneCountryCodes()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.HindiLocale.postalCodes()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.HindiLocale.states()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.HindiLocale.streets()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.JapaneseLocale.cities()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.JapaneseLocale.countries()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.JapaneseLocale.emailDomains()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.JapaneseLocale.firstNames()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.JapaneseLocale.jobTitles()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.JapaneseLocale.lastNames()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.JapaneseLocale.phoneCountryCodes()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.JapaneseLocale.postalCodes()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.JapaneseLocale.states()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.JapaneseLocale.streets()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.KoreanLocale.cities()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.KoreanLocale.countries()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.KoreanLocale.emailDomains()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.KoreanLocale.firstNames()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.KoreanLocale.jobTitles()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.KoreanLocale.lastNames()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.KoreanLocale.phoneCountryCodes()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.KoreanLocale.postalCodes()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.KoreanLocale.states()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.KoreanLocale.streets()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.PortugueseLocale.cities()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.PortugueseLocale.countries()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.PortugueseLocale.emailDomains()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.PortugueseLocale.firstNames()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.PortugueseLocale.jobTitles()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.PortugueseLocale.lastNames()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.PortugueseLocale.phoneCountryCodes()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.PortugueseLocale.postalCodes()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.PortugueseLocale.states()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.PortugueseLocale.streets()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.RussianLocale.cities()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.RussianLocale.countries()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.RussianLocale.emailDomains()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.RussianLocale.firstNames()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.RussianLocale.jobTitles()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.RussianLocale.lastNames()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.RussianLocale.phoneCountryCodes()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.RussianLocale.postalCodes()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.RussianLocale.states()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.RussianLocale.streets()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.SpanishLocale.cities()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.SpanishLocale.countries()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.SpanishLocale.emailDomains()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.SpanishLocale.firstNames()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.SpanishLocale.jobTitles()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.SpanishLocale.lastNames()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.SpanishLocale.phoneCountryCodes()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.SpanishLocale.postalCodes()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.SpanishLocale.states()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.locale.SpanishLocale.streets()
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.provider.Emails.list(int)
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.provider.JobTitles.list(int)
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.provider.Names.list(int)
-METHOD public java.util.List<java.lang.String> dev.havlli.fabricate.provider.Phones.list(int)
-METHOD public java.util.List<java.time.LocalDate> dev.havlli.fabricate.provider.DatesOfBirth.list(int)
-METHOD public java.util.List<java.util.UUID> dev.havlli.fabricate.provider.Identities.list(int)
-METHOD public java.util.Locale dev.havlli.fabricate.locale.ArabicLocale.locale()
-METHOD public java.util.Locale dev.havlli.fabricate.locale.ChineseLocale.locale()
-METHOD public java.util.Locale dev.havlli.fabricate.locale.EnglishLocale.locale()
-METHOD public java.util.Locale dev.havlli.fabricate.locale.FrenchLocale.locale()
-METHOD public java.util.Locale dev.havlli.fabricate.locale.GermanLocale.locale()
-METHOD public java.util.Locale dev.havlli.fabricate.locale.HindiLocale.locale()
-METHOD public java.util.Locale dev.havlli.fabricate.locale.JapaneseLocale.locale()
-METHOD public java.util.Locale dev.havlli.fabricate.locale.KoreanLocale.locale()
-METHOD public java.util.Locale dev.havlli.fabricate.locale.PortugueseLocale.locale()
-METHOD public java.util.Locale dev.havlli.fabricate.locale.RussianLocale.locale()
-METHOD public java.util.Locale dev.havlli.fabricate.locale.SpanishLocale.locale()
 METHOD public java.util.Set<java.lang.String> dev.havlli.fabricate.Templates.knownTokens()
-METHOD public java.util.Set<java.util.Locale> dev.havlli.fabricate.locale.LocaleRegistry.available()
-METHOD public java.util.UUID dev.havlli.fabricate.provider.Identities.uuid()
-METHOD public java.util.function.UnaryOperator<java.lang.String> dev.havlli.fabricate.locale.ArabicLocale.emailLocalPartTransform()
-METHOD public java.util.function.UnaryOperator<java.lang.String> dev.havlli.fabricate.locale.ChineseLocale.emailLocalPartTransform()
-METHOD public java.util.function.UnaryOperator<java.lang.String> dev.havlli.fabricate.locale.EnglishLocale.emailLocalPartTransform()
-METHOD public java.util.function.UnaryOperator<java.lang.String> dev.havlli.fabricate.locale.FrenchLocale.emailLocalPartTransform()
-METHOD public java.util.function.UnaryOperator<java.lang.String> dev.havlli.fabricate.locale.GermanLocale.emailLocalPartTransform()
-METHOD public java.util.function.UnaryOperator<java.lang.String> dev.havlli.fabricate.locale.HindiLocale.emailLocalPartTransform()
-METHOD public java.util.function.UnaryOperator<java.lang.String> dev.havlli.fabricate.locale.JapaneseLocale.emailLocalPartTransform()
-METHOD public java.util.function.UnaryOperator<java.lang.String> dev.havlli.fabricate.locale.KoreanLocale.emailLocalPartTransform()
-METHOD public java.util.function.UnaryOperator<java.lang.String> dev.havlli.fabricate.locale.PortugueseLocale.emailLocalPartTransform()
-METHOD public java.util.function.UnaryOperator<java.lang.String> dev.havlli.fabricate.locale.RussianLocale.emailLocalPartTransform()
-METHOD public java.util.function.UnaryOperator<java.lang.String> dev.havlli.fabricate.locale.SpanishLocale.emailLocalPartTransform()
-METHOD public java.util.random.RandomGenerator dev.havlli.fabricate.random.Rng.delegate()
+METHOD public java.util.random.RandomGenerator dev.havlli.fabricate.Fabricate.random()
 METHOD public java.util.stream.Stream<T> dev.havlli.fabricate.Unique.stream()
-METHOD public java.util.stream.Stream<dev.havlli.fabricate.model.Address> dev.havlli.fabricate.provider.Addresses.stream()
-METHOD public java.util.stream.Stream<dev.havlli.fabricate.model.Person> dev.havlli.fabricate.provider.Persons.stream()
-METHOD public java.util.stream.Stream<java.lang.String> dev.havlli.fabricate.provider.Emails.stream()
-METHOD public java.util.stream.Stream<java.lang.String> dev.havlli.fabricate.provider.JobTitles.stream()
-METHOD public java.util.stream.Stream<java.lang.String> dev.havlli.fabricate.provider.Names.stream()
-METHOD public java.util.stream.Stream<java.lang.String> dev.havlli.fabricate.provider.Phones.stream()
-METHOD public java.util.stream.Stream<java.time.LocalDate> dev.havlli.fabricate.provider.DatesOfBirth.stream()
-METHOD public java.util.stream.Stream<java.util.UUID> dev.havlli.fabricate.provider.Identities.stream()
 METHOD public long dev.havlli.fabricate.Sequence$Counter.next()
-METHOD public long dev.havlli.fabricate.provider.DevOps.latencyMs()
-METHOD public long dev.havlli.fabricate.provider.Files.fileSizeBytes()
-METHOD public long dev.havlli.fabricate.provider.Numbers.longBetween(long,long)
-METHOD public long dev.havlli.fabricate.random.Rng.nextLong(long,long)
 METHOD public static <T extends java.lang.Record> dev.havlli.fabricate.sink.Sink<T> dev.havlli.fabricate.sink.Sinks.csv()
 METHOD public static <T extends java.lang.Record> dev.havlli.fabricate.sink.Sink<T> dev.havlli.fabricate.sink.Sinks.jsonLines()
 METHOD public static <T extends java.lang.Record> dev.havlli.fabricate.sink.SqlSink<T> dev.havlli.fabricate.sink.Sinks.sql(java.lang.String)
@@ -586,8 +283,8 @@ METHOD public static <T> dev.havlli.fabricate.Sequence$Cycle<T> dev.havlli.fabri
 METHOD public static <T> dev.havlli.fabricate.Sequence$Cycle<T> dev.havlli.fabricate.Sequence.cycle(java.util.List<T>)
 METHOD public static <T> dev.havlli.fabricate.Unique<T> dev.havlli.fabricate.Unique.of(java.util.function.Supplier<T>)
 METHOD public static <T> dev.havlli.fabricate.Unique<T> dev.havlli.fabricate.Unique.of(java.util.function.Supplier<T>,int)
-METHOD public static <T> dev.havlli.fabricate.WeightedPicker$Builder<T> dev.havlli.fabricate.WeightedPicker.builder(dev.havlli.fabricate.random.Rng)
-METHOD public static <T> dev.havlli.fabricate.WeightedPicker<T> dev.havlli.fabricate.WeightedPicker.of(dev.havlli.fabricate.random.Rng,java.util.Map<T, ? extends java.lang.Number>)
+METHOD public static <T> dev.havlli.fabricate.WeightedPicker$Builder<T> dev.havlli.fabricate.WeightedPicker.builder(java.util.random.RandomGenerator)
+METHOD public static <T> dev.havlli.fabricate.WeightedPicker<T> dev.havlli.fabricate.WeightedPicker.of(java.util.random.RandomGenerator,java.util.Map<T, ? extends java.lang.Number>)
 METHOD public static <T> java.util.Optional<T> dev.havlli.fabricate.Fake.optional(double,java.util.function.Supplier<T>)
 METHOD public static boolean dev.havlli.fabricate.Fake.coinFlip()
 METHOD public static boolean dev.havlli.fabricate.Fake.withProbability(double)
@@ -597,12 +294,9 @@ METHOD public static dev.havlli.fabricate.Fabricate$Builder dev.havlli.fabricate
 METHOD public static dev.havlli.fabricate.Sequence$Counter dev.havlli.fabricate.Sequence.counter()
 METHOD public static dev.havlli.fabricate.Sequence$Counter dev.havlli.fabricate.Sequence.counter(java.lang.String,long)
 METHOD public static dev.havlli.fabricate.Sequence$Counter dev.havlli.fabricate.Sequence.counter(long)
-METHOD public static dev.havlli.fabricate.locale.LocaleRegistry dev.havlli.fabricate.locale.LocaleRegistry.getDefault()
 METHOD public static dev.havlli.fabricate.model.Address dev.havlli.fabricate.Fake.address()
 METHOD public static dev.havlli.fabricate.model.Address$Builder dev.havlli.fabricate.model.Address.builder()
 METHOD public static dev.havlli.fabricate.model.Person dev.havlli.fabricate.Fake.person()
-METHOD public static dev.havlli.fabricate.random.Rng dev.havlli.fabricate.random.Rng.create()
-METHOD public static dev.havlli.fabricate.random.Rng dev.havlli.fabricate.random.Rng.seeded(long)
 METHOD public static double dev.havlli.fabricate.Fake.doubleBetween(double,double)
 METHOD public static double dev.havlli.fabricate.Fake.latitude()
 METHOD public static double dev.havlli.fabricate.Fake.longitude()
@@ -707,75 +401,9 @@ SUPER dev.havlli.fabricate.junit.FabricateExtension implements org.junit.jupiter
 SUPER dev.havlli.fabricate.junit.FabricateTest extends java.lang.annotation.Annotation
 SUPER dev.havlli.fabricate.junit.Fabricated extends java.lang.annotation.Annotation
 SUPER dev.havlli.fabricate.junit.Seed extends java.lang.annotation.Annotation
-SUPER dev.havlli.fabricate.locale.ArabicLocale extends java.lang.Object
-SUPER dev.havlli.fabricate.locale.ArabicLocale implements dev.havlli.fabricate.spi.LocaleData
-SUPER dev.havlli.fabricate.locale.ArabicLocaleProvider extends java.lang.Object
-SUPER dev.havlli.fabricate.locale.ArabicLocaleProvider implements dev.havlli.fabricate.spi.LocaleProvider
-SUPER dev.havlli.fabricate.locale.ChineseLocale extends java.lang.Object
-SUPER dev.havlli.fabricate.locale.ChineseLocale implements dev.havlli.fabricate.spi.LocaleData
-SUPER dev.havlli.fabricate.locale.ChineseLocaleProvider extends java.lang.Object
-SUPER dev.havlli.fabricate.locale.ChineseLocaleProvider implements dev.havlli.fabricate.spi.LocaleProvider
-SUPER dev.havlli.fabricate.locale.EnglishLocale extends java.lang.Object
-SUPER dev.havlli.fabricate.locale.EnglishLocale implements dev.havlli.fabricate.spi.LocaleData
-SUPER dev.havlli.fabricate.locale.EnglishLocaleProvider extends java.lang.Object
-SUPER dev.havlli.fabricate.locale.EnglishLocaleProvider implements dev.havlli.fabricate.spi.LocaleProvider
-SUPER dev.havlli.fabricate.locale.FrenchLocale extends java.lang.Object
-SUPER dev.havlli.fabricate.locale.FrenchLocale implements dev.havlli.fabricate.spi.LocaleData
-SUPER dev.havlli.fabricate.locale.FrenchLocaleProvider extends java.lang.Object
-SUPER dev.havlli.fabricate.locale.FrenchLocaleProvider implements dev.havlli.fabricate.spi.LocaleProvider
-SUPER dev.havlli.fabricate.locale.GermanLocale extends java.lang.Object
-SUPER dev.havlli.fabricate.locale.GermanLocale implements dev.havlli.fabricate.spi.LocaleData
-SUPER dev.havlli.fabricate.locale.GermanLocaleProvider extends java.lang.Object
-SUPER dev.havlli.fabricate.locale.GermanLocaleProvider implements dev.havlli.fabricate.spi.LocaleProvider
-SUPER dev.havlli.fabricate.locale.HindiLocale extends java.lang.Object
-SUPER dev.havlli.fabricate.locale.HindiLocale implements dev.havlli.fabricate.spi.LocaleData
-SUPER dev.havlli.fabricate.locale.HindiLocaleProvider extends java.lang.Object
-SUPER dev.havlli.fabricate.locale.HindiLocaleProvider implements dev.havlli.fabricate.spi.LocaleProvider
-SUPER dev.havlli.fabricate.locale.JapaneseLocale extends java.lang.Object
-SUPER dev.havlli.fabricate.locale.JapaneseLocale implements dev.havlli.fabricate.spi.LocaleData
-SUPER dev.havlli.fabricate.locale.JapaneseLocaleProvider extends java.lang.Object
-SUPER dev.havlli.fabricate.locale.JapaneseLocaleProvider implements dev.havlli.fabricate.spi.LocaleProvider
-SUPER dev.havlli.fabricate.locale.KoreanLocale extends java.lang.Object
-SUPER dev.havlli.fabricate.locale.KoreanLocale implements dev.havlli.fabricate.spi.LocaleData
-SUPER dev.havlli.fabricate.locale.KoreanLocaleProvider extends java.lang.Object
-SUPER dev.havlli.fabricate.locale.KoreanLocaleProvider implements dev.havlli.fabricate.spi.LocaleProvider
-SUPER dev.havlli.fabricate.locale.LocaleRegistry extends java.lang.Object
-SUPER dev.havlli.fabricate.locale.PortugueseLocale extends java.lang.Object
-SUPER dev.havlli.fabricate.locale.PortugueseLocale implements dev.havlli.fabricate.spi.LocaleData
-SUPER dev.havlli.fabricate.locale.PortugueseLocaleProvider extends java.lang.Object
-SUPER dev.havlli.fabricate.locale.PortugueseLocaleProvider implements dev.havlli.fabricate.spi.LocaleProvider
-SUPER dev.havlli.fabricate.locale.RussianLocale extends java.lang.Object
-SUPER dev.havlli.fabricate.locale.RussianLocale implements dev.havlli.fabricate.spi.LocaleData
-SUPER dev.havlli.fabricate.locale.RussianLocaleProvider extends java.lang.Object
-SUPER dev.havlli.fabricate.locale.RussianLocaleProvider implements dev.havlli.fabricate.spi.LocaleProvider
-SUPER dev.havlli.fabricate.locale.SpanishLocale extends java.lang.Object
-SUPER dev.havlli.fabricate.locale.SpanishLocale implements dev.havlli.fabricate.spi.LocaleData
-SUPER dev.havlli.fabricate.locale.SpanishLocaleProvider extends java.lang.Object
-SUPER dev.havlli.fabricate.locale.SpanishLocaleProvider implements dev.havlli.fabricate.spi.LocaleProvider
 SUPER dev.havlli.fabricate.model.Address extends java.lang.Record
 SUPER dev.havlli.fabricate.model.Address$Builder extends java.lang.Object
 SUPER dev.havlli.fabricate.model.Person extends java.lang.Record
-SUPER dev.havlli.fabricate.provider.Addresses extends java.lang.Object
-SUPER dev.havlli.fabricate.provider.Booleans extends java.lang.Object
-SUPER dev.havlli.fabricate.provider.Commerce extends java.lang.Object
-SUPER dev.havlli.fabricate.provider.Dates extends java.lang.Object
-SUPER dev.havlli.fabricate.provider.DatesOfBirth extends java.lang.Object
-SUPER dev.havlli.fabricate.provider.DevOps extends java.lang.Object
-SUPER dev.havlli.fabricate.provider.Emails extends java.lang.Object
-SUPER dev.havlli.fabricate.provider.Files extends java.lang.Object
-SUPER dev.havlli.fabricate.provider.Finance extends java.lang.Object
-SUPER dev.havlli.fabricate.provider.Geo extends java.lang.Object
-SUPER dev.havlli.fabricate.provider.Identities extends java.lang.Object
-SUPER dev.havlli.fabricate.provider.Internet extends java.lang.Object
-SUPER dev.havlli.fabricate.provider.JobTitles extends java.lang.Object
-SUPER dev.havlli.fabricate.provider.Names extends java.lang.Object
-SUPER dev.havlli.fabricate.provider.Numbers extends java.lang.Object
-SUPER dev.havlli.fabricate.provider.Passwords extends java.lang.Object
-SUPER dev.havlli.fabricate.provider.Persons extends java.lang.Object
-SUPER dev.havlli.fabricate.provider.Persons$Builder extends java.lang.Object
-SUPER dev.havlli.fabricate.provider.Phones extends java.lang.Object
-SUPER dev.havlli.fabricate.provider.Texts extends java.lang.Object
-SUPER dev.havlli.fabricate.random.Rng extends java.lang.Object
 SUPER dev.havlli.fabricate.sink.Sinks extends java.lang.Object
 SUPER dev.havlli.fabricate.sink.SqlSink extends dev.havlli.fabricate.sink.Sink<T>
 TYPE annotation public abstract @interface dev.havlli.fabricate.junit.FabricateTest
@@ -791,63 +419,24 @@ TYPE class public final class dev.havlli.fabricate.Unique<T>
 TYPE class public final class dev.havlli.fabricate.UniqueExhaustedException
 TYPE class public final class dev.havlli.fabricate.WeightedPicker<T>
 TYPE class public final class dev.havlli.fabricate.junit.FabricateExtension
-TYPE class public final class dev.havlli.fabricate.locale.ArabicLocale
-TYPE class public final class dev.havlli.fabricate.locale.ArabicLocaleProvider
-TYPE class public final class dev.havlli.fabricate.locale.ChineseLocale
-TYPE class public final class dev.havlli.fabricate.locale.ChineseLocaleProvider
-TYPE class public final class dev.havlli.fabricate.locale.EnglishLocale
-TYPE class public final class dev.havlli.fabricate.locale.EnglishLocaleProvider
-TYPE class public final class dev.havlli.fabricate.locale.FrenchLocale
-TYPE class public final class dev.havlli.fabricate.locale.FrenchLocaleProvider
-TYPE class public final class dev.havlli.fabricate.locale.GermanLocale
-TYPE class public final class dev.havlli.fabricate.locale.GermanLocaleProvider
-TYPE class public final class dev.havlli.fabricate.locale.HindiLocale
-TYPE class public final class dev.havlli.fabricate.locale.HindiLocaleProvider
-TYPE class public final class dev.havlli.fabricate.locale.JapaneseLocale
-TYPE class public final class dev.havlli.fabricate.locale.JapaneseLocaleProvider
-TYPE class public final class dev.havlli.fabricate.locale.KoreanLocale
-TYPE class public final class dev.havlli.fabricate.locale.KoreanLocaleProvider
-TYPE class public final class dev.havlli.fabricate.locale.LocaleRegistry
-TYPE class public final class dev.havlli.fabricate.locale.PortugueseLocale
-TYPE class public final class dev.havlli.fabricate.locale.PortugueseLocaleProvider
-TYPE class public final class dev.havlli.fabricate.locale.RussianLocale
-TYPE class public final class dev.havlli.fabricate.locale.RussianLocaleProvider
-TYPE class public final class dev.havlli.fabricate.locale.SpanishLocale
-TYPE class public final class dev.havlli.fabricate.locale.SpanishLocaleProvider
-TYPE class public final class dev.havlli.fabricate.provider.Addresses
-TYPE class public final class dev.havlli.fabricate.provider.Booleans
-TYPE class public final class dev.havlli.fabricate.provider.Commerce
-TYPE class public final class dev.havlli.fabricate.provider.Dates
-TYPE class public final class dev.havlli.fabricate.provider.DatesOfBirth
-TYPE class public final class dev.havlli.fabricate.provider.DevOps
-TYPE class public final class dev.havlli.fabricate.provider.Emails
-TYPE class public final class dev.havlli.fabricate.provider.Files
-TYPE class public final class dev.havlli.fabricate.provider.Finance
-TYPE class public final class dev.havlli.fabricate.provider.Geo
-TYPE class public final class dev.havlli.fabricate.provider.Identities
-TYPE class public final class dev.havlli.fabricate.provider.Internet
-TYPE class public final class dev.havlli.fabricate.provider.JobTitles
-TYPE class public final class dev.havlli.fabricate.provider.Names
-TYPE class public final class dev.havlli.fabricate.provider.Numbers
-TYPE class public final class dev.havlli.fabricate.provider.Passwords
-TYPE class public final class dev.havlli.fabricate.provider.Persons
-TYPE class public final class dev.havlli.fabricate.provider.Phones
-TYPE class public final class dev.havlli.fabricate.provider.Texts
-TYPE class public final class dev.havlli.fabricate.random.Rng
 TYPE class public final class dev.havlli.fabricate.sink.Sinks
 TYPE class public static final class dev.havlli.fabricate.Fabricate$Builder
 TYPE class public static final class dev.havlli.fabricate.Sequence$Counter
 TYPE class public static final class dev.havlli.fabricate.Sequence$Cycle<T>
 TYPE class public static final class dev.havlli.fabricate.WeightedPicker$Builder<T>
 TYPE class public static final class dev.havlli.fabricate.model.Address$Builder
-TYPE class public static final class dev.havlli.fabricate.provider.Persons$Builder
 TYPE interface public abstract interface dev.havlli.fabricate.AddressGen
 TYPE interface public abstract interface dev.havlli.fabricate.BoolGen
+TYPE interface public abstract interface dev.havlli.fabricate.CommerceGen
 TYPE interface public abstract interface dev.havlli.fabricate.DateGen
 TYPE interface public abstract interface dev.havlli.fabricate.DateOfBirthGen
+TYPE interface public abstract interface dev.havlli.fabricate.DevOpsGen
 TYPE interface public abstract interface dev.havlli.fabricate.FileGen
+TYPE interface public abstract interface dev.havlli.fabricate.FinanceGen
 TYPE interface public abstract interface dev.havlli.fabricate.Gen<T>
+TYPE interface public abstract interface dev.havlli.fabricate.GeoGen
 TYPE interface public abstract interface dev.havlli.fabricate.IdentityGen
+TYPE interface public abstract interface dev.havlli.fabricate.InternetGen
 TYPE interface public abstract interface dev.havlli.fabricate.JobGen
 TYPE interface public abstract interface dev.havlli.fabricate.NameGen
 TYPE interface public abstract interface dev.havlli.fabricate.NumberGen

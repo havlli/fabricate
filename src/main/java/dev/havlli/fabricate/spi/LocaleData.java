@@ -8,7 +8,7 @@ import java.util.function.UnaryOperator;
  * Locale-specific data and rules consumed by built-in providers.
  *
  * Implementations are typically immutable singletons. Built-in locales
- * live in {@code dev.havlli.fabricate.locale}; new locales are contributed via
+ * are supplied by the library; new locales are contributed via
  * {@link LocaleProvider} on the module path or classpath.
  *
  * <p><strong>Consumer-implemented type.</strong> Third parties implement this

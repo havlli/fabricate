@@ -303,7 +303,7 @@ class RecordGenTest {
             assertThat(nested.get()).usingRecursiveComparison().isEqualTo(filled.fill(Nested.class));
             assertThat(beans.get()).usingRecursiveComparison().isEqualTo(filled.fill(SetterBean.class));
         }
-        assertThat(generated.rng().delegate().nextLong()).isEqualTo(filled.rng().delegate().nextLong());
+        assertThat(generated.random().nextLong()).isEqualTo(filled.random().nextLong());
     }
 
     @Test
@@ -314,7 +314,7 @@ class RecordGenTest {
         for (int i = 0; i < 10; i++) {
             assertThat(gen.get()).isEqualTo(new Counts(-1, expected.number().between(0, 1_000_000)));
         }
-        assertThat(generated.rng().delegate().nextLong()).isEqualTo(expected.rng().delegate().nextLong());
+        assertThat(generated.random().nextLong()).isEqualTo(expected.random().nextLong());
     }
 
     @Test

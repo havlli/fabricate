@@ -1,6 +1,10 @@
 package dev.havlli.fabricate.sink;
 
 import java.nio.file.Path;
+import dev.havlli.fabricate.internal.sink.DefaultCsvSink;
+import dev.havlli.fabricate.internal.sink.DefaultJsonLinesSink;
+import dev.havlli.fabricate.internal.sink.DefaultSqlSink;
+import dev.havlli.fabricate.internal.sink.SinkEncoding;
 import java.util.List;
 import java.util.Objects;
 

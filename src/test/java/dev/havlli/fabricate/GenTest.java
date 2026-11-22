@@ -207,7 +207,7 @@ class GenTest {
         assertThatThrownBy(() -> source.orNull(probability))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("probability must be in [0, 1], was " + probability);
-        assertThat(fab.rng().delegate().nextLong()).isEqualTo(seeded().rng().delegate().nextLong());
+        assertThat(fab.random().nextLong()).isEqualTo(seeded().random().nextLong());
     }
 
     @Test
@@ -287,7 +287,7 @@ class GenTest {
 
         assertThat(fluent.gen(fluent.name()::full).list(100))
                 .isEqualTo(classic.repeat(100, classic.name()::full));
-        assertThat(fluent.rng().delegate().nextLong()).isEqualTo(classic.rng().delegate().nextLong());
+        assertThat(fluent.random().nextLong()).isEqualTo(classic.random().nextLong());
     }
 
     @ParameterizedTest
@@ -300,7 +300,7 @@ class GenTest {
         for (int i = 0; i < 100; i++) {
             assertThat(gen.get()).isEqualTo(classic.optional(probability, classic.name()::full));
         }
-        assertThat(fluent.rng().delegate().nextLong()).isEqualTo(classic.rng().delegate().nextLong());
+        assertThat(fluent.random().nextLong()).isEqualTo(classic.random().nextLong());
     }
 
     @ParameterizedTest
@@ -315,7 +315,7 @@ class GenTest {
                     ? null : classic.name().full();
             assertThat(gen.get()).isEqualTo(expected);
         }
-        assertThat(fluent.rng().delegate().nextLong()).isEqualTo(classic.rng().delegate().nextLong());
+        assertThat(fluent.random().nextLong()).isEqualTo(classic.random().nextLong());
     }
 
     @ParameterizedTest
@@ -330,7 +330,7 @@ class GenTest {
         for (int i = 0; i < 100; i++) {
             assertThat(gen.get()).isEqualTo(classic.choice(values));
         }
-        assertThat(fluent.rng().delegate().nextLong()).isEqualTo(classic.rng().delegate().nextLong());
+        assertThat(fluent.random().nextLong()).isEqualTo(classic.random().nextLong());
     }
 
     @ParameterizedTest
@@ -345,7 +345,7 @@ class GenTest {
         for (int i = 0; i < 100; i++) {
             assertThat(gen.get()).isEqualTo(classic.choice(ordered));
         }
-        assertThat(fluent.rng().delegate().nextLong()).isEqualTo(classic.rng().delegate().nextLong());
+        assertThat(fluent.random().nextLong()).isEqualTo(classic.random().nextLong());
     }
 
     @Test

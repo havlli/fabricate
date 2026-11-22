@@ -37,14 +37,14 @@ import dev.havlli.fabricate.model.Person;
 @Deprecated(since = "0.2.0", forRemoval = true)
 public final class BeanFiller {
 
-    private final BeanEngine engine;
+    private final Fabricate fab;
 
     BeanFiller(Fabricate fab) {
-        this.engine = new BeanEngine(fab);
+        this.fab = fab;
     }
 
     /** Fills a record or POJO type by invoking its constructor with generated values. */
     public <T> T fill(Class<T> type) {
-        return engine.fill(type);
+        return fab.fill(type);
     }
 }
