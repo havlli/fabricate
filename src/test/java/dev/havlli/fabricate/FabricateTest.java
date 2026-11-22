@@ -9,7 +9,6 @@ import java.util.stream.IntStream;
 import dev.havlli.fabricate.model.Person;
 import org.junit.jupiter.api.Test;
 
-@SuppressWarnings("removal")
 class FabricateTest {
 
     @Test
@@ -25,7 +24,7 @@ class FabricateTest {
         Fabricate b = Fabricate.builder().seed(42L).build();
 
         for (int i = 0; i < 50; i++) {
-            assertThat(a.names().fullName()).isEqualTo(b.names().fullName());
+            assertThat(a.name().full()).isEqualTo(b.name().full());
         }
     }
 
@@ -35,7 +34,7 @@ class FabricateTest {
         Fabricate b = Fabricate.builder().seed(2L).build();
 
         boolean differs = IntStream.range(0, 50)
-                .anyMatch(i -> !a.names().fullName().equals(b.names().fullName()));
+                .anyMatch(i -> !a.name().full().equals(b.name().full()));
         assertThat(differs).isTrue();
     }
 
@@ -63,7 +62,7 @@ class FabricateTest {
     void person_hasAllRequiredFieldsPopulated() {
         Fabricate fab = Fabricate.builder().seed(7L).build();
 
-        Person p = fab.persons().person();
+        Person p = fab.person().get();
 
         assertThat(p.firstName()).isNotBlank();
         assertThat(p.lastName()).isNotBlank();

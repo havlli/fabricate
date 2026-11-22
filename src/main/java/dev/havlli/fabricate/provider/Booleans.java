@@ -6,8 +6,8 @@ import dev.havlli.fabricate.random.Rng;
  * Booleans, optionally biased toward {@code true}.
  *
  * {@snippet :
- * boolean coin       = fab.booleans().any();
- * boolean usuallyOn  = fab.booleans().withProbability(0.95);  // ~95% true
+ * boolean coin       = fab.bool().get();
+ * boolean usuallyOn  = fab.bool().withProbability(0.95);  // ~95% true
  * }
  */
 public final class Booleans {

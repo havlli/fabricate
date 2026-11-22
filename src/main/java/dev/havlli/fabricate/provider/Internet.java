@@ -2,12 +2,16 @@ package dev.havlli.fabricate.provider;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
+import dev.havlli.fabricate.locale.EnglishLocale;
+import dev.havlli.fabricate.spi.LocaleData;
 import dev.havlli.fabricate.random.Rng;
 
 /**
  * Internet/network primitives: URLs, domains, IPs, MAC addresses, user agents.
  *
  * {@snippet :
+ * String email = fab.internet().email();
  * String url   = fab.internet().url();          // https://example.org/lorem-ipsum
  * String ip4   = fab.internet().ipv4();         // 203.45.12.78
  * String ua    = fab.internet().userAgent();    // realistic curated UA string
@@ -46,14 +50,39 @@ public final class Internet {
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 Edg/119.0.0.0"
     );
 
+    private final Emails emails;
     private final Rng rng;
     private final Numbers numbers;
     private final Texts texts;
 
+    /** Creates an internet provider with English email data and the supplied RNG. */
     public Internet(Rng rng) {
-        this.rng = rng;
+        this(EnglishLocale.INSTANCE, rng);
+    }
+
+    /**
+     * Creates an internet provider that draws locale-aware emails from {@code locale}
+     * and shares {@code rng} with other providers built from the same source.
+     *
+     * @param locale the locale data used for emails
+     * @param rng the random source
+     * @throws NullPointerException if {@code locale} or {@code rng} is null
+     */
+    public Internet(LocaleData locale, Rng rng) {
+        this.emails = new Emails(Objects.requireNonNull(locale, "locale"), rng);
+        this.rng = Objects.requireNonNull(rng, "rng");
         this.numbers = new Numbers(rng);
         this.texts = new Texts(rng);
+    }
+
+    /** Draws an email address using the configured email provider's locale. */
+    public String email() {
+        return emails.email();
+    }
+
+    /** Draws an email address for the given names using the configured locale. */
+    public String email(String firstName, String lastName) {
+        return emails.email(firstName, lastName);
     }
 
     /** Random domain like {@code orange-laboris.io}. */

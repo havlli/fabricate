@@ -285,8 +285,8 @@ class GenTest {
         Fabricate fluent = seeded();
         Fabricate classic = seeded();
 
-        assertThat(fluent.gen(fluent.names()::fullName).list(100))
-                .isEqualTo(classic.repeat(100, classic.names()::fullName));
+        assertThat(fluent.gen(fluent.name()::full).list(100))
+                .isEqualTo(classic.repeat(100, classic.name()::full));
         assertThat(fluent.rng().delegate().nextLong()).isEqualTo(classic.rng().delegate().nextLong());
     }
 
@@ -295,10 +295,10 @@ class GenTest {
     void optional_matchesExistingHelperIncludingRngConsumption(double probability) {
         Fabricate fluent = seeded();
         Fabricate classic = seeded();
-        Gen<Optional<String>> gen = fluent.gen(fluent.names()::fullName).optional(probability);
+        Gen<Optional<String>> gen = fluent.gen(fluent.name()::full).optional(probability);
 
         for (int i = 0; i < 100; i++) {
-            assertThat(gen.get()).isEqualTo(classic.optional(probability, classic.names()::fullName));
+            assertThat(gen.get()).isEqualTo(classic.optional(probability, classic.name()::full));
         }
         assertThat(fluent.rng().delegate().nextLong()).isEqualTo(classic.rng().delegate().nextLong());
     }
@@ -308,11 +308,11 @@ class GenTest {
     void orNull_matchesBooleanProbabilityIncludingRngConsumption(double probability) {
         Fabricate fluent = seeded();
         Fabricate classic = seeded();
-        Gen<@Nullable String> gen = fluent.gen(fluent.names()::fullName).orNull(probability);
+        Gen<@Nullable String> gen = fluent.gen(fluent.name()::full).orNull(probability);
 
         for (int i = 0; i < 100; i++) {
-            String expected = classic.booleans().withProbability(probability)
-                    ? null : classic.names().fullName();
+            String expected = classic.bool().withProbability(probability)
+                    ? null : classic.name().full();
             assertThat(gen.get()).isEqualTo(expected);
         }
         assertThat(fluent.rng().delegate().nextLong()).isEqualTo(classic.rng().delegate().nextLong());
@@ -353,12 +353,12 @@ class GenTest {
         Fabricate first = seeded();
         Fabricate second = seeded();
 
-        assertThat(first.gen(first.names()::fullName).unique().map(String::length).optional(0.7).list(100))
-                .isEqualTo(second.gen(second.names()::fullName).unique().map(String::length).optional(0.7).list(100));
+        assertThat(first.gen(first.name()::full).unique().map(String::length).optional(0.7).list(100))
+                .isEqualTo(second.gen(second.name()::full).unique().map(String::length).optional(0.7).list(100));
         assertThat(first.oneOf("PAID", "OPEN", "CLOSED").orNull(0.3).list(100))
                 .isEqualTo(second.oneOf("PAID", "OPEN", "CLOSED").orNull(0.3).list(100));
-        assertThat(first.gen(first.names()::fullName).set(20))
-                .containsExactlyElementsOf(second.gen(second.names()::fullName).set(20));
+        assertThat(first.gen(first.name()::full).set(20))
+                .containsExactlyElementsOf(second.gen(second.name()::full).set(20));
     }
 
     @Test

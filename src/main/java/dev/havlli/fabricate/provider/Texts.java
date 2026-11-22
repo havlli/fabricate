@@ -9,11 +9,11 @@ import dev.havlli.fabricate.random.Rng;
  * Text fixtures: lorem ipsum prose, slugs, and short tokens.
  *
  * {@snippet :
- * String headline = fab.texts().sentence();
- * String body     = fab.texts().paragraphs(3);
- * String slug     = fab.texts().slug();              // "ut-iure-debitis"
- * String hex8     = fab.texts().hex(8);              // "9f3a0c41"
- * String code     = fab.texts().alphanumeric(10);    // "k4Hb9dQ3xV"
+ * String headline = fab.text().sentence();
+ * String body     = fab.text().paragraphs(3);
+ * String slug     = fab.text().slug();              // "ut-iure-debitis"
+ * String hex8     = fab.text().hex(8);              // "9f3a0c41"
+ * String code     = fab.text().alphanumeric(10);    // "k4Hb9dQ3xV"
  * }
  */
 public final class Texts {

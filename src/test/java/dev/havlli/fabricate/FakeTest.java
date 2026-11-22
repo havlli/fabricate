@@ -56,8 +56,8 @@ class FakeTest {
             Fake.locale(locale);
             Fabricate expected = Fabricate.builder().seed(42L).locale(locale).build();
             for (int i = 0; i < 10; i++) {
-                assertThat(Fake.fullName()).isEqualTo(expected.names().fullName());
-                assertThat(Fake.uuid()).isEqualTo(expected.identities().uuid());
+                assertThat(Fake.fullName()).isEqualTo(expected.name().full());
+                assertThat(Fake.uuid()).isEqualTo(expected.identity().uuid());
             }
         }
     }
@@ -82,8 +82,8 @@ class FakeTest {
                 .locale(Locale.CHINESE).build();
 
         for (int i = 0; i < 10; i++) {
-            assertThat(Fake.fullName()).isEqualTo(expected.names().fullName());
-            assertThat(Fake.uuid()).isEqualTo(expected.identities().uuid());
+            assertThat(Fake.fullName()).isEqualTo(expected.name().full());
+            assertThat(Fake.uuid()).isEqualTo(expected.identity().uuid());
         }
     }
 

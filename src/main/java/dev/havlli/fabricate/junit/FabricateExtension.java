@@ -60,12 +60,10 @@ public final class FabricateExtension implements BeforeEachCallback, ParameterRe
             return fab;
         }
         if (type == Person.class) {
-            @SuppressWarnings("removal") // Preserve legacy provider behavior for unannotated parameters.
-            Person person = fab.persons().person();
-            return person;
+            return fab.person().get();
         }
         if (type == Address.class) {
-            return fab.addresses().address();
+            return fab.address().get();
         }
         throw new IllegalStateException("Unsupported parameter type: " + type);
     }
