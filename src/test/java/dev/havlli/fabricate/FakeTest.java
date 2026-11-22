@@ -2,6 +2,8 @@ package dev.havlli.fabricate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
@@ -9,6 +11,7 @@ import java.util.stream.IntStream;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
+@SuppressWarnings("removal") // Compatibility coverage for the deprecated global mutators.
 class FakeTest {
 
     @AfterEach
@@ -104,5 +107,50 @@ class FakeTest {
         Fake.use(custom);
 
         assertThat(Fake.fabricate()).isSameAs(custom);
+    }
+
+    @Test
+    void shortcuts_matchLocalFluentDraws() {
+        Fake.seed(42L);
+        Fabricate expected = Fabricate.builder().seed(42L).build();
+
+        for (int i = 0; i < 10; i++) {
+            assertThat(Fake.first()).isEqualTo(expected.name().first());
+            assertThat(Fake.last()).isEqualTo(expected.name().last());
+            assertThat(Fake.full()).isEqualTo(expected.name().full());
+            assertThat(Fake.title()).isEqualTo(expected.job().title());
+            assertThat(Fake.between(-10, 10)).isEqualTo(expected.number().between(-10, 10));
+            assertThat(Fake.between(-100L, 100L)).isEqualTo(expected.number().between(-100L, 100L));
+            assertThat(Fake.between(-1.0, 1.0)).isEqualTo(expected.number().between(-1.0, 1.0));
+        }
+    }
+
+    @Test
+    void oldShortcuts_keepMatchingTheNewNames() {
+        Fake.seed(7L);
+        List<Object> old = List.of(Fake.firstName(), Fake.lastName(), Fake.fullName(), Fake.jobTitle(),
+                Fake.intBetween(1, 10), Fake.longBetween(1L, 10L), Fake.doubleBetween(1.0, 10.0));
+        Fake.seed(7L);
+        assertThat(List.of(Fake.first(), Fake.last(), Fake.full(), Fake.title(),
+                Fake.between(1, 10), Fake.between(1L, 10L), Fake.between(1.0, 10.0))).isEqualTo(old);
+    }
+
+    @Test
+    void mutators_areDeprecatedForRemovalAndDocumentLocalConfiguration() throws Exception {
+        String source = Files.readString(Path.of(System.getProperty("basedir", "."),
+                "src/main/java/dev/havlli/fabricate/Fake.java"));
+        for (var method : List.of(Fake.class.getMethod("seed", long.class),
+                Fake.class.getMethod("unseed"), Fake.class.getMethod("locale", Locale.class),
+                Fake.class.getMethod("use", Fabricate.class))) {
+            Deprecated deprecated = method.getAnnotation(Deprecated.class);
+            assertThat(deprecated).as(method.getName()).isNotNull();
+            assertThat(deprecated.since()).isEqualTo("0.2.0");
+            assertThat(deprecated.forRemoval()).isTrue();
+
+            int declaration = source.indexOf("public static void " + method.getName() + "(");
+            String javadoc = source.substring(source.lastIndexOf("/**", declaration), declaration);
+            assertThat(javadoc).contains("@deprecated", "Fabricate#builder()", "#fabricate()",
+                    "only to read the default instance");
+        }
     }
 }

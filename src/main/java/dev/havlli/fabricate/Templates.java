@@ -8,8 +8,12 @@ import java.util.function.Supplier;
  * Tiny mustache-flavoured template expander backed by provider methods.
  *
  * {@snippet :
+ * import dev.havlli.fabricate.Fabricate;
+ * import dev.havlli.fabricate.Sequence;
+ *
+ * Fabricate fab = Fabricate.builder().seed(42L).build();
  * String greeting = fab.expand("Hi {firstName} <{email}>");
- * String log      = fab.expand("{ipv4} - {httpStatus} {method} {url}");
+ * String log      = fab.expand("{ipv4} - {httpStatus} {httpMethod} {url}");
  * }
  *
  * Tokens are simple identifiers between curly braces; they map to a fixed
@@ -20,8 +24,13 @@ import java.util.function.Supplier;
  * project-specific data:
  *
  * {@snippet :
+ * import dev.havlli.fabricate.Fabricate;
+ * import dev.havlli.fabricate.Sequence;
+ *
+ * Fabricate fab = Fabricate.builder().seed(42L).build();
+ * Sequence.Counter orderIds = Sequence.counter("ORD-", 1);
  * String s = fab.templates()
- *               .with("orderId", () -> "ORD-" + Sequence.counter(1).next())
+ *               .with("orderId", orderIds::format)
  *               .expand("[{orderId}] {firstName}");
  * }
  *

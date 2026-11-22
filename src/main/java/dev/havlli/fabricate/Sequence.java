@@ -12,6 +12,8 @@ import java.util.function.LongFunction;
  * a cycle to walk a fixed list in order.
  *
  * {@snippet :
+ * import dev.havlli.fabricate.Sequence;
+ *
  * Sequence.Counter id    = Sequence.counter(1000);
  * long next              = id.next();                          // 1000, 1001, 1002, ...
  * Sequence.Counter named = Sequence.counter("USR-", 1);
