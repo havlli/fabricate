@@ -11,35 +11,37 @@ import dev.havlli.fabricate.model.Person;
 import org.jspecify.annotations.Nullable;
 
 /**
- * Zero-setup static facade for one-shot fake-data needs.
+ * Zero-setup, default-seeded facade for scripts and demos.
+ * Treat this facade as read-only: tests and production code should configure
+ * their own local {@link Fabricate} via {@link Fabricate#builder()}.
+ * Use {@link #fabricate()} only to read the default instance.
  *
  * {@snippet :
- * String name  = Fake.firstName();
+ * import dev.havlli.fabricate.Fake;
+ * import dev.havlli.fabricate.model.Person;
+ *
+ * String name  = Fake.first();
  * String email = Fake.email();
  * Person p     = Fake.person();
- * int score    = Fake.intBetween(0, 100);
+ * int score    = Fake.between(0, 100);
  * }
  *
  * <h2>Determinism</h2>
  *
- * Out of the box the underlying {@link Fabricate} is seeded with
- * {@code 0L}, so {@code Fake.firstName()} returns the same value on every
- * JVM start. This keeps demos and quick scripts reproducible without any
- * setup; it also means two unrelated tests calling {@code Fake.email()}
- * will see correlated draws. For test isolation prefer building your own
- * {@link Fabricate} via {@link Fabricate#builder()}, or call
- * {@link #seed(long)} / {@link #unseed()} once at startup.
+ * The default instance starts with seed {@code 0L}, keeping scripts and demos
+ * reproducible without setup. Calls advance a shared random sequence, so
+ * unrelated callers affect each other's results. Build a separate
+ * {@code Fabricate} per test for isolation.
  *
  * <h2>Threading</h2>
  *
  * The default instance is a singleton and shares one RNG. Calls from
- * multiple threads will succeed but produce non-deterministic interleaved
- * sequences; for parallel work, build per-thread {@code Fabricate}
- * instances instead.
+ * multiple threads produce non-deterministic interleaved sequences;
+ * build per-thread {@code Fabricate} instances for parallel work.
  */
 public final class Fake {
 
-    /** Seed used by the default instance until {@link #seed(long)} or {@link #unseed()} is called. */
+    /** Initial seed of the default instance. */
     public static final long DEFAULT_SEED = 0L;
 
     private static volatile Fabricate instance = Fabricate.builder().seed(DEFAULT_SEED).build();
@@ -47,19 +49,37 @@ public final class Fake {
 
     private Fake() {}
 
-    /** Reseeds the underlying {@link Fabricate}. */
+    /**
+     * Reseeds the underlying {@link Fabricate}.
+     *
+     * @deprecated Configure a local {@link Fabricate} via {@link Fabricate#builder()}.
+     *             Use {@link #fabricate()} only to read the default instance.
+     */
+    @Deprecated(since = "0.2.0", forRemoval = true)
     public static void seed(long seed) {
         instance = Fabricate.builder().seed(seed).locale(instance.locale().locale()).build();
         currentSeed = seed;
     }
 
-    /** Switches to a non-seeded (truly random) instance. */
+    /**
+     * Switches to an unseeded instance.
+     *
+     * @deprecated Configure a local {@link Fabricate} via {@link Fabricate#builder()}.
+     *             Use {@link #fabricate()} only to read the default instance.
+     */
+    @Deprecated(since = "0.2.0", forRemoval = true)
     public static void unseed() {
         instance = Fabricate.builder().locale(instance.locale().locale()).build();
         currentSeed = null;
     }
 
-    /** Switches the active locale, preserving the current seed mode. */
+    /**
+     * Switches the active locale, preserving the current seed mode.
+     *
+     * @deprecated Configure a local {@link Fabricate} via {@link Fabricate#builder()}.
+     *             Use {@link #fabricate()} only to read the default instance.
+     */
+    @Deprecated(since = "0.2.0", forRemoval = true)
     public static void locale(Locale locale) {
         Fabricate.Builder builder = Fabricate.builder().locale(locale);
         Long seed = currentSeed;
@@ -69,17 +89,29 @@ public final class Fake {
         instance = builder.build();
     }
 
-    /** Replaces the underlying {@link Fabricate} entirely. */
+    /**
+     * Replaces the underlying {@link Fabricate} entirely.
+     *
+     * @deprecated Configure a local {@link Fabricate} via {@link Fabricate#builder()}.
+     *             Use {@link #fabricate()} only to read the default instance.
+     */
+    @Deprecated(since = "0.2.0", forRemoval = true)
     public static void use(Fabricate fabricate) {
         instance = fabricate;
     }
 
-    /** Returns the current underlying {@link Fabricate} for advanced use. */
+    /** Reads the default {@link Fabricate} instance; configure local instances with {@link Fabricate#builder()}. */
     public static Fabricate fabricate() {
         return instance;
     }
 
     // --- Names ---
+    /** Draws a first name from the default instance. */
+    public static String first()               { return instance.name().first(); }
+    /** Draws a last name from the default instance. */
+    public static String last()                { return instance.name().last(); }
+    /** Draws a full name from the default instance. */
+    public static String full()                { return instance.name().full(); }
     public static String firstName()           { return instance.name().first(); }
     public static String lastName()            { return instance.name().last(); }
     public static String fullName()            { return instance.name().full(); }
@@ -95,6 +127,8 @@ public final class Fake {
     public static Address address()            { return instance.address().get(); }
     public static String city()                { return instance.addresses.city(); }
     public static String country()             { return instance.addresses.country(); }
+    /** Draws a job title from the default instance. */
+    public static String title()               { return instance.job().title(); }
     public static String jobTitle()            { return instance.job().title(); }
 
     // --- Time ---
@@ -105,6 +139,12 @@ public final class Fake {
     public static <T> T fill(Class<T> type)    { return instance.fill(type); }
 
     // --- Primitives ---
+    /** Uniform int in {@code [min, max]} (both inclusive). */
+    public static int between(int min, int max)               { return instance.number().between(min, max); }
+    /** Uniform long in {@code [min, max]} (both inclusive). */
+    public static long between(long min, long max)            { return instance.number().between(min, max); }
+    /** Uniform double in {@code [min, max)} (max exclusive). */
+    public static double between(double min, double max)      { return instance.number().between(min, max); }
     public static int intBetween(int min, int max)            { return instance.number().between(min, max); }
     public static long longBetween(long min, long max)        { return instance.number().between(min, max); }
     public static double doubleBetween(double min, double max) { return instance.number().between(min, max); }

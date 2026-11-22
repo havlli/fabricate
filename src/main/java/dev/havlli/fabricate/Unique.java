@@ -15,6 +15,10 @@ import java.util.stream.Stream;
  * a retry budget so a finite pool can be drained predictably:
  *
  * {@snippet :
+ * import java.util.List;
+ * import dev.havlli.fabricate.Fabricate;
+ * import dev.havlli.fabricate.Unique;
+ *
  * Fabricate fab = Fabricate.builder().seed(7L).build();
  * Unique<String> emails = Unique.of(fab.internet()::email);
  * List<String> distinct = emails.list(50);

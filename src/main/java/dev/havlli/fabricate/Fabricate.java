@@ -55,6 +55,10 @@ import org.jspecify.annotations.Nullable;
  * or {@link #builder()} for full control:
  *
  * {@snippet :
+ * import java.util.Locale;
+ * import dev.havlli.fabricate.Fabricate;
+ * import dev.havlli.fabricate.model.Person;
+ *
  * Fabricate fab = Fabricate.builder()
  *     .locale(Locale.CHINESE)
  *     .seed(42L)
@@ -68,7 +72,8 @@ import org.jspecify.annotations.Nullable;
  * Person ceo = fab.person().jobTitle("CEO").get(); // override one field
  * }
  *
- * Instances are immutable and thread-confined: create one per thread, or
+ * Configuration is immutable, but random draws advance shared state. Instances
+ * are thread-confined: create one per thread, or
  * one per test, rather than sharing across threads.
  */
 public final class Fabricate {

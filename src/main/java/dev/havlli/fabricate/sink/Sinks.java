@@ -12,6 +12,14 @@ import java.util.Objects;
  * Factories for writing records as CSV, JSON Lines, or SQL.
  *
  * {@snippet :
+ * import java.nio.file.Path;
+ * import java.util.List;
+ * import dev.havlli.fabricate.Fabricate;
+ * import dev.havlli.fabricate.model.Person;
+ * import dev.havlli.fabricate.sink.Sinks;
+ *
+ * Fabricate fab = Fabricate.builder().seed(42L).build();
+ * List<Person> people = fab.person().list(100);
  * Sinks.csv().write(people, Path.of("people.csv"));
  * Sinks.jsonLines().write(fab.person().stream().limit(10_000), Path.of("people.jsonl"));
  * Sinks.sql("person").batchSize(500).write(people, Path.of("people.sql"));

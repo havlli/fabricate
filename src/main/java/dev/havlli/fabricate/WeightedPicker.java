@@ -13,6 +13,11 @@ import java.util.random.RandomGenerator;
  * can express ratios directly:
  *
  * {@snippet :
+ * import java.util.Map;
+ * import dev.havlli.fabricate.Fabricate;
+ * import dev.havlli.fabricate.WeightedPicker;
+ *
+ * Fabricate fab = Fabricate.builder().seed(42L).build();
  * WeightedPicker<String> status = WeightedPicker.<String>builder(fab.random())
  *         .add("active",  80)
  *         .add("pending", 15)
@@ -25,6 +30,11 @@ import java.util.random.RandomGenerator;
  * Or for one-liners over a {@link Map}:
  *
  * {@snippet :
+ * import java.util.Map;
+ * import dev.havlli.fabricate.Fabricate;
+ * import dev.havlli.fabricate.WeightedPicker;
+ *
+ * Fabricate fab = Fabricate.builder().seed(42L).build();
  * WeightedPicker<String> p = WeightedPicker.of(
  *         fab.random(),
  *         Map.of("US", 0.7, "DE", 0.2, "JP", 0.1));

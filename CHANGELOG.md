@@ -2,7 +2,9 @@
 
 ## [Unreleased]
 
-### Breaking changes (0.2.0)
+## [0.2.0] - TBD
+
+### Breaking changes
 
 - Removed the public `dev.havlli.fabricate.provider`, `.locale`, and `.random`
   packages: concrete providers (including `Persons.Builder`), locale implementations
@@ -22,6 +24,12 @@
   Method names and seeded fluent draw order are unchanged.
 
 ### Added
+
+- `Fake.first()`, `last()`, `full()`, `title()`, and `between(int, int)`,
+  `between(long, long)`, `between(double, double)` shortcuts. Existing data
+  methods remain available.
+- [0.2.0 migration guide](MIGRATION-0.2.md), fluent API documentation, and
+  compilation checks for documentation examples.
 
 - Singular provider accessors: `name()`, `phone()`, `dateOfBirth()`, `date()`,
   `job()`, `identity()`, `password()`, `number()`, `bool()`, `text()`, and `file()`,
@@ -58,6 +66,11 @@
   model records, sinks, and the locale SPI retain their packages.
 
 ### Deprecated
+
+- `Fake.seed(long)`, `unseed()`, `locale(Locale)`, and `use(Fabricate)`, for
+  removal since 0.2.0. They still work for compatibility; treat `Fake` as a
+  read-only scripts/demos facade and configure a local `Fabricate.builder()`
+  for tests and production code.
 
 - `Sinks.toCsv`, `toCsvString`, `toJsonLines`, `toJsonLinesString`,
   `toSqlInserts`, and `toSqlInsertsString`, for removal since 0.2.0; use the

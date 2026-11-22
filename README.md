@@ -12,9 +12,10 @@ Built for tests, demos, fixtures, and corpus generation. Java 21+. JPMS-ready.
 
 ## Features
 
-- **Zero-setup static facade** — `Fake.firstName()`, `Fake.iban()`,
-  `Fake.creditCard()`, `Fake.gitSha()`. Default seed is `0L` so quick
-  scripts are reproducible without any setup.
+- **Zero-setup static facade** — `Fake.first()`, `Fake.iban()`,
+  `Fake.creditCard()`, `Fake.gitSha()`. Default seed is `0L` so scripts and demos
+  are reproducible without setup. Treat it as read-only; build a local
+  `Fabricate` for tests and production code.
 - **Realistic data** — Luhn-valid credit cards across 6 brands,
   IBANs with mod-97 check digits for 32 countries, EAN-13/ISBN-13 with
   valid GS1 checksums, ~20 curated User-Agent strings, ~50 file extensions
@@ -29,7 +30,7 @@ Built for tests, demos, fixtures, and corpus generation. Java 21+. JPMS-ready.
   `Sinks.jsonLines().write(rows, path)`, `Sinks.sql(table).write(rows, path)`
   for any iterable or stream of records, with Path, Writer, and string output.
 - **Stream APIs** — `fab.person().stream()` for lazy unbounded sequences,
-  `fab.person().list(n)` for bounded eager generation, `fab.repeat(n, …)`
+  `fab.person().list(n)` for bounded eager generation, `fab.gen(supplier).list(n)`
   for arbitrary suppliers.
 - **Sequences** — `Sequence.counter("USR-", 1)` and
   `Sequence.cycle("admin", "user", "guest")` for deterministic IDs and
@@ -38,31 +39,30 @@ Built for tests, demos, fixtures, and corpus generation. Java 21+. JPMS-ready.
   values with a bounded retry budget; finite pools fail fast and explicitly.
 - **Fluent overrides** — fix one field, randomize the rest:
   `fab.person().firstName("Ada").get()`.
-- **Bean fill** — `fab.fill(MyRecord.class)` reflectively populates any
-  record type, using component names as hints.
+- **Records and beans** — `fab.of(MyRecord.class).get()` reflectively populates
+  records and POJOs, with fluent overrides and component names as hints.
 - **JUnit 5 extension** — `@FabricateTest` injects a fresh, seeded
-  `Fabricate` (and `Person`/`Address`) directly into test parameters.
+  `Fabricate` directly into test parameters; `@Fabricated` also injects
+  records, POJOs, and sized lists.
 - **No runtime dependencies** — JSpecify and JUnit Jupiter are both
-  declared `optional`/`requires static`; consumers pay for what they use.
+  declared optional in Maven and `requires static transitive` in JPMS.
+  Modular compilation needs both on the module path; see [Modules and JPMS](#modules-and-jpms).
 
-## Breaking changes (planned 0.2.0)
+## Breaking changes in 0.2.0
 
-- Removed the public `dev.havlli.fabricate.provider`, `.locale`, and `.random`
-  packages: concrete providers (including `Persons.Builder`), locale implementations
-  and their `INSTANCE` fields, locale providers, `LocaleRegistry`, and `Rng` are
-  now implementation details in non-exported packages. Direct construction/imports
-  of these types are no longer supported.
-- Replaced `Fabricate.rng()` with `random()`, returning `RandomGenerator`.
-  `WeightedPicker.of(...)` and `builder(...)` now accept `RandomGenerator`.
-- Replaced `Builder.localeRegistry(...)` with `locale(LocaleData)` for supplying
-  third-party data directly. `locale(Locale)` still selects a registered locale.
-- Removed plural accessors `names()`, `emails()`, `phones()`, `addresses()`,
-  `datesOfBirth()`, `dates()`, `jobTitles()`, `identities()`, `passwords()`,
-  `numbers()`, `booleans()`, `texts()`, `files()`, and `persons()`. Use the singular
-  accessors, including `internet().email(...)`, `address()`, and `person()`.
-- `internet()`, `geo()`, `finance()`, `commerce()`, and `devops()` now return
-  `InternetGen`, `GeoGen`, `FinanceGen`, `CommerceGen`, and `DevOpsGen` respectively.
-  Method names and seeded fluent draw order are unchanged.
+0.2.0 moves to singular fluent generators, JDK `RandomGenerator`, and direct
+`LocaleData` configuration. Implementation packages are no longer exported.
+Some older helpers remain deprecated for removal, including the global `Fake`
+mutators. See [MIGRATION-0.2.md](MIGRATION-0.2.md) for every replacement and
+before/after examples.
+
+## Compatibility policy
+
+0.2.0 is the pre-1.0 breaking API transition. From 1.0, public packages only
+accrete: existing APIs stay compatible, and an incompatible change requires a
+new package. Provider interfaces obtained from `Fabricate` may gain methods;
+applications must not implement them. The locale SPI is intended for
+third-party implementations.
 
 ## Building from source
 
@@ -76,6 +76,10 @@ mise exec -- mvn verify
 Or use any JDK 21+ and Maven 3.9+ already on your `PATH`.
 
 ## Quick start
+
+These examples describe the 0.2.0 API in this source tree. The Maven version
+remains `0.1.0` during development; the coordinates below match the locally
+built artifact and do not announce a 0.2.0 release.
 
 ```xml
 <dependency>
@@ -111,7 +115,7 @@ import dev.havlli.fabricate.model.Person;
 import dev.havlli.fabricate.sink.Sinks;
 
 // Zero-setup facade with default seed (0L) for quick scripts
-String name = Fake.fullName();
+String name = Fake.full();
 String iban = Fake.iban("DE");
 String card = Fake.creditCard("VISA");
 String env  = Fake.environment();
@@ -137,7 +141,7 @@ List<String> noDuplicates = distinctEmails.list(50);
 
 // fill any record by reflection
 record Customer(String firstName, String email, LocalDate dateOfBirth) {}
-Customer c = fab.fill(Customer.class);
+Customer c = fab.of(Customer.class).get();
 
 // dump 1k rows to a CSV/JSONL/SQL fixture
 Sinks.csv().write(bulk, Path.of("people.csv"));
@@ -159,8 +163,11 @@ draws; supplied generators may consume random values themselves.
 Wrap any supplier with `fab.gen(...)`, or use `fab.oneOf(...)` for a pool of choices:
 
 ```java
+import java.util.List;
 import java.util.Optional;
+import dev.havlli.fabricate.Fabricate;
 
+Fabricate fab = Fabricate.builder().seed(42L).build();
 List<String> names = fab.gen(fab.name()::full).unique().list(100);
 List<String> statuses = fab.oneOf("PAID", "OPEN").stream().limit(20).toList();
 List<Optional<String>> emails = fab.gen(fab.internet()::email).optional(0.8).list(10);
@@ -178,8 +185,11 @@ Use `fab.of(...)` to generate records or POJOs with a no-arg constructor:
 
 ```java
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
+import dev.havlli.fabricate.Fabricate;
 
+Fabricate fab = Fabricate.builder().seed(42L).build();
 record Order(UUID id, String status, BigDecimal total) {}
 
 List<Order> orders = fab.of(Order.class)
@@ -198,19 +208,27 @@ properties skip random generation, changing the RNG sequence of later properties
 
 ## What you can generate
 
-| Provider              | Examples                                                      |
-|-----------------------|---------------------------------------------------------------|
-| `numbers` / `booleans`| `intBetween`, `gaussian`, `withProbability`                   |
-| `texts`               | lorem `word`/`sentence`/`paragraph`, `slug`, `hex`, `alphanumeric` |
-| `names` / `emails` / `phones` / `addresses` | localised field providers           |
-| `internet`            | `url`, `ipv4`/`ipv6`, `macAddress`, `userAgent`, `port`       |
-| `files`               | `fileName`, `path`, `mimeType`, `fileSizeBytes` (log-uniform) |
-| `finance`             | Luhn-valid `creditCard`, `cvv`, mod-97 `iban`, `currencyCode`, `money` |
-| `commerce`            | `productName`, `sku`, `isbn13`, `colorName`/`colorHex`        |
-| `devops`              | `semver`, `gitSha`, `httpStatus`, `branchName`, `dockerImage`, `cloudRegion` |
-| `dates`               | `between`, `recent`/`future`/`past`, `instantBetween`, `weekday`, `month` |
-| `Sequence`            | monotonic `Counter`, cyclic `Cycle`                           |
-| `Sinks`               | `csv()`, `jsonLines()`, `sql(table)` over record iterables or streams |
+| Accessor | Examples |
+|---|---|
+| `name()` | `first()`, `last()`, `full()`, `list(count)` |
+| `phone()` | `number()` |
+| `person()` / `address()` | `get()`, `list(count)`, immutable field overrides |
+| `dateOfBirth()` / `job()` / `identity()` | `get(minAge, maxAge)`, `title()`, `uuid()` |
+| `number()` / `bool()` | `between(min, max)`, `gaussian(mean, stddev)`, `get()`, `withProbability(p)` |
+| `text()` | `word()`, `sentence()`, `paragraph()`, `slug()`, `hex(length)`, `alphanumeric(length)` |
+| `password()` | `get()`, `get(length)`, `get(length, alphabet)` |
+| `internet()` | `email()`, `url()`, `ipv4()`, `ipv6()`, `macAddress()`, `userAgent()`, `port()` |
+| `geo()` | `latitude()`, `longitude()`, `coordinate()`, `timezone()` |
+| `file()` | `name()`, `path()`, `mimeType()`, `sizeBytes()` |
+| `finance()` | `creditCard()`, `cvv()`, `iban()`, `currencyCode()`, `money()` |
+| `commerce()` | `productName()`, `sku()`, `isbn13()`, `colorName()`, `colorHex()` |
+| `devops()` | `semver()`, `gitSha()`, `httpStatus()`, `branchName()`, `dockerImage()`, `cloudRegion()` |
+| `date()` | `between(from, to)`, `recent(days)`, `future(days)`, `past(years)`, `instantBetween(from, to)` |
+
+Obtain generator interfaces from `Fabricate`; applications must not implement
+them. `name().list(count)` draws full names, and `identity().list(count)` draws
+UUIDs. For email lists and streams use `fab.gen(fab.internet()::email)`.
+Read address components from a generated `Address` record.
 
 ## JUnit 5 extension
 
@@ -237,7 +255,7 @@ class UserServiceTest {
 
     @Test
     @Seed(7L)
-    void regressionForBugX(Person person) {
+    void regressionForBugX(@Fabricated Person person) {
         // pinned to seed 7L regardless of the class-level seed
     }
 }
@@ -251,37 +269,6 @@ concrete supported element class and an explicit `size >= 0`; zero produces an
 empty list. Raw lists, wildcards, and unsupported types are rejected.
 Unannotated `Fabricate`, `Person`, and `Address` parameters remain supported;
 leave `Fabricate` itself unannotated.
-
-## Singular accessors
-
-Provider interfaces live in `dev.havlli.fabricate`. Obtain them from `Fabricate`;
-users must not implement them. Each accessor shares the existing provider and
-random sequence, so migrating a call preserves draw order for the same seed.
-
-| Legacy call | Replacement |
-|---|---|
-| `names().firstName()` / `lastName()` / `fullName()` | `name().first()` / `last()` / `full()` |
-| `emails().email()` / `email(first, last)` | `internet().email()` / `email(first, last)` |
-| `phones().phoneNumber()` | `phone().number()` |
-| `addresses().address()` | `address().get()` |
-| `datesOfBirth().birthdate()` / `birthdate(min, max)` | `dateOfBirth().get()` / `get(min, max)` |
-| `dates()` | `date()` (same methods) |
-| `jobTitles().jobTitle()` | `job().title()` |
-| `identities()` | `identity()` (`uuid()` / `username(...)`) |
-| `passwords().password(...)` | `password().get(...)` |
-| `numbers().intBetween(...)` / `longBetween(...)` / `doubleBetween(...)` | `number().between(...)` overloads |
-| `booleans().any()` | `bool().get()` |
-| `texts()` | `text()` (same methods) |
-| `files().fileName(...)` / `fileSizeBytes()` | `file().name(...)` / `sizeBytes()` |
-| `persons().person()` / `builder().firstName("Ada").build()` | `person().get()` / `person().firstName("Ada").get()` |
-
-The legacy accessors are removed for 0.2.0.
-`name()`, `phone()`, `dateOfBirth()`, `job()`, and `identity()` retain `list(count)`
-and lazy `stream()` methods; names draw full names and identities draw UUIDs.
-For email lists and streams, use `fab.gen(fab.internet()::email)`.
-Read address components from a generated `Address` record. `number().gaussian(...)`, `bool().withProbability(...)`,
-and the other file methods retain their names. Passwords still use `SecureRandom`
-and are independent of the Fabricate seed.
 
 ## Locales
 
@@ -318,30 +305,62 @@ Add your own locale by implementing `LocaleData` and registering a
 `LocaleProvider` via `META-INF/services/dev.havlli.fabricate.spi.LocaleProvider`
 on the classpath, or `provides dev.havlli.fabricate.spi.LocaleProvider with ...`
 in your module descriptor. For an individual instance, pass your data directly
-with `Fabricate.builder().locale(myLocaleData).seed(42).build()`. The last
-`locale(...)` call wins.
+with `locale(LocaleData)`. The last `locale(...)` call wins. For example, this
+reuses data selected through the public API; substitute your own `LocaleData`
+implementation for custom pools:
+
+```java
+import java.util.Locale;
+import dev.havlli.fabricate.Fabricate;
+import dev.havlli.fabricate.spi.LocaleData;
+
+LocaleData data = Fabricate.builder().locale(Locale.GERMAN).build().locale();
+Fabricate fab = Fabricate.builder().locale(data).seed(42L).build();
+String name = fab.name().full();
+```
 
 ## Reproducibility guarantees
 
-`Fabricate` instances are immutable and thread-confined. Two instances
-built with the same seed produce identical sequences across every
-provider as long as the calls are made in the same order. For
-parallelism, build one `Fabricate` per worker rather than sharing.
+`Fabricate` configuration is immutable, while its random sequence advances on
+each draw. Instances are thread-confined. Two instances with the same seed,
+locale, and call order reproduce seeded values. Date helpers relative to today
+also depend on the clock. For parallelism, build one `Fabricate` per worker.
 
 `identity().uuid()` is seedable (does not call `UUID.randomUUID()`), so
 seeded test runs produce stable UUIDs. `password()` deliberately uses
 `SecureRandom` and is **not** seeded — generated passwords are never
 reproducible by design.
 
+The public `random()` method returns the shared JDK `RandomGenerator`:
+
+```java
+import java.util.Map;
+import java.util.random.RandomGenerator;
+import dev.havlli.fabricate.Fabricate;
+import dev.havlli.fabricate.WeightedPicker;
+
+Fabricate fab = Fabricate.builder().seed(42L).build();
+RandomGenerator random = fab.random();
+WeightedPicker<String> status = WeightedPicker.of(random, Map.of("OPEN", 3, "PAID", 7));
+String value = status.pick();
+```
+
+Calls through `random()` or a picker advance the same sequence as the fluent
+API. Use a separate `Fabricate` per independent generation task.
+
 ## Modules and JPMS
+
+Modular consumers need both `org.jspecify` (artifact `org.jspecify:jspecify`)
+and `org.junit.jupiter.api` (artifact `org.junit.jupiter:junit-jupiter-api`)
+on the **compile-time module path**, including their required dependencies,
+because Fabricate declares them with `requires static transitive`. Maven marks
+them optional, so consumers must add these dependencies explicitly. At runtime,
+JSpecify may be absent; JUnit is needed when using the JUnit extension.
 
 ```java
 module my.app {
     requires dev.havlli.fabricate;
-    // optional, only if you use the JUnit extension:
-    requires org.junit.jupiter.api;
-
-    // expose your record types so BeanFiller can construct them
+    // Allow fab.of(...) / fab.fill(...) to construct records and POJOs reflectively.
     opens my.app.dto to dev.havlli.fabricate;
 }
 ```

@@ -8,9 +8,13 @@ import java.util.function.Consumer;
  * on the first failure, reports the seed that reproduces it.
  *
  * {@snippet :
+ * import dev.havlli.fabricate.Fabricate;
+ * import dev.havlli.fabricate.Trials;
+ * import dev.havlli.fabricate.model.Person;
+ *
  * Trials.run(100, fab -> {
  *     Person p = fab.person().get();
- *     assertThat(p.email()).contains("@");
+ *     if (!p.email().contains("@")) throw new AssertionError(p.email());
  * });
  *
  * // failure message includes the failing seed; reproduce with:

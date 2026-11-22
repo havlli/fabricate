@@ -25,6 +25,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
  * such as {@code "en"} or {@code "zh"}.
  *
  * {@snippet :
+ * import java.util.List;
+ * import org.junit.jupiter.api.Test;
+ * import dev.havlli.fabricate.Fabricate;
+ * import dev.havlli.fabricate.junit.FabricateTest;
+ * import dev.havlli.fabricate.junit.Fabricated;
+ * import dev.havlli.fabricate.model.Person;
+ *
  * @FabricateTest(seed = 42L, locale = "de")
  * class UserServiceTest {
  *     record Order(String product, int quantity) {}
